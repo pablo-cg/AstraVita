@@ -1,0 +1,11 @@
+.navColor{
+    background-color: #07002C;
+}
+
+.bordeIzq{
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-left: solid 1px;
+    padding-left: 3px;
+}
