@@ -1,11 +1,5 @@
 <template>
-     <div class="d-flex align-items-center justify-content-center container" style="height: 800px">
-        <div class="p-5 mb-4 rounded-3" style="background-color: rgba(7, 0, 44, 0.5);">
-            <div class="container-fluid row">
-                <div class="col-md-6">
-                    <img src="@/assets/img/zodiac.jpg" th:src="@{/img/profelogo.png}" class="img-fluid">
-                </div>
-                <div class="col-md-6 text-light">
+        <div class="col-md-6 text-light">
                     <h1 class="display-5 fw-bold text-light text-center">¡Bienvenido!</h1>
                     <form class="mt-lg-5">
                         <div class="row mb-3">
@@ -44,9 +38,6 @@
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
 </template>
 
 <script>
