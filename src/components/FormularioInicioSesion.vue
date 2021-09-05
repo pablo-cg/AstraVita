@@ -1,30 +1,28 @@
 <template>
-    <div class="col-md-6 text-light">
-        <h1 class="display-5 fw-bold text-light text-center">¡Bienvenido!</h1>
+    <div class="text-light">
         <form class="mt-lg-5">
-            <div class="row mb-3">
-                <label for="inputEmail3" class="col-sm-2 col-form-label"
-                    >Usuario</label
-                >
-                <div class="col-sm-10">
-                    <input
-                        type="email"
-                        class="form-control rounded-pill"
-                        id="inputEmail3"
-                    />
-                </div>
+            <h1 class="display-5 fw-bold text-light text-center">
+                ¡Bienvenido!
+            </h1>
+            <div class="mb-3">
+                <label for="correo">Tu correo</label>
+                <input
+                    type="email"
+                    class="form-control rounded-pill"
+                    id="correo"
+                    v-model="correo"
+                    required
+                />
             </div>
-            <div class="row mb-3">
-                <label for="inputPassword3" class="col-sm-2 col-form-label"
-                    >Clave</label
-                >
-                <div class="col-sm-10">
-                    <input
-                        type="password"
-                        class="form-control rounded-pill"
-                        id="inputPassword3"
-                    />
-                </div>
+            <div class="mb-3">
+                <label for="contrasena">Tu contraseña</label>
+                <input
+                    type="password"
+                    class="form-control rounded-pill"
+                    id="contrasena"
+                    v-model="contrasena"
+                    required
+                />
             </div>
             <div class="row mb-3">
                 <button

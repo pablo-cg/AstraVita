@@ -10,7 +10,7 @@
                     <span class="text-light">
                         <ul class="list-group list-group-flush">
                             <li>
-                                <i class="fas fa-map-marked-alt"></i>
+                                <i class="fas fa-map-marked-alt"></i>&nbsp;
                                 <a
                                     class="text-light"
                                     href="https://goo.gl/maps/1exkBhNeogh4EjnW7"
@@ -18,13 +18,13 @@
                                 >
                             </li>
                             <li>
-                                <i class="fas fa-phone"></i>
+                                <i class="fas fa-phone"></i>&nbsp;
                                 <a class="text-light" href="tel:+56978940490"
                                     >+569 7894 0490</a
                                 >
                             </li>
                             <li>
-                                <i class="fas fa-at"></i>
+                                <i class="fas fa-at"></i>&nbsp;
                                 <a
                                     href="mailto:soporte@astravita.cl"
                                     class="text-light"
@@ -32,7 +32,7 @@
                                 >
                             </li>
                             <li>
-                                <i class="fas fa-heart"></i>
+                                <i class="fas fa-heart"></i>&nbsp;
                                 <a class="text-light" href="suscripcion.html"
                                     >Suscríbete</a
                                 >
@@ -45,7 +45,7 @@
                     <span class="text-light">
                         <ul class="list-group list-group-flush">
                             <li>
-                                <i class="fab fa-instagram"></i>
+                                <i class="fab fa-instagram"></i>&nbsp;
                                 <a
                                     class="text-light"
                                     href="https://www.instagram.com/sebastian.vergara.nunez/?hl=es-la"
@@ -53,7 +53,7 @@
                                 >
                             </li>
                             <li>
-                                <i class="fab fa-instagram"></i>
+                                <i class="fab fa-instagram"></i>&nbsp;
                                 <a
                                     class="text-light"
                                     href="https://www.instagram.com/rusioflores/?hl=es-la"
@@ -61,7 +61,7 @@
                                 >
                             </li>
                             <li>
-                                <i class="fab fa-instagram"></i>
+                                <i class="fab fa-instagram"></i>&nbsp;
                                 <a
                                     class="text-light"
                                     href="https://www.instagram.com/pablocg.uwu/?hl=es-la"
@@ -82,7 +82,5 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>

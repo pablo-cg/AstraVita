@@ -1,6 +1,6 @@
 <template>
-    <div class="col-md-6 text-light">
-        <form class="mt-lg-5" @submit.prevent="RegistrarUsuario">
+    <div class="text-light">
+        <form class="" @submit.prevent="RegistrarUsuario">
             <h1 class="display-6 fw-bold text-light text-center">Registro</h1>
             <div class="mb-3">
                 <label for="nombre">Nombre</label>
@@ -82,7 +82,7 @@
                     {{ mensajeErrorCiudad }}
                 </p>
             </div>
-            <div class="row mb-3">
+            <div class="mb-3">
                 <label for="fHNacimiento" class="form-label"
                     >Fecha y hora de Nacimiento</label
                 >
@@ -223,8 +223,7 @@ export default {
             }
 
             if (!this.paisSeleccionado) {
-                this.mensajeErrorPais =
-                    "Debes ingresar tu país de nacimiento";
+                this.mensajeErrorPais = "Debes ingresar tu país de nacimiento";
             }
 
             if (!this.ciudadSeleccionada) {
