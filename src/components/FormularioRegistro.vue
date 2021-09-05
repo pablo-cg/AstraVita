@@ -53,7 +53,9 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="ciudad" class="form-label">Ciudad de Nacimiento</label>
+                <label for="ciudad" class="form-label"
+                    >Ciudad de Nacimiento</label
+                >
                 <select
                     class="form-select rounded-pill"
                     aria-label="ciudad"
@@ -110,59 +112,45 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
-
 export default {
-    setup() {
-        const paises = ref([
-            {
-                nombre: "Chile",
-                ciudades: ["Stgo", "Valpo", "Conce"],
-            },
-            {
-                nombre: "Argentina",
-                ciudades: ["Mendoza", "BSAS", "Cordoba"],
-            },
-        ]);
-
-        const nombre = ref("");
-        const correoElectronico = ref("");
-        const contrasena = ref("");
-        const repetirContrasena = ref("");
-        const paisSeleccionado = ref("");
-        const ciudadSeleccionada = ref("");
-
-        const nombreVacio = computed(() => {
-            return nombre.value.trim() === "" ? true : false;
-        });
-
-        const correoValido = computed(() => {
+    data() {
+        return {
+            nombre: "",
+            correoElectronico: "",
+            contrasena: "",
+            repetirContrasena: "",
+            paisSeleccionado: "",
+            ciudadSeleccionada: "",
+            paises: [
+                {
+                    nombre: "Chile",
+                    ciudades: ["Stgo", "Valpo", "Conce"],
+                },
+                {
+                    nombre: "Argentina",
+                    ciudades: ["Mendoza", "BSAS", "Cordoba"],
+                },
+            ],
+        };
+    },
+    computed: {},
+    methods: {
+        nombreVacio() {
+            return this.nombre.trim() === "" ? true : false;
+        },
+        correoValido() {
             const regEx =
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return regEx.test(correoElectronico.value) ? true : false;
-        });
-
-        const coincideContrasena = computed(() => {
-            if (contrasena.value !== repetirContrasena.value) {
+            return regEx.test(this.correoElectronico) ? true : false;
+        },
+        coincideContrasena() {
+            if (this.contrasena !== this.repetirContrasena) {
                 return false;
             } else {
                 return true;
             }
-        });
-
-        // const datosCompletos = () => {
-        //     if (
-        //         !nombreVacio.value &&
-        //         correoValido.value &&
-        //         coincideContrasena.value
-        //     ) {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        // };
-
-        const RegistrarUsuario = () => {
+        },
+        RegistrarUsuario() {
             // if (datosCompletos()) {
             //     console.log(nombre.value);
             //     console.log(correoElectronico.value);
@@ -170,23 +158,9 @@ export default {
             // } else {
             //     console.log("incompleto");
             // }
-            console.log(paisSeleccionado.value.nombre);
-            console.log(ciudadSeleccionada.value);
-        };
-
-        return {
-            nombre,
-            correoElectronico,
-            contrasena,
-            repetirContrasena,
-            coincideContrasena,
-            paises,
-            paisSeleccionado,
-            ciudadSeleccionada,
-            nombreVacio,
-            correoValido,
-            RegistrarUsuario,
-        };
+            console.log(this.paisSeleccionado.nombre);
+            console.log(this.ciudadSeleccionada);
+        },
     },
 };
 </script>
