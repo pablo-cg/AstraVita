@@ -10,8 +10,11 @@
                     id="nombre"
                     v-model="nombre"
                 />
-                <p v-if="nombreVacio" class="form-text text-center text-danger">
-                    Debes ingresar un nombre
+                <p
+                    v-if="mensajeErrorNombre"
+                    class="form-text text-center text-danger"
+                >
+                    {{ mensajeErrorNombre }}
                 </p>
             </div>
             <div class="mb-3">
@@ -25,13 +28,10 @@
                     v-model="correoElectronico"
                 />
                 <p
-                    v-if="!correoValido"
+                    v-if="mensajeErrorCorreo"
                     class="form-text text-center text-danger"
                 >
-                    Debes ingresar un correo electrónico válido
-                </p>
-                <p v-else class="form-text text-center text-light">
-                    Tu dirección de correo esta seguro con nosotros.
+                    {{ mensajeErrorCorreo }}
                 </p>
             </div>
             <div class="mb-3">
@@ -42,7 +42,6 @@
                     id="pais"
                     v-model="paisSeleccionado"
                 >
-                    <option selected>Open this select menu</option>
                     <option
                         v-for="pais in paises"
                         :key="pais.nombre"
@@ -51,8 +50,14 @@
                         {{ pais.nombre }}
                     </option>
                 </select>
+                <p
+                    v-if="mensajeErrorPais"
+                    class="form-text text-danger text-center"
+                >
+                    {{ mensajeErrorPais }}
+                </p>
             </div>
-            <div class="mb-3">
+            <div class="mb-3" v-if="paisSeleccionado">
                 <label for="ciudad" class="form-label"
                     >Ciudad de Nacimiento</label
                 >
@@ -62,7 +67,6 @@
                     id="ciudad"
                     v-model="ciudadSeleccionada"
                 >
-                    <option selected>Open this select menu</option>
                     <option
                         v-for="ciudad in paisSeleccionado.ciudades"
                         :key="ciudad"
@@ -71,6 +75,29 @@
                         {{ ciudad }}
                     </option>
                 </select>
+                <p
+                    v-if="mensajeErrorCiudad"
+                    class="form-text text-danger text-center"
+                >
+                    {{ mensajeErrorCiudad }}
+                </p>
+            </div>
+            <div class="row mb-3">
+                <label for="fHNacimiento" class="form-label"
+                    >Fecha y hora de Nacimiento</label
+                >
+                <input
+                    type="datetime-local"
+                    id="fHNacimiento"
+                    class="form-control rounded-pill"
+                    v-model="fechaHoraNac"
+                />
+                <p
+                    v-if="mensajeErrorFechaHoraNac"
+                    class="form-text text-danger text-center"
+                >
+                    {{ mensajeErrorFechaHoraNac }}
+                </p>
             </div>
             <div class="mb-3">
                 <label for="contrasena" class="form-label">Contraseña</label>
@@ -80,6 +107,12 @@
                     id="contrasena"
                     v-model="contrasena"
                 />
+                <p
+                    v-if="mensajeErrorContrasena"
+                    class="form-text text-danger text-center"
+                >
+                    {{ mensajeErrorContrasena }}
+                </p>
             </div>
             <div class="mb-3">
                 <label for="repetirContrasena" class="form-label"
@@ -106,6 +139,9 @@
                 >
                     Registrarse
                 </button>
+                <p class="form-text text-center text-light">
+                    Todos tus datos están seguros con nosotros.
+                </p>
             </div>
         </form>
     </div>
@@ -115,12 +151,19 @@
 export default {
     data() {
         return {
-            nombre: "",
-            correoElectronico: "",
-            contrasena: "",
-            repetirContrasena: "",
+            nombre: null,
+            correoElectronico: null,
+            contrasena: null,
+            repetirContrasena: null,
             paisSeleccionado: "",
             ciudadSeleccionada: "",
+            fechaHoraNac: null,
+            mensajeErrorCorreo: "",
+            mensajeErrorNombre: "",
+            mensajeErrorContrasena: "",
+            mensajeErrorPais: "",
+            mensajeErrorCiudad: "",
+            mensajeErrorFechaHoraNac: "",
             paises: [
                 {
                     nombre: "Chile",
@@ -133,11 +176,7 @@ export default {
             ],
         };
     },
-    computed: {},
-    methods: {
-        nombreVacio() {
-            return this.nombre.trim() === "" ? true : false;
-        },
+    computed: {
         correoValido() {
             const regEx =
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -150,16 +189,60 @@ export default {
                 return true;
             }
         },
+    },
+    methods: {
+        ValidarDatos() {
+            if (
+                this.nombre &&
+                this.correoElectronico &&
+                this.contrasena &&
+                this.coincideContrasena &&
+                this.paisSeleccionado &&
+                this.ciudadSeleccionada &&
+                this.fechaHoraNac
+            ) {
+                this.mensajeErrorCorreo = "";
+                this.mensajeErrorNombre = "";
+                this.mensajeErrorContrasena = "";
+                this.mensajeErrorPais = "";
+                this.mensajeErrorCiudad = "";
+                this.mensajeErrorFechaHoraNac = "";
+                return true;
+            }
+
+            if (!this.nombre || this.nombre.trim() === "") {
+                this.mensajeErrorNombre = "Debes ingresar un nombre";
+            }
+
+            if (!this.correoValido) {
+                this.mensajeErrorCorreo = "Debes ingresar un correo válido";
+            }
+
+            if (!this.contrasena || this.contrasena.trim() === "") {
+                this.mensajeErrorContrasena = "Debes ingresar una contraseña";
+            }
+
+            if (!this.paisSeleccionado) {
+                this.mensajeErrorPais =
+                    "Debes ingresar tu país de nacimiento";
+            }
+
+            if (!this.ciudadSeleccionada) {
+                this.mensajeErrorCiudad =
+                    "Debes ingresar tu ciudad de nacimiento";
+            }
+
+            if (!this.fechaHoraNac) {
+                this.mensajeErrorFechaHoraNac =
+                    "Debes ingresar tu fecha y hora de nacimiento";
+            }
+        },
         RegistrarUsuario() {
-            // if (datosCompletos()) {
-            //     console.log(nombre.value);
-            //     console.log(correoElectronico.value);
-            //     console.log(contrasena.value);
-            // } else {
-            //     console.log("incompleto");
-            // }
-            console.log(this.paisSeleccionado.nombre);
-            console.log(this.ciudadSeleccionada);
+            if (this.ValidarDatos()) {
+                console.log("completo");
+            } else {
+                console.log("incompleto");
+            }
         },
     },
 };

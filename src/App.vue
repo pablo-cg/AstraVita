@@ -104,22 +104,22 @@
 </template>
 
 <script>
-import { computed, ref } from "vue";
 import PieDePagina from "./components/PieDePagina.vue";
 
 export default {
     components: { PieDePagina },
-    setup() {
-        const tieneSesionIniciada = ref(false);
-
-        const imagenFondo = computed(() => {
+    data(){
+        return{
+            tieneSesionIniciada : false,
+        };
+    },
+    computed:{
+        imagenFondo(){
             return {
                 backgroundImage: `url(${require("@/assets/img/universo.jpg")})`,
             };
-        });
-
-        return { imagenFondo, tieneSesionIniciada };
-    },
+        }
+    }
 };
 </script>
 
