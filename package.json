@@ -8,8 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "@popperjs/core": "^2.10.1",
-    "boostrap": "^2.0.0",
     "bootstrap": "^5.1.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",

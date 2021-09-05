@@ -1,93 +1,100 @@
 <template>
     <div class="col-md-6 text-light">
-        <h1 class="display-5 fw-bold text-light text-center">Registro</h1>
-        <form class="mt-lg-5">
-            <div class="row mb-3">
-                <label for="nombre" class="col-sm-2 col-form-label"
-                    >Nombre</label
-                >
-                <div class="col-sm-10">
-                    <input
-                        type="text"
-                        class="form-control rounded-pill"
-                        id="nombre"
-                    />
-                </div>
+        <form class="mt-lg-5" @submit.prevent="RegistrarUsuario">
+            <h1 class="display-6 fw-bold text-light text-center">Registro</h1>
+            <div class="mb-3">
+                <label for="nombre">Nombre</label>
+                <input
+                    type="text"
+                    class="form-control rounded-pill"
+                    id="nombre"
+                    v-model="nombre"
+                />
+                <p v-if="nombreVacio" class="form-text text-center text-danger">
+                    Debes ingresar un nombre
+                </p>
             </div>
-            <div class="row mb-3">
-                <label for="email" class="col-sm-2 col-form-label"
-                    >Correo</label
+            <div class="mb-3">
+                <label for="email" class="form-label"
+                    >Dirección de Correo Electrónico</label
                 >
-                <div class="col-sm-10">
-                    <input
-                        type="email"
-                        class="form-control rounded-pill"
-                        id="email"
-                    />
-                </div>
+                <input
+                    type="email"
+                    class="form-control rounded-pill"
+                    id="email"
+                    v-model="correoElectronico"
+                />
+                <p
+                    v-if="!correoValido"
+                    class="form-text text-center text-danger"
+                >
+                    Debes ingresar un correo electrónico válido
+                </p>
+                <p v-else class="form-text text-center text-light">
+                    Tu dirección de correo esta seguro con nosotros.
+                </p>
             </div>
-            <div class="row mb-3">
-                <label for="email" class="col-sm-2 col-form-label text-nowrap"
-                    >Lugar nacimiento</label
+            <div class="mb-3">
+                <label for="pais" class="form-label">País de Nacimiento</label>
+                <select
+                    class="form-select rounded-pill"
+                    aria-label="pais"
+                    id="pais"
+                    v-model="paisSeleccionado"
                 >
-                <div class="col-sm-8 offset-sm-2">
-                    <select
-                        class="form-select rounded-pill"
-                        aria-label="Default select example"
+                    <option selected>Open this select menu</option>
+                    <option
+                        v-for="pais in paises"
+                        :key="pais.nombre"
+                        :value="pais"
                     >
-                        <option selected>Ciudad</option>
-                        <option value="1">Ciudad 1</option>
-                        <option value="2">Ciudad 2</option>
-                        <option value="3">Ciudad 3</option>
-                    </select>
-                </div>
+                        {{ pais.nombre }}
+                    </option>
+                </select>
             </div>
-            <div class="row mb-3">
-                <div class="col-4 col-form-label">Hora Nacimiento</div>
-                <div class="col-5">
-                    <!-- <label for="nombre" class="col-sm-2 col-form-label"></label> -->
-                    <!-- <div class="col-sm-10"> -->
-                    <input
-                        type="date"
-                        class="form-control rounded-pill"
-                        id="nombre"
-                    />
-                    <!-- </div> -->
-                </div>
-                <div class="col-3">
-                    <!-- <label for="nombre" class="col-sm-2 col-form-label"></label> -->
-                    <!-- <div class="col-sm-10"> -->
-                    <input
-                        type="time"
-                        class="form-control rounded-pill"
-                        id="nombre"
-                    />
-                    <!-- </div> -->
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="contrasena" class="col-sm-2 col-form-label"
-                    >Clave</label
+            <div class="mb-3">
+                <label for="ciudad" class="form-label">Ciudad de Nacimiento</label>
+                <select
+                    class="form-select rounded-pill"
+                    aria-label="ciudad"
+                    id="ciudad"
+                    v-model="ciudadSeleccionada"
                 >
-                <div class="col-sm-10">
-                    <input
-                        type="password"
-                        class="form-control rounded-pill"
-                        id="contrasena"
-                    />
-                </div>
+                    <option selected>Open this select menu</option>
+                    <option
+                        v-for="ciudad in paisSeleccionado.ciudades"
+                        :key="ciudad"
+                        :value="ciudad"
+                    >
+                        {{ ciudad }}
+                    </option>
+                </select>
             </div>
-            <div class="row mb-3">
-                <label for="contrasena" class="col-sm-2 col-form-label"
-                    >Repetir Clave</label
+            <div class="mb-3">
+                <label for="contrasena" class="form-label">Contraseña</label>
+                <input
+                    type="password"
+                    class="form-control rounded-pill"
+                    id="contrasena"
+                    v-model="contrasena"
+                />
+            </div>
+            <div class="mb-3">
+                <label for="repetirContrasena" class="form-label"
+                    >Repite tu Contraseña</label
                 >
-                <div class="col-sm-10">
-                    <input
-                        type="password"
-                        class="form-control rounded-pill"
-                        id="contrasena"
-                    />
-                </div>
+                <input
+                    type="password"
+                    class="form-control rounded-pill"
+                    id="repetirContrasena"
+                    v-model="repetirContrasena"
+                />
+                <p
+                    v-if="!coincideContrasena"
+                    class="form-text text-danger text-center"
+                >
+                    Las contraseñas no coinciden
+                </p>
             </div>
             <div class="row mb-3">
                 <button
@@ -103,7 +110,85 @@
 </template>
 
 <script>
-export default {};
+import { computed, ref } from "vue";
+
+export default {
+    setup() {
+        const paises = ref([
+            {
+                nombre: "Chile",
+                ciudades: ["Stgo", "Valpo", "Conce"],
+            },
+            {
+                nombre: "Argentina",
+                ciudades: ["Mendoza", "BSAS", "Cordoba"],
+            },
+        ]);
+
+        const nombre = ref("");
+        const correoElectronico = ref("");
+        const contrasena = ref("");
+        const repetirContrasena = ref("");
+        const paisSeleccionado = ref("");
+        const ciudadSeleccionada = ref("");
+
+        const nombreVacio = computed(() => {
+            return nombre.value.trim() === "" ? true : false;
+        });
+
+        const correoValido = computed(() => {
+            const regEx =
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return regEx.test(correoElectronico.value) ? true : false;
+        });
+
+        const coincideContrasena = computed(() => {
+            if (contrasena.value !== repetirContrasena.value) {
+                return false;
+            } else {
+                return true;
+            }
+        });
+
+        // const datosCompletos = () => {
+        //     if (
+        //         !nombreVacio.value &&
+        //         correoValido.value &&
+        //         coincideContrasena.value
+        //     ) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // };
+
+        const RegistrarUsuario = () => {
+            // if (datosCompletos()) {
+            //     console.log(nombre.value);
+            //     console.log(correoElectronico.value);
+            //     console.log(contrasena.value);
+            // } else {
+            //     console.log("incompleto");
+            // }
+            console.log(paisSeleccionado.value.nombre);
+            console.log(ciudadSeleccionada.value);
+        };
+
+        return {
+            nombre,
+            correoElectronico,
+            contrasena,
+            repetirContrasena,
+            coincideContrasena,
+            paises,
+            paisSeleccionado,
+            ciudadSeleccionada,
+            nombreVacio,
+            correoValido,
+            RegistrarUsuario,
+        };
+    },
+};
 </script>
 
 <style>
