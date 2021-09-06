@@ -109,11 +109,10 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
     computed: {
-        tieneSesionIniciada() {
-            return this.$store.getters.getConSesionIniciada;
-        },
+        ...mapState(["tieneSesionIniciada"]),
     },
 };
 </script>

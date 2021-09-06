@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-      conSesionIniciada: false,
+    tieneSesionIniciada: false,
   },
   mutations: {
   },
@@ -11,7 +11,4 @@ export default createStore({
   modules: {
 
   },
-  getters:{
-      getConSesionIniciada: (state) => state.conSesionIniciada,
-  }
 })
