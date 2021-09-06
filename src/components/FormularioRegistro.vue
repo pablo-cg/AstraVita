@@ -47,7 +47,7 @@
                         :key="pais.nombre"
                         :value="pais"
                     >
-                        {{ pais.nombre }}
+                        {{ pais.pais }}
                     </option>
                 </select>
                 <p
@@ -72,7 +72,7 @@
                         :key="ciudad"
                         :value="ciudad"
                     >
-                        {{ ciudad }}
+                        {{ ciudad.ciudad }}
                     </option>
                 </select>
                 <p
@@ -148,6 +148,7 @@
 </template>
 
 <script>
+import Localidades from '../assets/localidades/localidades.min.json'
 export default {
     data() {
         return {
@@ -164,16 +165,7 @@ export default {
             mensajeErrorPais: "",
             mensajeErrorCiudad: "",
             mensajeErrorFechaHoraNac: "",
-            paises: [
-                {
-                    nombre: "Chile",
-                    ciudades: ["Stgo", "Valpo", "Conce"],
-                },
-                {
-                    nombre: "Argentina",
-                    ciudades: ["Mendoza", "BSAS", "Cordoba"],
-                },
-            ],
+            paises: Localidades
         };
     },
     computed: {
@@ -241,6 +233,7 @@ export default {
                 console.log("completo");
             } else {
                 console.log("incompleto");
+                console.log(this.ciudadSeleccionada.longitud);
             }
         },
     },
