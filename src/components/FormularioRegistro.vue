@@ -35,7 +35,7 @@
                 </p>
             </div>
             <div class="mb-3">
-                <label for="region" class="form-label">¿En cuál región naciste?</label>
+                <label for="region" class="form-label">¿En qué región naciste?</label>
                 <select
                     class="form-select rounded-pill"
                     aria-label="region"
@@ -59,7 +59,7 @@
             </div>
             <div class="mb-3" v-if="regionSeleccionada">
                 <label for="comuna" class="form-label"
-                    >¿Cuál comuna?</label
+                    >¿En qué comuna?</label
                 >
                 <select
                     class="form-select rounded-pill"
