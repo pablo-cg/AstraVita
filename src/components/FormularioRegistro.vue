@@ -35,51 +35,51 @@
                 </p>
             </div>
             <div class="mb-3">
-                <label for="pais" class="form-label">País de Nacimiento</label>
+                <label for="region" class="form-label">¿En cuál región naciste?</label>
                 <select
                     class="form-select rounded-pill"
-                    aria-label="pais"
-                    id="pais"
-                    v-model="paisSeleccionado"
+                    aria-label="region"
+                    id="region"
+                    v-model="regionSeleccionada"
                 >
                     <option
-                        v-for="pais in paises"
-                        :key="pais.nombre"
-                        :value="pais"
+                        v-for="region in localidades"
+                        :key="region.nombre"
+                        :value="region"
                     >
-                        {{ pais.pais }}
+                        {{ region.nombre }}
                     </option>
                 </select>
                 <p
-                    v-if="mensajeErrorPais"
+                    v-if="mensajeErrorRegion"
                     class="form-text text-danger text-center"
                 >
-                    {{ mensajeErrorPais }}
+                    {{ mensajeErrorRegion }}
                 </p>
             </div>
-            <div class="mb-3" v-if="paisSeleccionado">
-                <label for="ciudad" class="form-label"
-                    >Ciudad de Nacimiento</label
+            <div class="mb-3" v-if="regionSeleccionada">
+                <label for="comuna" class="form-label"
+                    >¿Cuál comuna?</label
                 >
                 <select
                     class="form-select rounded-pill"
-                    aria-label="ciudad"
-                    id="ciudad"
-                    v-model="ciudadSeleccionada"
+                    aria-label="comuna"
+                    id="comuna"
+                    v-model="comunaSeleccionada"
                 >
                     <option
-                        v-for="ciudad in paisSeleccionado.ciudades"
-                        :key="ciudad"
-                        :value="ciudad"
+                        v-for="comuna in regionSeleccionada.comunas"
+                        :key="comuna.nombre"
+                        :value="comuna"
                     >
-                        {{ ciudad.ciudad }}
+                        {{ comuna.nombre }}
                     </option>
                 </select>
                 <p
-                    v-if="mensajeErrorCiudad"
+                    v-if="mensajeErrorComuna"
                     class="form-text text-danger text-center"
                 >
-                    {{ mensajeErrorCiudad }}
+                    {{ mensajeErrorComuna }}
                 </p>
             </div>
             <div class="mb-3">
@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import Localidades from '../assets/localidades/localidades.min.json'
+import Localidades from '../assets/localidades/regionesComunas.min.json'
 export default {
     data() {
         return {
@@ -156,16 +156,16 @@ export default {
             correoElectronico: null,
             contrasena: null,
             repetirContrasena: null,
-            paisSeleccionado: "",
-            ciudadSeleccionada: "",
+            regionSeleccionada: "",
+            comunaSeleccionada: "",
             fechaHoraNac: null,
             mensajeErrorCorreo: "",
             mensajeErrorNombre: "",
             mensajeErrorContrasena: "",
-            mensajeErrorPais: "",
-            mensajeErrorCiudad: "",
+            mensajeErrorRegion: "",
+            mensajeErrorComuna: "",
             mensajeErrorFechaHoraNac: "",
-            paises: Localidades
+            localidades: Localidades
         };
     },
     computed: {
@@ -189,15 +189,15 @@ export default {
                 this.correoElectronico &&
                 this.contrasena &&
                 this.coincideContrasena &&
-                this.paisSeleccionado &&
-                this.ciudadSeleccionada &&
+                this.regionSeleccionada &&
+                this.comunaSeleccionada &&
                 this.fechaHoraNac
             ) {
                 this.mensajeErrorCorreo = "";
                 this.mensajeErrorNombre = "";
                 this.mensajeErrorContrasena = "";
-                this.mensajeErrorPais = "";
-                this.mensajeErrorCiudad = "";
+                this.mensajeErrorRegion = "";
+                this.mensajeErrorComuna = "";
                 this.mensajeErrorFechaHoraNac = "";
                 return true;
             }
@@ -214,13 +214,13 @@ export default {
                 this.mensajeErrorContrasena = "Debes ingresar una contraseña";
             }
 
-            if (!this.paisSeleccionado) {
-                this.mensajeErrorPais = "Debes ingresar tu país de nacimiento";
+            if (!this.regionSeleccionada) {
+                this.mensajeErrorRegion = "Debes ingresar tu región de nacimiento";
             }
 
-            if (!this.ciudadSeleccionada) {
-                this.mensajeErrorCiudad =
-                    "Debes ingresar tu ciudad de nacimiento";
+            if (!this.comunaSeleccionada) {
+                this.mensajeErrorComuna =
+                    "Debes ingresar tu comuna de nacimiento";
             }
 
             if (!this.fechaHoraNac) {
@@ -233,7 +233,7 @@ export default {
                 console.log("completo");
             } else {
                 console.log("incompleto");
-                console.log(this.ciudadSeleccionada.longitud);
+                console.log(this.comunaSeleccionada.longitud);
             }
         },
     },
