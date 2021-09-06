@@ -63,7 +63,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            correo: "",
+            contrasena: "",
+        };
+    },
+};
 </script>
 
 <style>

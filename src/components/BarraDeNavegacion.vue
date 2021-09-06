@@ -109,7 +109,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+    computed: {
+        tieneSesionIniciada() {
+            return this.$store.getters.getConSesionIniciada;
+        },
+    },
+};
 </script>
 
 <style>

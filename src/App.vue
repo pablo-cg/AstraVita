@@ -2,9 +2,10 @@
     <!-- CONTENEDOR PRINCIPAL CON LA IMAGEN DE FONDO -->
     <section :style="imagenFondo">
         <!-- BARRA DE NAVEGACION -->
-        <barra-de-navegacion/>
+        <barra-de-navegacion />
+
         <!-- CONTENIDO DE LA PAGINA -->
-        <section class="container mt-3" >
+        <section class="container mt-3">
             <router-view />
         </section>
 
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-import BarraDeNavegacion from './components/BarraDeNavegacion.vue';
+import BarraDeNavegacion from "./components/BarraDeNavegacion.vue";
 import PieDePagina from "./components/PieDePagina.vue";
 
 export default {
