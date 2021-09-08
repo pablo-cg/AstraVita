@@ -1,28 +1,28 @@
 <template>
     <div class="text-light">
-        <form class="mt-lg-5">
+        <vee-form class="mt-lg-5" :validation-schema="schema">
             <h1 class="display-5 fw-bold text-light text-center">
                 ¡Bienvenido!
             </h1>
             <div class="mb-3">
                 <label for="correo">Tu correo</label>
-                <input
+                <vee-field
                     type="email"
                     class="form-control rounded-pill"
-                    id="correo"
+                    name="correo"
                     v-model="correo"
-                    required
                 />
+                <ErrorMessage class="text-danger" name="correo" />
             </div>
             <div class="mb-3">
                 <label for="contrasena">Tu contraseña</label>
-                <input
+                <vee-field
                     type="password"
                     class="form-control rounded-pill"
-                    id="contrasena"
+                    name="contrasena"
                     v-model="contrasena"
-                    required
                 />
+                <ErrorMessage class="text-danger" name="contrasena" />
             </div>
             <div class="row mb-3">
                 <button
@@ -58,16 +58,22 @@
                     >
                 </div>
             </div>
-        </form>
+        </vee-form>
     </div>
 </template>
 
 <script>
+import schema from "../includes/schema.js";
 export default {
     data() {
         return {
             correo: "",
             contrasena: "",
+            // schema: {
+            //     correo: "required|email|min:3|max:100",
+            //     contrasena: "required|min:3|max:100",
+            // },
+            schema: schema.validadores,
         };
     },
 };

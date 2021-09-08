@@ -1,41 +1,43 @@
 <template>
     <div class="text-light">
-        <form class="" @submit.prevent="RegistrarUsuario">
+        <vee-form
+            class=""
+            :validation-schema="schema"
+            @submit="RegistrarUsuario"
+        >
             <h1 class="display-6 fw-bold text-light text-center">Registro</h1>
             <div class="mb-3">
                 <label for="nombre">Nombre</label>
-                <input
+                <vee-field
                     type="text"
                     class="form-control rounded-pill"
-                    id="nombre"
+                    name="nombre"
                     v-model="nombre"
                 />
-                <p
-                    v-if="mensajeErrorNombre"
-                    class="form-text text-center text-danger"
-                >
-                    {{ mensajeErrorNombre }}
-                </p>
+                <ErrorMessage class="text-danger" name="nombre" />
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label"
+                <label for="correo" class="form-label"
                     >Dirección de Correo Electrónico</label
                 >
-                <input
+                <vee-field
                     type="email"
                     class="form-control rounded-pill"
-                    id="email"
+                    name="correo"
                     v-model="correoElectronico"
                 />
-                <p
-                    v-if="mensajeErrorCorreo"
-                    class="form-text text-center text-danger"
-                >
-                    {{ mensajeErrorCorreo }}
-                </p>
+                <ErrorMessage class="text-danger" name="correo" />
             </div>
             <div class="mb-3">
-                <label for="region" class="form-label">¿En qué región naciste?</label>
+                <vee-field
+                    type="text"
+                    hidden
+                    v-model="regionSeleccionada"
+                    name="region"
+                />
+                <label for="region" class="form-label"
+                    >¿En qué región naciste?</label
+                >
                 <select
                     class="form-select rounded-pill"
                     aria-label="region"
@@ -50,18 +52,18 @@
                         {{ region.nombre }}
                     </option>
                 </select>
-                <p
-                    v-if="mensajeErrorRegion"
-                    class="form-text text-danger text-center"
-                >
-                    {{ mensajeErrorRegion }}
-                </p>
+                <ErrorMessage class="text-danger" name="region" />
             </div>
-            <div class="mb-3" v-if="regionSeleccionada">
-                <label for="comuna" class="form-label"
-                    >¿En qué comuna?</label
-                >
+            <div class="mb-3">
+                <vee-field
+                    type="text"
+                    hidden
+                    v-model="comunaSeleccionada"
+                    name="comuna"
+                />
+                <label for="comuna" class="form-label">¿En qué comuna?</label>
                 <select
+                    as="select"
                     class="form-select rounded-pill"
                     aria-label="comuna"
                     id="comuna"
@@ -75,61 +77,41 @@
                         {{ comuna.nombre }}
                     </option>
                 </select>
-                <p
-                    v-if="mensajeErrorComuna"
-                    class="form-text text-danger text-center"
-                >
-                    {{ mensajeErrorComuna }}
-                </p>
+                <ErrorMessage class="text-danger" name="comuna" />
             </div>
             <div class="mb-3">
                 <label for="fHNacimiento" class="form-label"
                     >Fecha y hora de Nacimiento</label
                 >
-                <input
+                <vee-field
                     type="datetime-local"
-                    id="fHNacimiento"
+                    name="fHNacimiento"
                     class="form-control rounded-pill"
                     v-model="fechaHoraNac"
                 />
-                <p
-                    v-if="mensajeErrorFechaHoraNac"
-                    class="form-text text-danger text-center"
-                >
-                    {{ mensajeErrorFechaHoraNac }}
-                </p>
+                <ErrorMessage class="text-danger" name="fHNacimiento" />
             </div>
             <div class="mb-3">
                 <label for="contrasena" class="form-label">Contraseña</label>
-                <input
+                <vee-field
                     type="password"
                     class="form-control rounded-pill"
-                    id="contrasena"
+                    name="contrasena"
                     v-model="contrasena"
                 />
-                <p
-                    v-if="mensajeErrorContrasena"
-                    class="form-text text-danger text-center"
-                >
-                    {{ mensajeErrorContrasena }}
-                </p>
+                <ErrorMessage class="text-danger" name="contrasena" />
             </div>
             <div class="mb-3">
                 <label for="repetirContrasena" class="form-label"
                     >Repite tu Contraseña</label
                 >
-                <input
+                <vee-field
                     type="password"
                     class="form-control rounded-pill"
-                    id="repetirContrasena"
+                    name="repetirContrasena"
                     v-model="repetirContrasena"
                 />
-                <p
-                    v-if="!coincideContrasena"
-                    class="form-text text-danger text-center"
-                >
-                    Las contraseñas no coinciden
-                </p>
+                <ErrorMessage class="text-danger" name="repetirContrasena" />
             </div>
             <div class="row mb-3">
                 <button
@@ -143,98 +125,37 @@
                     Todos tus datos están seguros con nosotros.
                 </p>
             </div>
-        </form>
+        </vee-form>
     </div>
 </template>
 
 <script>
-import Localidades from '../assets/localidades/regionesComunas.min.json'
+import Localidades from "../assets/localidades/regionesComunas.min.json";
+import schema from "../includes/schema.js";
+
 export default {
     data() {
         return {
-            nombre: null,
+            nombre: "",
             correoElectronico: null,
             contrasena: null,
             repetirContrasena: null,
-            regionSeleccionada: "",
-            comunaSeleccionada: "",
+            regionSeleccionada: [],
+            comunaSeleccionada: [],
             fechaHoraNac: null,
-            mensajeErrorCorreo: "",
-            mensajeErrorNombre: "",
-            mensajeErrorContrasena: "",
-            mensajeErrorRegion: "",
-            mensajeErrorComuna: "",
-            mensajeErrorFechaHoraNac: "",
-            localidades: Localidades
+            // mensajeErrorCorreo: "",
+            // mensajeErrorNombre: "",
+            // mensajeErrorContrasena: "",
+            // mensajeErrorRegion: "",
+            // mensajeErrorComuna: "",
+            // mensajeErrorFechaHoraNac: "",
+            localidades: Localidades,
+            schema: schema.validadores,
         };
     },
-    computed: {
-        correoValido() {
-            const regEx =
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return regEx.test(this.correoElectronico) ? true : false;
-        },
-        coincideContrasena() {
-            if (this.contrasena !== this.repetirContrasena) {
-                return false;
-            } else {
-                return true;
-            }
-        },
-    },
     methods: {
-        ValidarDatos() {
-            if (
-                this.nombre &&
-                this.correoElectronico &&
-                this.contrasena &&
-                this.coincideContrasena &&
-                this.regionSeleccionada &&
-                this.comunaSeleccionada &&
-                this.fechaHoraNac
-            ) {
-                this.mensajeErrorCorreo = "";
-                this.mensajeErrorNombre = "";
-                this.mensajeErrorContrasena = "";
-                this.mensajeErrorRegion = "";
-                this.mensajeErrorComuna = "";
-                this.mensajeErrorFechaHoraNac = "";
-                return true;
-            }
-
-            if (!this.nombre || this.nombre.trim() === "") {
-                this.mensajeErrorNombre = "Debes ingresar un nombre";
-            }
-
-            if (!this.correoValido) {
-                this.mensajeErrorCorreo = "Debes ingresar un correo válido";
-            }
-
-            if (!this.contrasena || this.contrasena.trim() === "") {
-                this.mensajeErrorContrasena = "Debes ingresar una contraseña";
-            }
-
-            if (!this.regionSeleccionada) {
-                this.mensajeErrorRegion = "Debes ingresar tu región de nacimiento";
-            }
-
-            if (!this.comunaSeleccionada) {
-                this.mensajeErrorComuna =
-                    "Debes ingresar tu comuna de nacimiento";
-            }
-
-            if (!this.fechaHoraNac) {
-                this.mensajeErrorFechaHoraNac =
-                    "Debes ingresar tu fecha y hora de nacimiento";
-            }
-        },
-        RegistrarUsuario() {
-            if (this.ValidarDatos()) {
-                console.log("completo");
-            } else {
-                console.log("incompleto");
-                console.log(this.comunaSeleccionada.longitud);
-            }
+        RegistrarUsuario(values) {
+            console.log(values);
         },
     },
 };
