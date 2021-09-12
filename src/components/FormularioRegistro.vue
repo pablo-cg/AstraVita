@@ -1,18 +1,22 @@
 <template>
     <div class="text-light">
         <h1 class="display-6 fw-bold text-light text-center">Registro</h1>
-        <div v-if="registroEnCurso">
+        <div v-if="registroMostrarAlerta">
             <div
-                class="alert d-flex justify-content-center mt-4 fw-bold rounded-pill"
+                class="
+                    alert
+                    d-flex
+                    justify-content-center
+                    mt-4
+                    fw-bold
+                    rounded-pill
+                "
                 :class="registroVarianteAlerta"
                 role="alert"
             >
                 {{ registroMensajeAlerta }}
             </div>
-            <div
-                class="d-flex justify-content-center"
-                v-if="!registroCompletado"
-            >
+            <div class="d-flex justify-content-center" v-if="registroEnCurso">
                 <div class="spinner-grow text-light" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
@@ -22,7 +26,7 @@
             class=""
             :validation-schema="schema"
             @submit="RegistrarUsuario"
-            v-else
+            v-if="!registroEnCurso"
         >
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
@@ -97,17 +101,31 @@
                 </select>
                 <ErrorMessage class="text-danger" name="comuna" />
             </div>
-            <div class="mb-3">
-                <label for="fHNacimiento" class="form-label"
-                    >Fecha y hora de Nacimiento</label
-                >
-                <vee-field
-                    type="datetime-local"
-                    name="fHNacimiento"
-                    class="form-control rounded-pill"
-                    v-model="fechaHoraNac"
-                />
-                <ErrorMessage class="text-danger" name="fHNacimiento" />
+            <div class="mb-3 row">
+                <div class="col">
+                    <label for="fechaNac" class="form-label"
+                        >Fecha de Nacimiento</label
+                    >
+                    <vee-field
+                        type="date"
+                        name="fechaNac"
+                        class="form-control rounded-pill"
+                        v-model="fechaNac"
+                    />
+                    <ErrorMessage class="text-danger" name="fechaNac" />
+                </div>
+                <div class="col">
+                    <label for="horaNac" class="form-label"
+                        >Hora de Nacimiento</label
+                    >
+                    <vee-field
+                        type="time"
+                        name="horaNac"
+                        class="form-control rounded-pill"
+                        v-model="horaNac"
+                    />
+                    <ErrorMessage class="text-danger" name="horaNac" />
+                </div>
             </div>
             <div class="mb-3">
                 <label for="contrasena" class="form-label">Contraseña</label>
@@ -150,6 +168,7 @@
 <script>
 import Localidades from "../assets/localidades/regionesComunas.min.json";
 import validationSchemas from "../includes/validationSchemas.js";
+import { auth, perfilUsuario } from "../includes/supabase";
 
 export default {
     data() {
@@ -160,27 +179,73 @@ export default {
             repetirContrasena: null,
             regionSeleccionada: [],
             comunaSeleccionada: [],
-            fechaHoraNac: null,
+            fechaNac: null,
+            horaNac: null,
             localidades: Localidades,
             schema: validationSchemas.registro,
+            registroMostrarAlerta: false,
             registroEnCurso: false,
-            registroCompletado: false,
             registroVarianteAlerta: "alert-primary",
             registroMensajeAlerta:
                 "Espera unos segundos, estamos creado tu cuenta...",
         };
     },
     methods: {
-        RegistrarUsuario() {
+        async RegistrarUsuario() {
+            this.registroMostrarAlerta = true;
             this.registroEnCurso = true;
-            
+            this.registroVarianteAlerta = "alert-primary";
+            this.registroMensajeAlerta =
+                "Espera unos segundos, estamos creado tu cuenta...";
+
+
+            try {
+                const { error } = await auth.signUp({
+                    email: this.correoElectronico,
+                    password: this.contrasena,
+                });
+                if (error) throw error;
+            } catch (error) {
+                this.registroEnCurso = false;
+                this.registroVarianteAlerta = "alert-danger";
+                if (error.message.includes("user with this email")) {
+                    this.registroMensajeAlerta =
+                        "Ya existe un usuario con ese correo";
+                } else {
+                    this.registroMensajeAlerta = "" + error.message;
+                }
+                return;
+            }
+
+            try {
+                const { error } = await perfilUsuario.insert([
+                    {
+                        id: auth.user().id,
+                        nombre: this.nombre,
+                        correo: this.correoElectronico,
+                        lugar_nac: `${this.comunaSeleccionada.nombre}, ${this.regionSeleccionada.nombre}`,
+                        latitud_lugar_nac: this.comunaSeleccionada.latitud,
+                        longitud_lugar_nac: this.comunaSeleccionada.longitud,
+                        fecha_hora_nac: new Date(
+                            `${this.fechaNac}T${this.horaNac}`
+                        ).toLocaleString(),
+                    },
+                ]);
+                if (error) throw error;
+            } catch (error) {
+                this.registroEnCurso = false;
+                this.registroVarianteAlerta = "alert-danger";
+                this.registroMensajeAlerta = "" + error.message;
+                return;
+            }
+
             this.registroVarianteAlerta = "alert-success";
-            this.registroCompletado = true;
-            this.registroMensajeAlerta = "Felicidades, tu cuenta ha sido creada!"
+            this.registroMensajeAlerta =
+                "Felicidades, tu cuenta ha sido creada! Ahora puedes iniciar sesión";
+            this.registroEnCurso = false;
         },
     },
 };
 </script>
-
 <style>
 </style>

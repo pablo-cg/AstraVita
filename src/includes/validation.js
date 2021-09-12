@@ -30,16 +30,18 @@ export default {
         defineRule("min_value", minValue);
         defineRule("max_value", maxValue);
         defineRule("contrasena_mismatch", confirmed);
-        defineRule("fHNac_required", required);
+        defineRule("fNac_required", required);
+        defineRule("hNac_required", required);
 
         configure({
             generateMessage: (context) => {
                 const mensajes = {
                     alpha_spaces: `El ${context.field} no puede contener números ni carácteres especiales`,
                     required: `Debes ingresar tu ${context.field}`,
-                    fHNac_required: `Debes ingresar tu fecha y hora de nacimiento`,
+                    fNac_required: `Debes ingresar tu fecha de nacimiento`,
+                    hNac_required: `Debes ingresar tu hora de nacimiento`,
                     email: `Debes ingresar un ${context.field} válido (ej: correo@dominio.com)`,
-                    min: `El campo ${context.field} es muy corto`,
+                    min: `El campo ${context.field} es muy corto (min: 6)`,
                     max: `El campo ${context.field} es muy largo`,
                     min_value: `El campo ${context.field} es muy bajo`,
                     max_value: `El campo ${context.field} es muy alto`,
