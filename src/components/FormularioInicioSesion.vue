@@ -1,6 +1,6 @@
 <template>
     <div class="text-light">
-        <vee-form class="mt-lg-5" :validation-schema="schema">
+        <vee-form class="mt-lg-5" :validation-schema="schema" @submit="iniciarSesion">
             <h1 class="display-5 fw-bold text-light text-center">
                 ¡Bienvenido!
             </h1>
@@ -29,6 +29,7 @@
                     type="submit"
                     class="btn d-block text-light rounded-pill"
                     style="background-color: slateblue"
+                    :disabled="loginEnCurso && !loginFallido"
                 >
                     Iniciar Sesión
                 </button>
@@ -50,7 +51,24 @@
                                 <a href="http://" class="text-light">¿Olvidaste tu clave?</a>
                             </div> -->
             </div>
-            <div class="row mb-3 text-light">
+            <div v-if="loginEnCurso || loginFallido">
+                <div
+                    class="alert d-flex justify-content-center mt-4 fw-bold rounded-pill"
+                    :class="loginVarianteAlerta"
+                    role="alert"
+                >
+                    {{ loginMensajeAlerta }}
+                </div>
+                <div
+                    class="d-flex justify-content-center"
+                    v-if="!loginFallido"
+                >
+                    <div class="spinner-grow text-light" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3 text-light" v-else>
                 <div class="col">
                     ¿No posees una cuenta?,
                     <router-link to="/registro" class="text-light"
@@ -69,13 +87,24 @@ export default {
         return {
             correo: "",
             contrasena: "",
-            // schema: {
-            //     correo: "required|email|min:3|max:100",
-            //     contrasena: "required|min:3|max:100",
-            // },
             schema: validationSchemas.login,
+            loginEnCurso: false,
+            loginFallido: false,
+            loginVarianteAlerta: "alert-primary",
+            loginMensajeAlerta:
+                "Iniciando Sesión",
         };
     },
+    methods:{
+        iniciarSesion(){
+            this.loginEnCurso = true;
+            
+            // this.loginVarianteAlerta = "alert-danger";
+            // this.loginFallido = true;
+            // this.loginEnCurso = false;
+            // this.loginMensajeAlerta = "Correo o contraseña incorrectos"
+        },
+    }
 };
 </script>
 

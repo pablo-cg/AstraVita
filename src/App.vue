@@ -17,12 +17,14 @@
 <script>
 import BarraDeNavegacion from "./components/BarraDeNavegacion.vue";
 import PieDePagina from "./components/PieDePagina.vue";
+// import { mapState } from "vuex";
+
 
 export default {
     components: { PieDePagina, BarraDeNavegacion },
     data() {
         return {
-            tieneSesionIniciada: false,
+            // tieneSesionIniciada: false,
         };
     },
     computed: {
@@ -31,6 +33,7 @@ export default {
                 backgroundImage: `url(${require("@/assets/img/universo.jpg")})`,
             };
         },
+        // ...mapState(["tieneSesionIniciada"]),
     },
 };
 </script>

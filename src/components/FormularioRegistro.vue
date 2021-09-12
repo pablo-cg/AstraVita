@@ -3,7 +3,7 @@
         <h1 class="display-6 fw-bold text-light text-center">Registro</h1>
         <div v-if="registroEnCurso">
             <div
-                class="alert d-flex justify-content-center mt-4 fw-bold"
+                class="alert d-flex justify-content-center mt-4 fw-bold rounded-pill"
                 :class="registroVarianteAlerta"
                 role="alert"
             >
