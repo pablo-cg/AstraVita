@@ -3,6 +3,7 @@ import {
     Field as VeeField,
     defineRule,
     ErrorMessage,
+    configure
 } from "vee-validate";
 import {
     required,
@@ -28,6 +29,27 @@ export default {
         defineRule("max", max);
         defineRule("min_value", minValue);
         defineRule("max_value", maxValue);
-        defineRule("confirmed", confirmed);
+        defineRule("contrasena_mismatch", confirmed);
+        defineRule("fHNac_required", required);
+
+        configure({
+            generateMessage: (context) => {
+                const mensajes = {
+                    alpha_spaces: `El ${context.field} no puede contener números ni carácteres especiales`,
+                    required: `Debes ingresar tu ${context.field}`,
+                    fHNac_required: `Debes ingresar tu fecha y hora de nacimiento`,
+                    email: `Debes ingresar un ${context.field} válido (ej: correo@dominio.com)`,
+                    min: `El campo ${context.field} es muy corto`,
+                    max: `El campo ${context.field} es muy largo`,
+                    min_value: `El campo ${context.field} es muy bajo`,
+                    max_value: `El campo ${context.field} es muy alto`,
+                    contrasena_mismatch: `Tus contraseñas no coinciden`,
+                };
+
+                const mensaje = mensajes[context.rule.name] ? mensajes[context.rule.name] : `El campo ${context.field} es inválido`
+
+                return mensaje;
+            }
+        });
     },
 };

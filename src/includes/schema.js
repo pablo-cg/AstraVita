@@ -5,7 +5,7 @@ export default {
         contrasena: "required|min:3|max:100",
         region: "required",
         comuna: "required",
-        fHNacimiento: "required",
-        repetirContrasena: "confirmed:@contrasena"
+        fHNacimiento: "fHNac_required",
+        repetirContrasena: "contrasena_mismatch:@contrasena"
     },
 }

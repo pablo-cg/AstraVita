@@ -154,8 +154,9 @@ export default {
         };
     },
     methods: {
-        RegistrarUsuario(values) {
-            console.log(values);
+        RegistrarUsuario() {
+            console.log(this.regionSeleccionada);
+            console.log(this.comunaSeleccionada);
         },
     },
 };
