@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import schema from "../includes/schema.js";
+import validationSchemas from "../includes/validationSchemas.js";
 export default {
     data() {
         return {
@@ -73,7 +73,7 @@ export default {
             //     correo: "required|email|min:3|max:100",
             //     contrasena: "required|min:3|max:100",
             // },
-            schema: schema.validadores,
+            schema: validationSchemas.login,
         };
     },
 };

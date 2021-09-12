@@ -1,13 +1,31 @@
 <template>
     <div class="text-light">
+        <h1 class="display-6 fw-bold text-light text-center">Registro</h1>
+        <div v-if="registroEnCurso">
+            <div
+                class="alert d-flex justify-content-center mt-4 fw-bold"
+                :class="registroVarianteAlerta"
+                role="alert"
+            >
+                {{ registroMensajeAlerta }}
+            </div>
+            <div
+                class="d-flex justify-content-center"
+                v-if="!registroCompletado"
+            >
+                <div class="spinner-grow text-light" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
         <vee-form
             class=""
             :validation-schema="schema"
             @submit="RegistrarUsuario"
+            v-else
         >
-            <h1 class="display-6 fw-bold text-light text-center">Registro</h1>
             <div class="mb-3">
-                <label for="nombre">Nombre</label>
+                <label for="nombre" class="form-label">Nombre</label>
                 <vee-field
                     type="text"
                     class="form-control rounded-pill"
@@ -131,7 +149,7 @@
 
 <script>
 import Localidades from "../assets/localidades/regionesComunas.min.json";
-import schema from "../includes/schema.js";
+import validationSchemas from "../includes/validationSchemas.js";
 
 export default {
     data() {
@@ -143,20 +161,22 @@ export default {
             regionSeleccionada: [],
             comunaSeleccionada: [],
             fechaHoraNac: null,
-            // mensajeErrorCorreo: "",
-            // mensajeErrorNombre: "",
-            // mensajeErrorContrasena: "",
-            // mensajeErrorRegion: "",
-            // mensajeErrorComuna: "",
-            // mensajeErrorFechaHoraNac: "",
             localidades: Localidades,
-            schema: schema.validadores,
+            schema: validationSchemas.registro,
+            registroEnCurso: false,
+            registroCompletado: false,
+            registroVarianteAlerta: "alert-primary",
+            registroMensajeAlerta:
+                "Espera unos segundos, estamos creado tu cuenta...",
         };
     },
     methods: {
         RegistrarUsuario() {
-            console.log(this.regionSeleccionada);
-            console.log(this.comunaSeleccionada);
+            this.registroEnCurso = true;
+            
+            this.registroVarianteAlerta = "alert-success";
+            this.registroCompletado = true;
+            this.registroMensajeAlerta = "Felicidades, tu cuenta ha sido creada!"
         },
     },
 };

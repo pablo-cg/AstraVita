@@ -2,7 +2,7 @@
     <!-- CONTENEDOR PRINCIPAL CON LA IMAGEN DE FONDO -->
     <section :style="imagenFondo">
         <!-- BARRA DE NAVEGACION -->
-        <barra-de-navegacion />
+        <barra-de-navegacion :tiene-sesion-iniciada="tieneSesionIniciada"/>
 
         <!-- CONTENIDO DE LA PAGINA -->
         <section class="container mt-3">
