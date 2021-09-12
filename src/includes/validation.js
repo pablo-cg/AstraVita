@@ -49,7 +49,11 @@ export default {
                 const mensaje = mensajes[context.rule.name] ? mensajes[context.rule.name] : `El campo ${context.field} es inválido`
 
                 return mensaje;
-            }
+            },
+            validateOnBlur: true,
+            validateOnChange: true,
+            validateOnInput: false,
+            validateOnModelUpdate: true,
         });
     },
 };
