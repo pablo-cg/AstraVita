@@ -38,39 +38,31 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a
+                                <router-link
                                     class="nav-link"
                                     aria-current="page"
-                                    href="inicio.html"
-                                    >Inicio</a
+                                    to="/miPerfil"
+                                    >Mi cuenta</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <a
-                                    class="nav-link active"
-                                    aria-current="page"
-                                    href="miCuenta.html"
-                                    >Mi Cuenta</a
+                                <router-link class="nav-link" to="/grupos"
+                                    >Grupos</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="grupos.html"
-                                    >Grupos</a
+                                <router-link class="nav-link" to="/amigos"
+                                    >Amigos</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="amigos.html"
-                                    >Amigos</a
+                                <router-link class="nav-link" to="/novedades"
+                                    >Novedades</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="novedades.html"
-                                    >Novedades</a
-                                >
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="contacto.html"
-                                    >Contacto</a
+                                <router-link class="nav-link" to="/contacto"
+                                    >Contacto</router-link
                                 >
                             </li>
                         </ul>
@@ -92,7 +84,8 @@
                             |
                             <a
                                 class="btn btn-outline-light text-light"
-                                type="submit"
+                                type="button"
+                                @click="cerrarSesion"
                                 ><i class="fas fa-power-off"></i
                             ></a>
                         </form>
@@ -113,6 +106,17 @@ import { mapState } from "vuex";
 export default {
     computed: {
         ...mapState(["usuarioConectado"]),
+    },
+    methods: {
+        async cerrarSesion() {
+            try {
+                await this.$store.dispatch("cerrarSesion");
+            } catch (error) {
+                console.log(error);
+            }
+            this.$router.push("login");
+            this.$store.commit("cambiarEstadoUsuario");
+        },
     },
 };
 </script>

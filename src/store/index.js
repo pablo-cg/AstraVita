@@ -11,7 +11,7 @@ export default createStore({
         }
     },
     actions: {
-        async registrarUsuario({ commit }, payload) {
+        async registrarUsuario({ dispatch }, payload) {
             const { error } = await supabase.auth.signUp({
                 email: payload.correoElectronico,
                 password: payload.contrasena,
@@ -32,7 +32,8 @@ export default createStore({
                     ).toJSON(),
                 },
             ]);
-            commit('cambiarEstadoUsuario');
+            await dispatch('cerrarSesion');
+            // commit('cambiarEstadoUsuario');
         },
         async iniciarSesion({ commit }, payload) {
             const { error } = await supabase.auth.signIn({
@@ -43,6 +44,9 @@ export default createStore({
                 throw error;
             }
             commit('cambiarEstadoUsuario');
+        },
+        async cerrarSesion(){
+            await supabase.auth.signOut();
         },
         usuarioEstaConectado({ commit }) {
             const usuario = supabase.auth.user();

@@ -2,6 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import VistaInicioSesion from '@/views/VistaInicioSesion.vue'
 import VistaRegistro from '@/views/VistaRegistro.vue'
+import VistaPaginaPrincipal from '@/views/VistaPaginaPrincipal.vue'
+import VistaAmigos from '@/views/VistaAmigos.vue'
+import VistaContacto from '@/views/VistaContacto.vue'
+import VistaGrupos from '@/views/VistaGrupos.vue'
+import VistaNovedades from '@/views/VistaNovedades.vue'
+import VistaPerfilUsuario from '@/views/VistaPerfilUsuario.vue'
 
 const routes = [
   {
@@ -17,7 +23,7 @@ const routes = [
     name: 'InicioSesion',
     component: VistaInicioSesion,
     meta:{
-        title: 'AstraVita - Inicio Sesión'
+        title: 'Inicio Sesión - AstraVita'
     }
   },
   {
@@ -25,7 +31,55 @@ const routes = [
     name: 'Registro',
     component: VistaRegistro,
     meta:{
-        title: 'AstraVita - Registro'
+        title: 'Registro - AstraVita'
+    }
+  },
+  {
+    path: '/inicio',
+    name: 'Inicio',
+    component: VistaPaginaPrincipal,
+    meta:{
+        title: 'Inicio - AstraVita'
+    }
+  },
+  {
+    path: '/amigos',
+    name: 'MisAmigos',
+    component: VistaAmigos,
+    meta:{
+        title: 'Mis Amigos - AstraVita'
+    }
+  },
+  {
+    path: '/contacto',
+    name: 'Contacto',
+    component: VistaContacto,
+    meta:{
+        title: 'Contacto - AstraVita'
+    }
+  },
+  {
+    path: '/grupos',
+    name: 'Grupos',
+    component: VistaGrupos,
+    meta:{
+        title: 'Grupos - AstraVita'
+    }
+  },
+  {
+    path: '/novedades',
+    name: 'Novedades',
+    component: VistaNovedades,
+    meta:{
+        title: 'Novedades - AstraVita'
+    }
+  },
+  {
+    path: '/miPerfil',
+    name: 'PerfilUsuario',
+    component: VistaPerfilUsuario,
+    meta:{
+        title: 'Mi Perfil - AstraVita'
     }
   },
   

@@ -118,6 +118,7 @@ export default {
             this.loginFallido = false;
             this.loginVarianteAlerta = "alert-success";
             this.loginMensajeAlerta = "Inicio de sesión correcto";
+            this.$router.push('Inicio');
         },
     },
 };
