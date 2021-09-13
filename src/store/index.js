@@ -33,6 +33,22 @@ export default createStore({
                 },
             ]);
             commit('cambiarEstadoUsuario');
+        },
+        async iniciarSesion({ commit }, payload) {
+            const { error } = await supabase.auth.signIn({
+                email: payload.correo,
+                password: payload.contrasena,
+            });
+            if (error) {
+                throw error;
+            }
+            commit('cambiarEstadoUsuario');
+        },
+        usuarioEstaConectado({ commit }) {
+            const usuario = supabase.auth.user();
+            if (usuario) {
+                commit('cambiarEstadoUsuario');
+            }
         }
     },
     modules: {

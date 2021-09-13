@@ -2,7 +2,7 @@
     <!-- CONTENEDOR PRINCIPAL CON LA IMAGEN DE FONDO -->
     <section :style="imagenFondo">
         <!-- BARRA DE NAVEGACION -->
-        <barra-de-navegacion :tiene-sesion-iniciada="tieneSesionIniciada"/>
+        <barra-de-navegacion/>
 
         <!-- CONTENIDO DE LA PAGINA -->
         <section class="container mt-3">
@@ -35,6 +35,9 @@ export default {
         },
         // ...mapState(["tieneSesionIniciada"]),
     },
+    created(){
+        this.$store.dispatch('usuarioEstaConectado')
+    }
 };
 </script>
 

@@ -1,6 +1,10 @@
 <template>
     <div class="text-light">
-        <vee-form class="mt-lg-5" :validation-schema="schema" @submit="iniciarSesion">
+        <vee-form
+            class="mt-lg-5"
+            :validation-schema="schema"
+            @submit="iniciarSesion"
+        >
             <h1 class="display-5 fw-bold text-light text-center">
                 ¡Bienvenido!
             </h1>
@@ -53,16 +57,20 @@
             </div>
             <div v-if="loginEnCurso || loginFallido">
                 <div
-                    class="alert d-flex justify-content-center mt-4 fw-bold rounded-pill"
+                    class="
+                        alert
+                        d-flex
+                        justify-content-center
+                        mt-4
+                        fw-bold
+                        rounded-pill
+                    "
                     :class="loginVarianteAlerta"
                     role="alert"
                 >
                     {{ loginMensajeAlerta }}
                 </div>
-                <div
-                    class="d-flex justify-content-center"
-                    v-if="!loginFallido"
-                >
+                <div class="d-flex justify-content-center" v-if="!loginFallido">
                     <div class="spinner-grow text-light" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
@@ -91,20 +99,27 @@ export default {
             loginEnCurso: false,
             loginFallido: false,
             loginVarianteAlerta: "alert-primary",
-            loginMensajeAlerta:
-                "Iniciando Sesión",
+            loginMensajeAlerta: "Iniciando Sesión",
         };
     },
-    methods:{
-        iniciarSesion(){
+    methods: {
+        async iniciarSesion(values) {
             this.loginEnCurso = true;
-            
-            // this.loginVarianteAlerta = "alert-danger";
-            // this.loginFallido = true;
-            // this.loginEnCurso = false;
-            // this.loginMensajeAlerta = "Correo o contraseña incorrectos"
+
+            try {
+                await this.$store.dispatch("iniciarSesion", values);
+            } catch (error) {
+                this.loginEnCurso = false;
+                this.loginFallido = true;
+                this.loginVarianteAlerta = "alert-danger";
+                this.loginMensajeAlerta = "Correo o contraseña incorrectos";
+                return;
+            }
+            this.loginFallido = false;
+            this.loginVarianteAlerta = "alert-success";
+            this.loginMensajeAlerta = "Inicio de sesión correcto";
         },
-    }
+    },
 };
 </script>
 
