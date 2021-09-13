@@ -8,7 +8,7 @@
                 <router-link
                     class="navbar-brand"
                     to="/inicio"
-                    v-if="tieneSesionIniciada"
+                    v-if="usuarioConectado"
                 >
                     <img
                         src="@/assets/img/astraLogoSlate.png"
@@ -23,7 +23,7 @@
                         width="150"
                     />
                 </router-link>
-                <section v-if="tieneSesionIniciada">
+                <section v-if="usuarioConectado">
                     <button
                         class="navbar-toggler"
                         type="button"
@@ -112,7 +112,7 @@
 import { mapState } from "vuex";
 export default {
     computed: {
-        ...mapState(["tieneSesionIniciada"]),
+        ...mapState(["usuarioConectado"]),
     },
 };
 </script>

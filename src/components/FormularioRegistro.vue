@@ -168,7 +168,6 @@
 <script>
 import Localidades from "../assets/localidades/regionesComunas.min.json";
 import validationSchemas from "../includes/validationSchemas.js";
-import { auth, perfilUsuario } from "../includes/supabase";
 
 export default {
     data() {
@@ -198,13 +197,16 @@ export default {
             this.registroMensajeAlerta =
                 "Espera unos segundos, estamos creado tu cuenta...";
 
-
             try {
-                const { error } = await auth.signUp({
-                    email: this.correoElectronico,
-                    password: this.contrasena,
+                await this.$store.dispatch("registrarUsuario", {
+                    nombre: this.nombre,
+                    correoElectronico: this.correoElectronico,
+                    regionSeleccionada: this.regionSeleccionada,
+                    comunaSeleccionada: this.comunaSeleccionada,
+                    fechaNac: this.fechaNac,
+                    horaNac: this.horaNac,
+                    contrasena: this.contrasena,
                 });
-                if (error) throw error;
             } catch (error) {
                 this.registroEnCurso = false;
                 this.registroVarianteAlerta = "alert-danger";
@@ -213,29 +215,8 @@ export default {
                         "Ya existe un usuario con ese correo";
                 } else {
                     this.registroMensajeAlerta = "" + error.message;
+                    console.log(error);
                 }
-                return;
-            }
-
-            try {
-                const { error } = await perfilUsuario.insert([
-                    {
-                        id: auth.user().id,
-                        nombre: this.nombre,
-                        correo: this.correoElectronico,
-                        lugar_nac: `${this.comunaSeleccionada.nombre}, ${this.regionSeleccionada.nombre}`,
-                        latitud_lugar_nac: this.comunaSeleccionada.latitud,
-                        longitud_lugar_nac: this.comunaSeleccionada.longitud,
-                        fecha_hora_nac: new Date(
-                            `${this.fechaNac}T${this.horaNac}`
-                        ).toLocaleString(),
-                    },
-                ]);
-                if (error) throw error;
-            } catch (error) {
-                this.registroEnCurso = false;
-                this.registroVarianteAlerta = "alert-danger";
-                this.registroMensajeAlerta = "" + error.message;
                 return;
             }
 
