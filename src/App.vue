@@ -5,7 +5,7 @@
         <barra-de-navegacion/>
 
         <!-- CONTENIDO DE LA PAGINA -->
-        <section class="container mt-3">
+        <section class="container mt-3 mb-3">
             <router-view />
         </section>
 
