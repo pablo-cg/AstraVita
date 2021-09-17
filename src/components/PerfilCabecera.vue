@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" v-if="usuario">
         <h5 class="card-header text-light" style="background-color: slateblue">
             {{ usuario.nombre }}
         </h5>

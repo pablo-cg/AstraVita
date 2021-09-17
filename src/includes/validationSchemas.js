@@ -4,7 +4,7 @@ export default {
         correo: "required|email|min:3|max:100",
         contrasena: "required|min:6|max:100",
         region: "required",
-        comuna: "required",
+        ciudad: "required",
         fechaNac: "fNac_required",
         horaNac: "hNac_required",
         repetirContrasena: "contrasena_mismatch:@contrasena"

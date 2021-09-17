@@ -3,6 +3,7 @@
         <h5
             class="card-header text-light text-center"
             style="background-color: slateblue"
+            @click="logDatos()"
         >
             Tu Resumen Astral
         </h5>
@@ -17,6 +18,8 @@
                         >
                             {{ housetext }}
                         </div>
+                        <hr>
+                        {{planet.speeds}}
                     </div>
                 </section>
             </div>
@@ -46,9 +49,11 @@
 <script>
 export default {
     props: ["cartaAstral"],
-    data() {
-        return {};
-    },
+    methods:{
+        logDatos(){
+            console.log(this.cartaAstral.planets);
+        }
+    }
 };
 </script>
 

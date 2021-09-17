@@ -80,26 +80,26 @@
                 <vee-field
                     type="text"
                     hidden
-                    v-model="comunaSeleccionada"
-                    name="comuna"
+                    v-model="ciudadSeleccionada"
+                    name="ciudad"
                 />
-                <label for="comuna" class="form-label">¿En qué comuna?</label>
+                <label for="ciudad" class="form-label">¿En qué ciudad?</label>
                 <select
                     as="select"
                     class="form-select rounded-pill"
-                    aria-label="comuna"
-                    id="comuna"
-                    v-model="comunaSeleccionada"
+                    aria-label="ciudad"
+                    id="ciudad"
+                    v-model="ciudadSeleccionada"
                 >
                     <option
-                        v-for="comuna in regionSeleccionada.comunas"
-                        :key="comuna.nombre"
-                        :value="comuna"
+                        v-for="ciudad in regionSeleccionada.ciudades"
+                        :key="ciudad.id"
+                        :value="ciudad"
                     >
-                        {{ comuna.nombre }}
+                        {{ ciudad.nombre }}
                     </option>
                 </select>
-                <ErrorMessage class="text-danger" name="comuna" />
+                <ErrorMessage class="text-danger" name="ciudad" />
             </div>
             <div class="mb-3 row">
                 <div class="col">
@@ -157,7 +157,7 @@
                 >
                     Registrarse
                 </button>
-                <p class="form-text text-center text-light">
+                <p class="form-text text-center text-light" @click="test">
                     Todos tus datos están seguros con nosotros.
                 </p>
             </div>
@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import Localidades from "../assets/localidades/regionesComunas.min.json";
+import Localidades from "../assets/localidades/ciudades.json";
 import validationSchemas from "../includes/validationSchemas.js";
 
 export default {
@@ -177,7 +177,7 @@ export default {
             contrasena: null,
             repetirContrasena: null,
             regionSeleccionada: [],
-            comunaSeleccionada: [],
+            ciudadSeleccionada: [],
             fechaNac: null,
             horaNac: null,
             localidades: Localidades,
@@ -202,7 +202,7 @@ export default {
                     nombre: this.nombre,
                     correoElectronico: this.correoElectronico,
                     regionSeleccionada: this.regionSeleccionada,
-                    comunaSeleccionada: this.comunaSeleccionada,
+                    ciudadSeleccionada: this.ciudadSeleccionada,
                     fechaNac: this.fechaNac,
                     horaNac: this.horaNac,
                     contrasena: this.contrasena,

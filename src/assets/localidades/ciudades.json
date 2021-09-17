@@ -1,0 +1,298 @@
+[
+    {
+        "nombre": "Metropolitana",
+        "ciudades": [
+            {
+                "id": 1152944896,
+                "nombre": "Colina"
+            },
+            {
+                "id": 1152483678,
+                "nombre": "Melipilla"
+            },
+            {
+                "id": 1152516346,
+                "nombre": "Puente Alto"
+            },
+            {
+                "id": 1152050361,
+                "nombre": "San Bernardo"
+            },
+            {
+                "id": 1152554349,
+                "nombre": "Santiago"
+            },
+            {
+                "id": 1152696612,
+                "nombre": "Talagante"
+            }
+        ]
+    },
+    {
+        "nombre": "Arica y Parinacota",
+        "ciudades": [
+            {
+                "id": 1152531089,
+                "nombre": "Arica"
+            },
+            {
+                "id": 1152134805,
+                "nombre": "Putre"
+            }
+        ]
+    },
+    {
+        "nombre": "Tarapacá",
+        "ciudades": [
+            {
+                "id": 1152234625,
+                "nombre": "Iquique"
+            },
+            {
+                "id": 1152924094,
+                "nombre": "Pozo Almonte"
+            }
+        ]
+    },
+    {
+        "nombre": "Antofagasta",
+        "ciudades": [
+            {
+                "id": 1152734289,
+                "nombre": "Antofagasta"
+            },
+            {
+                "id": 1152168074,
+                "nombre": "Calama"
+            },
+            {
+                "id": 1152050254,
+                "nombre": "Tocopilla"
+            }
+        ]
+    },
+    {
+        "nombre": "Atacama",
+        "ciudades": [
+            {
+                "id": 1152323837,
+                "nombre": "Chañaral"
+            },
+            {
+                "id": 1152406965,
+                "nombre": "Copiapó"
+            },
+            {
+                "id": 1152000009,
+                "nombre": "Vallenar"
+            }
+        ]
+    },
+    {
+        "nombre": "Coquimbo",
+        "ciudades": [
+            {
+                "id": 1152446656,
+                "nombre": "Illapel"
+            },
+            {
+                "id": 1152155065,
+                "nombre": "La Serena"
+            },
+            {
+                "id": 1152767334,
+                "nombre": "Ovalle"
+            }
+        ]
+    },
+    {
+        "nombre": "Valparaíso",
+        "ciudades": [
+            {
+                "id": 1152267672,
+                "nombre": "Hanga Roa"
+            },
+            {
+                "id": 1152833598,
+                "nombre": "Los Andes"
+            },
+            {
+                "id": 1152826056,
+                "nombre": "La Ligua"
+            },
+            {
+                "id": 1152185579,
+                "nombre": "Quillota"
+            },
+            {
+                "id": 1152063222,
+                "nombre": "Quilpué"
+            },
+            {
+                "id": 1152830501,
+                "nombre": "San Antonio"
+            },
+            {
+                "id": 1152329463,
+                "nombre": "San Felipe"
+            },
+            {
+                "id": 1152337970,
+                "nombre": "Valparaíso"
+            }
+        ]
+    },
+    {
+        "nombre": "Libertador General Bernardo O'Higgins",
+        "ciudades": [
+            {
+                "id": 1152498637,
+                "nombre": "Pichilemu"
+            },
+            {
+                "id": 1152672356,
+                "nombre": "Rancagua"
+            },
+            {
+                "id": 1152802349,
+                "nombre": "San Fernando"
+            }
+        ]
+    },
+    {
+        "nombre": "Maule",
+        "ciudades": [
+            {
+                "id": 1152787999,
+                "nombre": "Cauquenes"
+            },
+            {
+                "id": 1152564798,
+                "nombre": "Curicó"
+            },
+            {
+                "id": 1152783281,
+                "nombre": "Linares"
+            },
+            {
+                "id": 1152736946,
+                "nombre": "Talca"
+            }
+        ]
+    },
+    {
+        "nombre": "Ñuble",
+        "ciudades": [
+            {
+                "id": 1152082093,
+                "nombre": "Bulnes"
+            }
+        ]
+    },
+    {
+        "nombre": "Biobío",
+        "ciudades": [
+            {
+                "id": 1152838958,
+                "nombre": "Concepción"
+            },
+            {
+                "id": 1152064207,
+                "nombre": "Lebu"
+            },
+            {
+                "id": 1152810305,
+                "nombre": "Los Ángeles"
+            }
+        ]
+    },
+    {
+        "nombre": "La Araucanía",
+        "ciudades": [
+            {
+                "id": 1152404762,
+                "nombre": "Angol"
+            },
+            {
+                "id": 1152318955,
+                "nombre": "Temuco"
+            }
+        ]
+    },
+    {
+        "nombre": "Los Ríos",
+        "ciudades": [
+            {
+                "id": 1152649834,
+                "nombre": "La Unión"
+            },
+            {
+                "id": 1152201132,
+                "nombre": "Valdivia"
+            }
+        ]
+    },
+    {
+        "nombre": "Los Lagos",
+        "ciudades": [
+            {
+                "id": 1152445107,
+                "nombre": "Castro"
+            },
+            {
+                "id": 1152008170,
+                "nombre": "Chaitén"
+            },
+            {
+                "id": 1152866014,
+                "nombre": "Osorno"
+            },
+            {
+                "id": 1152443957,
+                "nombre": "Puerto Montt"
+            }
+        ]
+    },
+    {
+        "nombre": "Aysén",
+        "ciudades": [
+            {
+                "id": 1152412995,
+                "nombre": "Chile Chico"
+            },
+            {
+                "id": 1152054657,
+                "nombre": "Cochrane"
+            },
+            {
+                "id": 1152541137,
+                "nombre": "Coyhaique"
+            },
+            {
+                "id": 1152158570,
+                "nombre": "Puerto Aysén"
+            }
+        ]
+    },
+    {
+        "nombre": "Magallanes y de la Antártica Chilena",
+        "ciudades": [
+            {
+                "id": 1152790211,
+                "nombre": "Porvenir"
+            },
+            {
+                "id": 1152225106,
+                "nombre": "Puerto Natales"
+            },
+            {
+                "id": 1152455279,
+                "nombre": "Puerto Williams"
+            },
+            {
+                "id": 1152262933,
+                "nombre": "Punta Arenas"
+            }
+        ]
+    }
+]

@@ -23,29 +23,27 @@ export default {
     },
     data() {
         return {
-            usuario: { type: Object },
-            cartaAstral: { type: Object },
+            usuario: null,
+            cartaAstral: null,
         };
     },
-    async created() {
+    async mounted() {
         const { data } = await supabase
             .from("perfil_usuario")
             .select()
             .eq("id", supabase.auth.user().id)
             .single();
-        this.usuario = data;
+        if (data) {
+            this.usuario = data;
+        }
 
         const carta = await supabase
             .from("perfil_astral")
             .select("carta_astral")
             .eq("id_usuario", supabase.auth.user().id)
             .single();
-        if (carta === null) {
+        if (carta.data) {
             this.cartaAstral = carta.data.carta_astral;
-            console.log("carta not null");
-        } else {
-            this.cartaAstral = null;
-            console.log("carta null");
         }
     },
 };
