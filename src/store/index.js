@@ -19,21 +19,19 @@ export default createStore({
             if (error) {
                 throw error;
             }
+
             await supabase.from('perfil_usuario').insert([
                 {
                     id: supabase.auth.user().id,
                     nombre: payload.nombre,
                     correo: payload.correoElectronico,
-                    lugar_nac: `${payload.comunaSeleccionada.nombre}, ${payload.regionSeleccionada.nombre}`,
-                    latitud_lugar_nac: payload.comunaSeleccionada.latitud,
-                    longitud_lugar_nac: payload.comunaSeleccionada.longitud,
-                    fecha_hora_nac: new Date(
-                        `${payload.fechaNac}T${payload.horaNac}`
-                    ).toJSON(),
+                    lugar_nac: `${payload.ciudadSeleccionada.nombre}, ${payload.regionSeleccionada.nombre}`,
+                    id_lugar_nac: payload.ciudadSeleccionada.id,
+                    fecha_nac: payload.fechaNac,
+                    hora_nac: payload.horaNac
                 },
             ]);
             await dispatch('cerrarSesion');
-            // commit('cambiarEstadoUsuario');
         },
         async iniciarSesion({ commit }, payload) {
             const { error } = await supabase.auth.signIn({

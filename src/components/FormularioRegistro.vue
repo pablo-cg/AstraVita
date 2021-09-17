@@ -157,7 +157,7 @@
                 >
                     Registrarse
                 </button>
-                <p class="form-text text-center text-light" @click="test">
+                <p class="form-text text-center text-light">
                     Todos tus datos están seguros con nosotros.
                 </p>
             </div>
