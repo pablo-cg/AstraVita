@@ -35,8 +35,8 @@ export default {
         },
         // ...mapState(["tieneSesionIniciada"]),
     },
-    created(){
-        this.$store.dispatch('usuarioEstaConectado')
+    async created(){
+       await this.$store.dispatch('usuarioEstaConectado')
     }
 };
 </script>

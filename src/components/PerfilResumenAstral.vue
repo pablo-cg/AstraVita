@@ -18,15 +18,15 @@
                         >
                             {{ housetext }}
                         </div>
-                        <hr>
-                        {{planet.speeds}}
+                        <hr />
+                        {{ planet.speeds }}
                     </div>
                 </section>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     <h5>Tu Carta Astral</h5>
-                    <p>ACA VA LA IMAGEN</p>
+                    <img :src="cartaAstral.wheel" alt="carta_astral">
                 </div>
                 <div class="col-md-6">
                     <h5>Designación Astral</h5>
@@ -39,7 +39,13 @@
                 <h5 class="text-center">
                     Tu carta astral aun no ha sido calculada, si quieres
                     calcularla presiona
-                    <button type="button" class="btn btn-primary">Aquí</button>
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        @click="calcularCartaAstral"
+                    >
+                        Aquí
+                    </button>
                 </h5>
             </div>
         </div>
@@ -47,13 +53,44 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
     props: ["cartaAstral"],
-    methods:{
-        logDatos(){
-            console.log(this.cartaAstral.planets);
-        }
-    }
+    computed: {
+        ...mapState(["usuario"]),
+    },
+    methods: {
+        async calcularCartaAstral() {
+            const opcionesRequest = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization:
+                        "Bearer 306590|PHgyIPNB3X8hDhAazQbfX4M6rznQSY6MXDKz3F4v",
+                    "Access-Control-Allow-Origin": "*",
+                },
+                body: JSON.stringify({
+                    name: this.usuario.nombre,
+                    date: this.usuario.fecha_nac,
+                    time: this.usuario.hora_nac.slice(0, -3),
+                    place_id: this.usuario.id_lugar_nac,
+                    lang: "en",
+                    system: "p",
+                }),
+            };
+
+            const datos = await fetch(
+                "https://api.bloom.be/api/natal",
+                opcionesRequest
+            ).then((response) => response.json());
+
+            const { profile, planets, elements } = datos;
+
+            console.log(profile);
+            console.log(elements);
+            console.log(planets);
+        },
+    },
 };
 </script>
 

@@ -8,7 +8,7 @@
                 <router-link
                     class="navbar-brand"
                     to="/inicio"
-                    v-if="usuarioConectado"
+                    v-if="usuario"
                 >
                     <img
                         src="@/assets/img/astraLogoSlate.png"
@@ -23,7 +23,7 @@
                         width="150"
                     />
                 </router-link>
-                <section v-if="usuarioConectado">
+                <section v-if="usuario">
                     <button
                         class="navbar-toggler"
                         type="button"
@@ -105,7 +105,7 @@
 import { mapState } from "vuex";
 export default {
     computed: {
-        ...mapState(["usuarioConectado"]),
+        ...mapState(["usuario"]),
     },
     methods: {
         async cerrarSesion() {
@@ -115,7 +115,6 @@ export default {
                 console.log(error);
             }
             this.$router.push("login");
-            this.$store.commit("cambiarEstadoUsuario");
         },
     },
 };

@@ -4,10 +4,14 @@ import { supabase } from "../includes/supabase";
 export default createStore({
     state: {
         usuarioConectado: false,
+        usuario: null,
     },
     mutations: {
         cambiarEstadoUsuario(state) {
             state.usuarioConectado = !state.usuarioConectado;
+        },
+        setUsuario(state, payload) {
+            state.usuario = payload
         }
     },
     actions: {
@@ -33,7 +37,7 @@ export default createStore({
             ]);
             await dispatch('cerrarSesion');
         },
-        async iniciarSesion({ commit }, payload) {
+        async iniciarSesion({ commit, dispatch }, payload) {
             const { error } = await supabase.auth.signIn({
                 email: payload.correo,
                 password: payload.contrasena,
@@ -42,13 +46,27 @@ export default createStore({
                 throw error;
             }
             commit('cambiarEstadoUsuario');
+            await dispatch('datosUsuario');
         },
-        async cerrarSesion(){
+        async cerrarSesion({ commit }) {
             await supabase.auth.signOut();
+            commit('cambiarEstadoUsuario');
+            commit('setUsuario', null)
         },
-        usuarioEstaConectado({ commit }) {
+        async datosUsuario({ commit }) {
+            const { data } = await supabase
+                .from("perfil_usuario")
+                .select()
+                .eq("id", supabase.auth.user().id)
+                .single();
+            if (data) {
+                commit('setUsuario', data);
+            }
+        },
+        async usuarioEstaConectado({ commit, dispatch }) {
             const usuario = supabase.auth.user();
             if (usuario) {
+                await dispatch('datosUsuario');
                 commit('cambiarEstadoUsuario');
             }
         }

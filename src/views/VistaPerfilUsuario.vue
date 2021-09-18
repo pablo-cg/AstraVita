@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import PerfilCabecera from "../components/PerfilCabecera.vue";
 import PerfilResumenAstral from "../components/PerfilResumenAstral.vue";
 import { supabase } from "../includes/supabase";
@@ -23,20 +24,16 @@ export default {
     },
     data() {
         return {
-            usuario: null,
             cartaAstral: null,
         };
     },
+    methods: {
+       
+    },
+    computed: {
+        ...mapState(["usuario"]),
+    },
     async mounted() {
-        const { data } = await supabase
-            .from("perfil_usuario")
-            .select()
-            .eq("id", supabase.auth.user().id)
-            .single();
-        if (data) {
-            this.usuario = data;
-        }
-
         const carta = await supabase
             .from("perfil_astral")
             .select("carta_astral")
