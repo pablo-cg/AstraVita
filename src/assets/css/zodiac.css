@@ -5,7 +5,7 @@
     font-size:24px;
     line-height:24px;
 }
-.ai.aries,.ai.taurus,.ai.gemini,.ai.cancer,.ai.leo,.ai.virgo,.ai.libra,.ai.scorpio,.ai.sagittarius,.ai.capricorn,.ai.aquarius,.ai.pisces {
+.ai.aries,.ai.tauro,.ai.geminis,.ai.cancer,.ai.leo,.ai.virgo,.ai.libra,.ai.escorpion,.ai.sagitario,.ai.capricornio,.ai.acuario,.ai.piscis {
     font-weight:normal;
 }
 .ai.aries:before {
@@ -13,10 +13,10 @@
   display:inline;
   text-decoration:none;
 }
-.ai.taurus:before {
+.ai.tauro:before {
     content:"\2649";
 }
-.ai.gemini:before {
+.ai.geminis:before {
     content:"\264A";
 }
 .ai.cancer:before {
@@ -31,67 +31,67 @@
 .ai.libra:before {
     content:"\264E";
 }
-.ai.scorpio:before {
+.ai.escorpion:before {
     content:"\264F";
 }
-.ai.sagittarius:before {
+.ai.sagitario:before {
     content:"\2650";
 }
-.ai.capricorn:before {
+.ai.capricornio:before {
     content:"\2651";
 }
-.ai.aquarius:before {
+.ai.acuario:before {
     content:"\2652";
 }
-.ai.pisces:before {
+.ai.piscis:before {
     content:"\2653";
 }
-.ai.sun:before {
+.ai.sol:before {
     content:"\2609";
 }
-.ai.moon:before {
+.ai.luna:before {
     content:"\263D";
 }
-.ai.moon-variant:before {
+.ai.luna-variant:before {
     content:"\263E";
 }
-.ai.earth:before {
+.ai.tierra:before {
     content:"\2295";
 }
-.ai.mercury:before {
+.ai.mercurio:before {
     content:"\263F";
 }
 .ai.venus:before {
     content:"\2640";
 }
-.ai.mars:before {
+.ai.marte:before {
     content:"\2642";
 }
 .ai.jupiter:before {
     content:"\2643";
 }
-.ai.saturn:before {
+.ai.saturno:before {
     content:"\2644";
 }
-.ai.uranus:before {
+.ai.urano:before {
     content:"\2645";
 }
-.ai.neptune:before {
+.ai.neptuno:before {
     content:"\2646";
 }
-.ai.pluto:before {
+.ai.pluton:before {
     content:"\2647";
 }
-.ai.chiron:before {
+.ai.quiron:before {
     content:"\26B7";
 }
-.ai.north-node:before {
+.ai.nodon:before {
     content:"\260A";
 }
-.ai.south-node:before {
+.ai.nodos:before {
     content:"\260B";
 }
-.ai.part-of-fortune:before {
+.ai.parsfortuna:before {
     content:"\2297"
 }
 .ai.lilith:before {
@@ -109,30 +109,30 @@
 .ai.vesta:before {
     content:"\26B6";
 }
-.ai.conjunction:before {
+.ai.conjuncion:before {
     content:"\260C"
 }
-.ai.square:before {
+.ai.cuadratura:before {
     content:"\25A1"
 }
-.ai.trine:before {
+.ai.trigono:before {
     content:"\25B3"
 }
-.ai.opposition:before {
+.ai.oposicion:before {
     content:"\260D"
 }
-.ai.semisquare:before {
+.ai.semicuadratura:before {
     content:"\2220"
 }
-.ai.quintile:before {
+.ai.quintil:before {
     content:"\051"
 }
-.ai.biquintile:before {
+.ai.biquintil:before {
     content:"\0062\0051"
 }
-.ai.retrograde:before {
+.ai.retrogrado:before {
     content:"\211E"
 }
-.ai.comet:before {
+.ai.cometa:before {
     content:"\2604"
 }

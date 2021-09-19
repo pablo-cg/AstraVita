@@ -6,7 +6,7 @@
         <div class="card-body d-flex">
             <div class="row">
                 <div class="col-md-4">
-                    <img :src="usuario.avatar_url" alt="avatar" class="img-fluid">
+                    <img :src="usuario.avatar_url" alt="avatar_usuario" class="img-fluid">
                 </div>
                 <div class="col-md-8">
                     <p>
@@ -20,9 +20,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
-    props: ["usuario"],
-    
+    computed:{
+        ...mapState(['usuario'])
+    }
 };
 </script>
 

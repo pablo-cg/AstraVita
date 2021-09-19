@@ -5,11 +5,7 @@
             style="background-color: slateblue"
         >
             <div class="container-fluid">
-                <router-link
-                    class="navbar-brand"
-                    to="/inicio"
-                    v-if="usuario"
-                >
+                <router-link class="navbar-brand" to="/inicio" v-if="usuario">
                     <img
                         src="@/assets/img/astraLogoSlate.png"
                         alt=""
@@ -42,7 +38,7 @@
                                     class="nav-link"
                                     aria-current="page"
                                     to="/miPerfil"
-                                    >Mi cuenta</router-link
+                                    >{{ usuario.nombre }}</router-link
                                 >
                             </li>
                             <li class="nav-item">
