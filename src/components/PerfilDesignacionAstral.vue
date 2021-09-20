@@ -44,7 +44,7 @@
                     <thead>
                         <tr>
                             <th colspan="4" class="text-center">
-                                Placidus Orb: 0
+                                Cúspides de las Casas
                             </th>
                         </tr>
                     </thead>
