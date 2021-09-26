@@ -1,10 +1,6 @@
 <template>
     <div class="text-light">
-        <vee-form
-            class="mt-lg-5"
-            :validation-schema="schema"
-            @submit="iniciarSesion"
-        >
+        <vee-form class="mt-lg-5" :validation-schema="schema" @submit="login">
             <h1 class="display-5 fw-bold text-light text-center">
                 ¡Bienvenido!
             </h1>
@@ -90,6 +86,7 @@
 
 <script>
 import validationSchemas from "../includes/validationSchemas.js";
+import { mapActions } from "vuex";
 export default {
     data() {
         return {
@@ -103,11 +100,12 @@ export default {
         };
     },
     methods: {
-        async iniciarSesion(values) {
+        ...mapActions("usuarioStore", ["iniciarSesion"]),
+        async login(values) {
             this.loginEnCurso = true;
 
             try {
-                await this.$store.dispatch("iniciarSesion", values);
+                await this.iniciarSesion(values);
             } catch (error) {
                 this.loginEnCurso = false;
                 this.loginFallido = true;
@@ -118,7 +116,7 @@ export default {
             this.loginFallido = false;
             this.loginVarianteAlerta = "alert-success";
             this.loginMensajeAlerta = "Inicio de sesión correcto";
-            this.$router.push('Inicio');
+            this.$router.push("Inicio");
         },
     },
 };

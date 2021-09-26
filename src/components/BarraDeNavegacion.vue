@@ -81,7 +81,7 @@
                             <a
                                 class="btn btn-outline-light text-light"
                                 type="button"
-                                @click="cerrarSesion"
+                                @click="logout"
                                 ><i class="fas fa-power-off"></i
                             ></a>
                         </form>
@@ -98,15 +98,16 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
     computed: {
-        ...mapState(["usuario"]),
+        ...mapState("usuarioStore", ["usuario"]),
     },
     methods: {
-        async cerrarSesion() {
+        ...mapActions("usuarioStore", ["cerrarSesion"]),
+        async logout() {
             try {
-                await this.$store.dispatch("cerrarSesion");
+                await this.cerrarSesion();
             } catch (error) {
                 console.log(error);
             }

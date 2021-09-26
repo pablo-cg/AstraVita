@@ -25,7 +25,7 @@
         <vee-form
             class=""
             :validation-schema="schema"
-            @submit="RegistrarUsuario"
+            @submit="registrarNuevoUsuario"
             v-if="!registroEnCurso"
         >
             <div class="mb-3">
@@ -168,6 +168,7 @@
 <script>
 import Localidades from "../assets/localidades/ciudades.json";
 import validationSchemas from "../includes/validationSchemas.js";
+import { mapActions } from "vuex";
 
 export default {
     data() {
@@ -190,7 +191,8 @@ export default {
         };
     },
     methods: {
-        async RegistrarUsuario() {
+        ...mapActions("usuarioStore", ["registrarUsuario"]),
+        async registrarNuevoUsuario() {
             this.registroMostrarAlerta = true;
             this.registroEnCurso = true;
             this.registroVarianteAlerta = "alert-primary";
@@ -198,7 +200,7 @@ export default {
                 "Espera unos segundos, estamos creado tu cuenta...";
 
             try {
-                await this.$store.dispatch("registrarUsuario", {
+                await this.registrarUsuario({
                     nombre: this.nombre,
                     correoElectronico: this.correoElectronico,
                     regionSeleccionada: this.regionSeleccionada,

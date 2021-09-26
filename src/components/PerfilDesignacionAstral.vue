@@ -2,6 +2,19 @@
     <div class="col-md-4">
         <h5 class="text-center" @click="test">Tu Carta Astral</h5>
         <!-- <img :src="imagenRuedaCarta" alt="carta_astral" class="img-fluid" /> -->
+        <div class="card text-center">
+            <img
+                class="card-img-top"
+                src="../assets/img/demoChart.svg"
+                alt="Card image"
+                style="filter:blur(4px)"
+            />
+            <div class="card-img-overlay">
+                <h4 class="card-title">¿Quieres una imagen de tu carta astral?</h4>
+                <p class="card-text">Contáctanos y podrás conseguir una totalmente personalizada</p>
+                <a href="#" class="btn text-light" style="background-color: slateblue">Pide la tuya aquí</a>
+            </div>
+        </div>
     </div>
     <div class="col-md-8">
         <h5 class="text-center">Designación Astral</h5>
@@ -80,7 +93,6 @@
 </template>
 
 <script>
-
 export default {
     props: ["planetas", "casas", "imagenRuedaCarta"],
     methods: {
