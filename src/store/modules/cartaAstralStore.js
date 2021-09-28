@@ -4,14 +4,18 @@ export default {
     namespaced: true,
     state: {
         cartaAstral: null,
-        aspectos: null
+        aspectos: null,
+        grupos: null,
     },
     mutations: {
         setCartaAstral(state, payload) {
-            state.cartaAstral = payload
+            state.cartaAstral = payload;
         },
         setAspectos(state, payload) {
-            state.aspectos = payload
+            state.aspectos = payload;
+        },
+        setGrupos(state, payload) {
+            state.grupos = payload;
         }
     },
     actions: {
@@ -33,7 +37,22 @@ export default {
             }
         },
 
-        async calcularCartaAstral({ commit }, payload) {
+        async obtenerGruposUsuario({ commit }, payload) {
+            try {
+                const { data: grupo, error } = await supabase
+                    .from("usuario_en_grupo")
+                    .select(`grupo(*)`)
+                    .order('id_grupo', { ascending: true })
+                    .eq("id_usuario", payload);
+
+                if (error) throw error;
+                commit("setGrupos", grupo)
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async calcularCartaAstral({ commit, dispatch }, payload) {
             const opcionesRequest = {
                 method: "POST",
                 headers: {
@@ -81,6 +100,26 @@ export default {
                     }
                 }
 
+                let grupos = [];
+
+                for (const planeta of carta.planets) {
+                    if (planeta.planetId <= 9) {
+                        const { data: grupo } = await supabase
+                            .from('grupo')
+                            .select('id')
+                            .eq('id_planeta', planeta.planetId)
+                            .eq('id_signo', planeta.signId);
+
+                        const { error } = await supabase
+                            .from('usuario_en_grupo')
+                            .insert([{
+                                id_grupo: grupo[0].id,
+                                id_usuario: payload.id
+                            }])
+                        if (error) throw error;
+                    }
+                }
+
                 const { error } = await supabase
                     .from("perfil_astral")
                     .insert([
@@ -95,9 +134,11 @@ export default {
 
                 commit('setCartaAstral', carta);
                 commit('setAspectos', aspectos);
+                dispatch('obtenerGruposUsuario', payload.id)
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+
     }
-}
+} 

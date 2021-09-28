@@ -49,12 +49,12 @@ export default {
         PerfilAspectos,
     },
     async mounted() {
-        this.obtenerCartaAspectos(supabase.auth.user().id);
     },
     methods: {
         ...mapActions("cartaAstralStore", [
             "obtenerCartaAspectos",
             "calcularCartaAstral",
+            "obtenerGruposUsuario"
         ]),
         async calcularCarta() {
             this.calcularCartaAstral(this.usuario);

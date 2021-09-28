@@ -87,6 +87,8 @@
 <script>
 import validationSchemas from "../includes/validationSchemas.js";
 import { mapActions } from "vuex";
+import { supabase } from '../includes/supabase'
+
 export default {
     data() {
         return {
@@ -101,11 +103,14 @@ export default {
     },
     methods: {
         ...mapActions("usuarioStore", ["iniciarSesion"]),
+        ...mapActions("cartaAstralStore",["obtenerCartaAspectos", "obtenerGruposUsuario"]),
         async login(values) {
             this.loginEnCurso = true;
 
             try {
                 await this.iniciarSesion(values);
+                this.obtenerCartaAspectos(supabase.auth.user().id);
+                this.obtenerGruposUsuario(supabase.auth.user().id);
             } catch (error) {
                 this.loginEnCurso = false;
                 this.loginFallido = true;

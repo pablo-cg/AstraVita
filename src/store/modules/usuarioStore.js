@@ -53,7 +53,10 @@ export default {
         async cerrarSesion({ commit }) {
             await supabase.auth.signOut();
             commit('cambiarEstadoUsuario');
-            commit('setUsuario', null)
+            commit('setUsuario', null);
+            commit('cartaAstralStore/setCartaAstral', null, {root:true});
+            commit('cartaAstralStore/setAspectos', null, {root:true});
+            commit('cartaAstralStore/setGrupos', null, {root:true});
         },
         async datosUsuario({ commit }) {
             const { data } = await supabase

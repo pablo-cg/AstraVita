@@ -1,71 +1,73 @@
 <template>
-    <div class="row">
-        <!-- <div class="col-md-4 mb-1" v-for="grupo in grupos" :key="grupo">
+    <div class="row row-cols-1 row-cols-md-1 g-2">
+        <div class="col" v-for="grupo in grupos" :key="grupo.grupo.id">
             <div class="card">
-                <img
-                    class="card-img-top"
-                    src="../assets/img/demoChart.svg"
-                    :alt="grupo.nombre"
-                    style="filter: blur(4px)"
-                />
-                <div class="card-img-overlay">
-                    <h4 class="card-title">{{ grupo.nombre }}</h4>
-                    <div class="card-body">
-                        <h5>Objetivo: {{ grupo.objetivos }}</h5>
-                        <h5>Ego: {{ grupo.ego }}</h5>
-                        <h5>Personalidad: {{ grupo.personalidad }}</h5>
-                    </div>
-                    <div class="card-footer">
-                        <router-link class="btn btn-primary" to="/inicio"
-                            >Entrar</router-link
-                        >
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <div class="card" v-for="grupo in grupos" :key="grupo">
-            <img
-                class="card-img-top"
-                src="../assets/img/demoChart.svg"
-                :alt="grupo.nombre"
-                style="filter: blur(4px)"
-            />
-            <div class="card-img-overlay">
-                <h4 class="card-title">{{ grupo.nombre }}</h4>
                 <div class="card-body">
-                    <div v-html="grupo.descripcion"></div>
-                </div>
-                <div class="card-footer">
-                    <router-link class="btn btn-primary" to="/inicio"
-                        >Entrar</router-link
-                    >
+                    <div class="row">
+                        <div class="col-8">
+                            <h3 class="card-title">
+                                {{ grupo.grupo.nombre }}
+                                <span
+                                    class="badge bg-secondary"
+                                    v-if="grupo.grupo.de_pago"
+                                    >Premium</span
+                                >
+                            </h3>
+                        </div>
+                        <div class="col-4 text-end">
+                            <router-link
+                                class="btn btn-primary"
+                                :class="{ disabled: grupo.grupo.de_pago }"
+                                to="/grupos"
+                                >Entrar</router-link
+                            >
+                        </div>
+                    </div>
+                    <div class="card-text mt-3 mb-3">
+                        <section
+                            v-html="textoPlaneta[grupo.grupo.id_planeta]"
+                        ></section>
+                    </div>
+                    <div class="card-text">
+                        <p>
+                            <button
+                                class="btn btn-primary"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                :data-bs-target="'#collapse' + grupo.grupo.id"
+                                aria-expanded="false"
+                                :aria-controls="'collapse' + grupo.grupo.id"
+                            >
+                                Ver más detalles de {{ grupo.grupo.nombre }}
+                            </button>
+                        </p>
+                        <div class="collapse" :id="'collapse' + grupo.grupo.id">
+                            <div class="card card-body">
+                                <section
+                                    v-html="grupo.grupo.descripcion"
+                                ></section>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <br />
         </div>
     </div>
 </template>
 <script>
-import { supabase } from "../includes/supabase";
+import { mapState } from "vuex";
+import textoPlaneta from "../assets/planetas/textoPlaneta.json";
 
 export default {
     data() {
         return {
-            grupos: null,
+            textoPlaneta,
         };
     },
-    async created() {
-        try {
-            const { data: grupos, error } = await supabase
-                .from("grupo")
-                .select("*");
-            if (grupos) {
-                this.grupos = grupos;
-            }
-
-            if (error) throw error;
-        } catch (error) {
-            console.log(error);
-        }
+    computed: {
+        ...mapState("cartaAstralStore", ["cartaAstral", "grupos"]),
+        ...mapState("usuarioStore", ["usuario"]),
     },
 };
 </script>
