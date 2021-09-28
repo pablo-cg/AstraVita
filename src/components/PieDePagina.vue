@@ -31,10 +31,12 @@
                                     >soporte@astravita.cl</a
                                 >
                             </li>
-                            <li>
+                            <li v-if="usuario">
                                 <i class="fas fa-heart"></i>&nbsp;
-                                <a class="text-light" href="suscripcion.html"
-                                    >Suscríbete</a
+                                <router-link
+                                    :to="{ name: 'Suscripcion' }"
+                                    class="text-light"
+                                    >Suscribete</router-link
                                 >
                             </li>
                         </ul>
@@ -82,5 +84,10 @@
 </template>
 
 <script>
-export default {};
+import { mapState } from "vuex";
+export default {
+    computed: {
+        ...mapState("usuarioStore", ["usuario"]),
+    },
+};
 </script>

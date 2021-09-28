@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import { supabase } from "../includes/supabase";
 import { mapState, mapActions } from "vuex";
 import PerfilDesignacionAstral from "./PerfilDesignacionAstral.vue";
 import PerfilAspectos from "./PerfilAspectos.vue";

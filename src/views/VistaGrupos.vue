@@ -18,6 +18,7 @@
                             <router-link
                                 class="btn btn-primary"
                                 :class="{ disabled: grupo.grupo.de_pago }"
+                                style="background-color: slateblue; border-color: slateblue"
                                 to="/grupos"
                                 >Entrar</router-link
                             >
@@ -32,6 +33,7 @@
                         <p>
                             <button
                                 class="btn btn-primary"
+                                style="background-color: slateblue; border-color: slateblue"
                                 type="button"
                                 data-bs-toggle="collapse"
                                 :data-bs-target="'#collapse' + grupo.grupo.id"
