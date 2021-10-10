@@ -3,7 +3,7 @@
         {{ nombreGrupo }}
     </h1>
     <div class="row row-cols-1 row-cols-md-1 g-2">
-        <nuevo-post></nuevo-post>
+        <nuevo-post @nuevoPost="actualizarPosts"></nuevo-post>
         <post
             class="col mt-3"
             v-for="post in posts"
@@ -12,7 +12,8 @@
         ></post>
         <VueEternalLoading :load="getPosts"></VueEternalLoading>
         <div class="no-more text-light text-center fw-bold">
-            <i class="fas fa-frown"></i> No hay más que mostrar. <i class="fas fa-frown"></i>
+            <i class="fas fa-frown"></i> No hay más que mostrar.
+            <i class="fas fa-frown"></i>
         </div>
     </div>
 </template>
@@ -63,6 +64,10 @@ export default {
                 console.log(error);
             }
         },
+
+        actualizarPosts(nuevoPost){
+            this.posts.unshift(...nuevoPost);
+        }
     },
     async mounted() {
         const data = this.grupos.find(

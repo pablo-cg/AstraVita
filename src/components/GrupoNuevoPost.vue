@@ -52,6 +52,8 @@
 
 <script>
 import validationSchemas from "../includes/validationSchemas.js";
+import { supabase } from "../includes/supabase";
+import { mapState } from "vuex";
 
 export default {
     data() {
@@ -61,11 +63,33 @@ export default {
             schema: validationSchemas.comentarioEnGrupo,
         };
     },
+    computed: {
+        ...mapState("usuarioStore", ["usuario"]),
+    },
     methods: {
-        publicarNuevoComentario() {
-            console.log(this.comentario);
-            console.log(`es anonimo: ${this.anonimo}`);
+        async publicarNuevoComentario() {
+            try {
+                const { data: nuevoPost, error } = await supabase
+                    .from("post")
+                    .insert({
+                        id_usuario: supabase.auth.user().id,
+                        nombre_usuario: this.usuario.nombre,
+                        es_anonimo: this.anonimo,
+                        id_grupo: this.$route.params.id,
+                        contenido: this.comentario,
+                    });
+                if (error) throw error;
+                this.limpiarFormulario();
+                this.$emit('nuevoPost', nuevoPost);
+            } catch (error) {
+                console.log(error);
+            }
         },
+
+        limpiarFormulario(){
+            this.comentario = "";
+            this.anonimo = false;
+        }
     },
 };
 </script>
