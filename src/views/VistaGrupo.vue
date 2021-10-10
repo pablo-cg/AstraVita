@@ -1,9 +1,25 @@
 <template>
-    <h1 class="text-light">
-        {{ nombreGrupo }}
-    </h1>
     <div class="row row-cols-1 row-cols-md-1 g-2">
-        <nuevo-post @nuevoPost="actualizarPosts"></nuevo-post>
+        <div
+            class="mt-4 p-5 text-white rounded"
+            style="background-color: slateblue; border-color: slateblue"
+        >
+            <div class="row">
+                <div class="col">
+                    <h1>{{ nombreGrupo }}</h1>
+                </div>
+                <div class="col text-end">
+                    <router-link :to="{ name: 'Grupos' }">
+                        <button type="button" class="btn btn-light">
+                        Volver a Grupos
+                        <i class="fas fa-long-arrow-alt-left"></i>
+                    </button>
+                    </router-link>
+                </div>
+            </div>
+            <p v-html="textoPlaneta[idPlaneta]"></p>
+        </div>
+        <nuevo-post @nuevoPost="actualizarPosts" class="col mt-3"></nuevo-post>
         <post
             class="col mt-3"
             v-for="post in posts"
@@ -22,6 +38,7 @@
 import { mapState } from "vuex";
 import { supabase } from "../includes/supabase";
 import { VueEternalLoading } from "@ts-pro/vue-eternal-loading";
+import textoPlaneta from "../assets/planetas/textoPlaneta.json";
 
 import Post from "../components/GrupoPost.vue";
 import NuevoPost from "../components/GrupoNuevoPost.vue";
@@ -33,6 +50,9 @@ export default {
             postFin: 5,
             posts: [],
             nombreGrupo: null,
+            descripcionGrupo: null,
+            idPlaneta: -1,
+            textoPlaneta
         };
     },
     components: {
@@ -65,16 +85,19 @@ export default {
             }
         },
 
-        actualizarPosts(nuevoPost){
+        actualizarPosts(nuevoPost) {
             this.posts.unshift(...nuevoPost);
-        }
+        },
     },
     async mounted() {
         const data = this.grupos.find(
             (data) => data.grupo.id == this.$route.params.id
         );
         this.nombreGrupo = data.grupo.nombre;
+        this.descripcionGrupo = data.grupo.descripcion;
+        this.idPlaneta = data.grupo.id_planeta;
         document.title = `${this.nombreGrupo} - AstraVita`;
+        console.log(this.idPlaneta);
     },
 };
 </script>
