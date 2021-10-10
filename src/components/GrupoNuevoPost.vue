@@ -29,6 +29,7 @@
                         />
                         <label class="form-check-label" for="flexCheckDefault">
                             Publicar Anónimamente
+                            <i class="fas fa-user-secret"></i>
                         </label>
                     </div>
                     <div class="col text-end">
@@ -40,7 +41,7 @@
                                 border-color: slateblue;
                             "
                         >
-                            Publicar
+                            Publicar <i class="fas fa-comment"></i>
                         </button>
                     </div>
                 </div>
