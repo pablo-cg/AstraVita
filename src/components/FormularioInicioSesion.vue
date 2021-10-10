@@ -75,7 +75,7 @@
             <div class="row mb-3 text-light" v-else>
                 <div class="col">
                     ¿No posees una cuenta?,
-                    <router-link to="/registro" class="text-light"
+                    <router-link :to="{ name: 'Registro'}" class="text-light"
                         >Registrate</router-link
                     >
                 </div>

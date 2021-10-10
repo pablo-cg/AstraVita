@@ -1,9 +1,10 @@
 import { createStore } from 'vuex'
 import createPersistedState from "vuex-persistedstate";
-// import SecureLS from "secure-ls";
 import usuarioStore from './modules/usuarioStore';
 import cartaAstralStore from './modules/cartaAstralStore';
 
+// Depedencia para encriptar las cookies
+// import SecureLS from "secure-ls";
 // var ls = new SecureLS({ isCompression: false });
 
 export default createStore({
@@ -11,6 +12,7 @@ export default createStore({
         usuarioStore,
         cartaAstralStore
     },
+    //Encriptación de las cookies en localStorage
     // plugins : [createPersistedState({
     //     storage: {
     //         getItem: (key) => ls.get(key),

@@ -5,14 +5,18 @@
             style="background-color: slateblue"
         >
             <div class="container-fluid">
-                <router-link class="navbar-brand" to="/inicio" v-if="usuario">
+                <router-link
+                    class="navbar-brand"
+                    :to="{ name: 'Inicio' }"
+                    v-if="usuario"
+                >
                     <img
                         src="@/assets/img/astraLogoSlate.png"
                         alt=""
                         width="150"
                     />
                 </router-link>
-                <router-link class="navbar-brand" to="/" v-else>
+                <router-link class="navbar-brand" :to="{ name: 'Home' }" v-else>
                     <img
                         src="@/assets/img/astraLogoSlate.png"
                         alt=""
@@ -37,27 +41,35 @@
                                 <router-link
                                     class="nav-link"
                                     aria-current="page"
-                                    to="/miPerfil"
+                                    :to="{ name: 'PerfilUsuario'}"
                                     >{{ usuario.nombre }}</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <router-link class="nav-link" to="/grupos"
+                                <router-link
+                                    class="nav-link"
+                                    :to="{ name: 'Grupos' }"
                                     >Grupos</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <router-link class="nav-link" to="/amigos"
+                                <router-link
+                                    class="nav-link"
+                                    :to="{ name: 'MisAmigos' }"
                                     >Amigos</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <router-link class="nav-link" to="/novedades"
+                                <router-link
+                                    class="nav-link"
+                                    :to="{ name: 'Novedades' }"
                                     >Novedades</router-link
                                 >
                             </li>
                             <li class="nav-item">
-                                <router-link class="nav-link" to="/contacto"
+                                <router-link
+                                    class="nav-link"
+                                    :to="{ name: 'Contacto' }"
                                     >Contacto</router-link
                                 >
                             </li>
@@ -88,7 +100,9 @@
                     </div>
                 </section>
                 <div class="d-flex" v-else>
-                    <router-link to="/login" class="btn btn-outline-light"
+                    <router-link
+                        :to="{ name: 'InicioSesion' }"
+                        class="btn btn-outline-light"
                         >Iniciar Sesión</router-link
                     >
                 </div>

@@ -16,7 +16,7 @@ export default {
         },
         setGrupos(state, payload) {
             state.grupos = payload;
-        }
+        },
     },
     actions: {
         async obtenerCartaAspectos({ commit }, payload) {
@@ -141,4 +141,4 @@ export default {
         },
 
     }
-} 
+}

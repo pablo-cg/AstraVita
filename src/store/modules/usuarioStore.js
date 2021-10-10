@@ -32,7 +32,8 @@ export default {
                     lugar_nac: `${payload.ciudadSeleccionada.nombre}, ${payload.regionSeleccionada.nombre}`,
                     id_lugar_nac: payload.ciudadSeleccionada.id,
                     fecha_nac: payload.fechaNac,
-                    hora_nac: payload.horaNac
+                    hora_nac: payload.horaNac,
+                    esta_suscrito: false
                 },
             ]);
             await dispatch('cerrarSesion');

@@ -116,7 +116,7 @@
             </div>
             <div class="d-grid">
                 <button type="button" class="btn btn-block text-light" style="background-color: slateblue; border-color: slateblue">
-                    <h2>Suscribete Ahora</h2>
+                    <h2>Suscríbete Ahora</h2>
                 </button>
             </div>
         </main>

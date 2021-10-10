@@ -12,5 +12,8 @@ export default {
     login: {
         correo: "required|email|min:3|max:100",
         contrasena: "required|min:6|max:100",
+    },
+    comentarioEnGrupo:{
+        comentario: "comentarioRequerido"
     }
 }

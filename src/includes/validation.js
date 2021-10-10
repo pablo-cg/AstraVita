@@ -32,7 +32,7 @@ export default {
         defineRule("contrasena_mismatch", confirmed);
         defineRule("fNac_required", required);
         defineRule("hNac_required", required);
-
+        defineRule("comentarioRequerido", required)
         configure({
             generateMessage: (context) => {
                 const mensajes = {
@@ -46,6 +46,7 @@ export default {
                     min_value: `El campo ${context.field} es muy bajo`,
                     max_value: `El campo ${context.field} es muy alto`,
                     contrasena_mismatch: `Tus contraseñas no coinciden`,
+                    comentarioRequerido: `¿No tienes nada para contar?, no puedes dejar este campo vacio`
                 };
 
                 const mensaje = mensajes[context.rule.name] ? mensajes[context.rule.name] : `El campo ${context.field} es inválido`
