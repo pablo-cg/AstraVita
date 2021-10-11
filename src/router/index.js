@@ -10,6 +10,7 @@ import VistaGrupo from '@/views/VistaGrupo.vue'
 import VistaNovedades from '@/views/VistaNovedades.vue'
 import VistaPerfilUsuario from '@/views/VistaPerfilUsuario.vue'
 import VistaSuscripcion from '@/views/VistaSuscripcion.vue'
+import VistaPost from '@/views/VistaPost.vue'
 
 const routes = [
     {
@@ -59,6 +60,11 @@ const routes = [
         meta: {
             title: 'Contacto - AstraVita'
         }
+    },
+    {
+        path: '/grupo/publicacion/:id',
+        name: 'Publicacion',
+        component: VistaPost,
     },
     {
         path: '/grupo/:id',

@@ -2,7 +2,8 @@
     <div class="card">
         <h5 class="card-header row">
             <div class="col" v-if="post.es_anonimo">
-                <i class="fas fa-user-secret"></i> Anónimo dice:
+                <i class="fas fa-user-secret"></i> Anónimo
+                {{ post.id_usuario.substring(0, 7) }} dice:
             </div>
             <div class="col" v-else>
                 <i class="fas fa-user"></i> {{ post.nombre_usuario }} dice:
@@ -12,17 +13,98 @@
                 {{ creadoEl(new Date(post.created_at)) }}
             </div>
         </h5>
-        <div class="card-body">{{ post.contenido }}</div>
+        <div class="card-body">
+            <p>{{ post.contenido }}</p>
+            <p class="text-end">
+                <button
+                    class="btn btn-primary col"
+                    style="background-color: slateblue; border-color: slateblue"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    :data-bs-target="'#collapse' + post.id"
+                    aria-expanded="false"
+                    :aria-controls="'collapse' + post.id"
+                    @click="obtenerComentarios(post.id)"
+                >
+                    Ver últimos comentarios
+                </button>
+            </p>
+            <div class="collapse" :id="'collapse' + post.id">
+                <div class="card card-body">
+                    <p v-if="!comentarios" class="text-center fw-bold">
+                        No hay comentarios
+                    </p>
+                    <p v-else>
+                        <Comentario
+                            v-for="comentario in comentarios"
+                            :key="comentario.id"
+                            :comentario="comentario"
+                            class="mt-3"
+                        />
+                    </p>
+                    <div>
+                        <router-link
+                            :to="{
+                                name: 'Publicacion',
+                                params: { id: post.id },
+                            }"
+                        >
+                            <button
+                                class="btn btn-primary mt-3"
+                                style="
+                                    background-color: slateblue;
+                                    border-color: slateblue;
+                                "
+                                type="button"
+                            >
+                                Unirse a la discusión
+                            </button>
+                        </router-link>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import { supabase } from "../includes/supabase";
+import Comentario from "./PostComentario.vue";
 export default {
     props: ["post"],
+    components: {
+        Comentario,
+    },
+    data() {
+        return {
+            comentarios: null,
+        };
+    },
     methods: {
         creadoEl(fecha) {
             const nuevaFecha = fecha.toLocaleString();
             return nuevaFecha;
+        },
+
+        async obtenerComentarios(idPost) {
+            this.comentarios = [];
+            try {
+                const { data: comentarios, error } = await supabase
+                    .from("comentario")
+                    .select()
+                    .eq("id_post", idPost)
+                    .range(0, 2)
+                    .order("created_at", { ascending: false });
+                if (error) throw error;
+                if (comentarios.length) {
+                    this.comentarios.push(...comentarios);
+                    console.log(this.comentarios);
+                } else {
+                    this.comentarios = null;
+                }
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
 };

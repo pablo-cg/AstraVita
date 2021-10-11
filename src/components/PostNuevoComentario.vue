@@ -4,7 +4,10 @@
             <span class="text-center">¿Tienes algo que decir?</span>
         </h4>
         <div class="card-body">
-            <vee-form :validation-schema="schema" @submit="publicarNuevoPost">
+            <vee-form
+                :validation-schema="schema"
+                @submit="publicarNuevoComentario"
+            >
                 <div class="mb-3">
                     <label class="form-label" for="comentario"
                         >Cuentanos:
@@ -69,20 +72,20 @@ export default {
         ...mapState("usuarioStore", ["usuario"]),
     },
     methods: {
-        async publicarNuevoPost() {
+        async publicarNuevoComentario() {
             try {
-                const { data: nuevoPost, error } = await supabase
-                    .from("post")
+                const { data: nuevoComentario, error } = await supabase
+                    .from("comentario")
                     .insert({
                         id_usuario: supabase.auth.user().id,
                         nombre_usuario: this.usuario.nombre,
                         es_anonimo: this.anonimo,
-                        id_grupo: this.$route.params.id,
+                        id_post: this.$route.params.id,
                         contenido: this.comentario,
                     });
                 if (error) throw error;
                 this.limpiarFormulario();
-                this.$emit("nuevoPost", nuevoPost);
+                this.$emit("nuevoComentario", nuevoComentario);
             } catch (error) {
                 console.log(error);
             }

@@ -2,7 +2,7 @@
     <div class="row row-cols-1 row-cols-md-1 g-2">
         <div
             class="mt-4 p-5 text-white rounded"
-            style="background-color: slateblue; border-color: slateblue"
+            style="background-color: #5548a4; border-color: slateblue"
         >
             <div class="row">
                 <div class="col">
@@ -11,15 +11,19 @@
                 <div class="col text-end">
                     <router-link :to="{ name: 'Grupos' }">
                         <button type="button" class="btn btn-light">
-                        Volver a Grupos
-                        <i class="fas fa-long-arrow-alt-left"></i>
-                    </button>
+                            Volver a Grupos
+                            <i class="fas fa-long-arrow-alt-left"></i>
+                        </button>
                     </router-link>
                 </div>
             </div>
             <p v-html="textoPlaneta[idPlaneta]"></p>
         </div>
-        <nuevo-post @nuevoPost="actualizarPosts" class="col mt-3"></nuevo-post>
+        <nuevo-post
+            @nuevoPost="actualizarPosts"
+            class="col mt-3 sticky-top"
+        ></nuevo-post>
+
         <post
             class="col mt-3"
             v-for="post in posts"
@@ -52,7 +56,7 @@ export default {
             nombreGrupo: null,
             descripcionGrupo: null,
             idPlaneta: -1,
-            textoPlaneta
+            textoPlaneta,
         };
     },
     components: {
@@ -78,7 +82,6 @@ export default {
                     this.postInicio += 5;
                     this.postFin += 5;
                     loaded(posts.length, 5);
-                    console.log(loaded);
                 }
             } catch (error) {
                 console.log(error);
@@ -97,7 +100,6 @@ export default {
         this.descripcionGrupo = data.grupo.descripcion;
         this.idPlaneta = data.grupo.id_planeta;
         document.title = `${this.nombreGrupo} - AstraVita`;
-        console.log(this.idPlaneta);
     },
 };
 </script>
