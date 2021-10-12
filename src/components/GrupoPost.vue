@@ -98,7 +98,6 @@ export default {
                 if (error) throw error;
                 if (comentarios.length) {
                     this.comentarios.push(...comentarios);
-                    console.log(this.comentarios);
                 } else {
                     this.comentarios = null;
                 }
