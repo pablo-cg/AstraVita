@@ -226,7 +226,7 @@ export default {
             this.registroMensajeAlerta =
                 "Felicidades, tu cuenta ha sido creada! Ahora puedes iniciar sesión";
             this.registroEnCurso = false;
-            this.$router.push("login");
+            this.$router.push({ name: "InicioSesion" });
         },
     },
 };

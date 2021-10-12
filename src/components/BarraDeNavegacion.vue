@@ -41,7 +41,7 @@
                                 <router-link
                                     class="nav-link"
                                     aria-current="page"
-                                    :to="{ name: 'PerfilUsuario'}"
+                                    :to="{ name: 'PerfilUsuario' }"
                                     >{{ usuario.nombre }}</router-link
                                 >
                             </li>
@@ -122,10 +122,10 @@ export default {
         async logout() {
             try {
                 await this.cerrarSesion();
+                this.$router.push({ name: "InicioSesion" });
             } catch (error) {
                 console.log(error);
             }
-            this.$router.push("login");
         },
     },
 };
