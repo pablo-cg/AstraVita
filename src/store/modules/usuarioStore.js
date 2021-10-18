@@ -39,6 +39,19 @@ export default {
             await dispatch('cerrarSesion');
         },
 
+        async modificarNombreUsuario({ commit }, payload) {
+            try {
+                const { data, error } = await supabase
+                    .from("perfil_usuario")
+                    .update({ nombre: payload, updated_at: new Date() })
+                    .match({ id: supabase.auth.user().id });
+                if (error) throw error;
+                commit('setUsuario', ...data);
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
         async iniciarSesion({ commit, dispatch }, payload) {
             const { error } = await supabase.auth.signIn({
                 email: payload.correo,
@@ -55,9 +68,9 @@ export default {
             await supabase.auth.signOut();
             commit('cambiarEstadoUsuario');
             commit('setUsuario', null);
-            commit('cartaAstralStore/setCartaAstral', null, {root:true});
-            commit('cartaAstralStore/setAspectos', null, {root:true});
-            commit('cartaAstralStore/setGrupos', null, {root:true});
+            commit('cartaAstralStore/setCartaAstral', null, { root: true });
+            commit('cartaAstralStore/setAspectos', null, { root: true });
+            commit('cartaAstralStore/setGrupos', null, { root: true });
         },
         async datosUsuario({ commit }) {
             const { data } = await supabase

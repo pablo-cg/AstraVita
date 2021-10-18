@@ -22,7 +22,7 @@
                     calcularla presiona
                     <button
                         type="button"
-                        class="btn btn-primary"
+                        class="btn astra-btn-primario"
                         @click="calcularCarta"
                     >
                         Aquí
@@ -62,5 +62,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.astra-btn-primario {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
+
+.astra-btn-primario:hover {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
 </style>

@@ -10,7 +10,7 @@
                 </div>
                 <div class="col text-end">
                     <router-link :to="{ name: 'Grupos' }">
-                        <button type="button" class="btn btn-light">
+                        <button type="button" class="btn astra-btn-secundario">
                             Volver a Grupos
                             <i class="fas fa-long-arrow-alt-left"></i>
                         </button>
@@ -104,5 +104,27 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.astra-btn-primario {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
+
+.astra-btn-primario:hover {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+
+.astra-btn-secundario {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+.astra-btn-secundario:hover {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
 </style>

@@ -17,8 +17,7 @@
             <p>{{ post.contenido }}</p>
             <p class="text-end">
                 <button
-                    class="btn btn-primary col"
-                    style="background-color: slateblue; border-color: slateblue"
+                    class="btn astra-btn-primario col"
                     type="button"
                     data-bs-toggle="collapse"
                     :data-bs-target="'#collapse' + post.id"
@@ -50,11 +49,7 @@
                             }"
                         >
                             <button
-                                class="btn btn-primary mt-3"
-                                style="
-                                    background-color: slateblue;
-                                    border-color: slateblue;
-                                "
+                                class="btn astra-btn-primario mt-3"
                                 type="button"
                             >
                                 Unirse a la discusión
@@ -109,5 +104,27 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.astra-btn-primario {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
+
+.astra-btn-primario:hover {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+
+.astra-btn-secundario {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+.astra-btn-secundario:hover {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
 </style>

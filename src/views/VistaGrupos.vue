@@ -16,12 +16,8 @@
                         </div>
                         <div class="col-4 text-end">
                             <router-link
-                                class="btn btn-primary"
+                                class="btn astra-btn-primario"
                                 :class="{ disabled: data.grupo.de_pago }"
-                                style="
-                                    background-color: slateblue;
-                                    border-color: slateblue;
-                                "
                                 :to="{
                                     name: 'Grupo',
                                     params: { id: data.grupo.id },
@@ -39,11 +35,7 @@
                     <div class="card-text">
                         <p>
                             <button
-                                class="btn btn-primary"
-                                style="
-                                    background-color: slateblue;
-                                    border-color: slateblue;
-                                "
+                                class="btn astra-btn-primario"
                                 type="button"
                                 data-bs-toggle="collapse"
                                 :data-bs-target="'#collapse' + data.grupo.id"
@@ -84,3 +76,28 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.astra-btn-primario {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
+
+.astra-btn-primario:hover {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+
+.astra-btn-secundario {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+.astra-btn-secundario:hover {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
+</style>

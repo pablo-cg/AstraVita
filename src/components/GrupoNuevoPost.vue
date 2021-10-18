@@ -35,14 +35,7 @@
                         </label>
                     </div>
                     <div class="col text-end">
-                        <button
-                            type="submit"
-                            class="btn text-light"
-                            style="
-                                background-color: slateblue;
-                                border-color: slateblue;
-                            "
-                        >
+                        <button type="submit" class="btn astra-btn-primario">
                             Publicar <i class="fas fa-comment"></i>
                         </button>
                     </div>
@@ -96,5 +89,27 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.astra-btn-primario {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
+
+.astra-btn-primario:hover {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+
+.astra-btn-secundario {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+.astra-btn-secundario:hover {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
 </style>

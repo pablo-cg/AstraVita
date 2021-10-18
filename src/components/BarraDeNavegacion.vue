@@ -91,7 +91,7 @@
                             </button>
                             |
                             <a
-                                class="btn btn-outline-light text-light"
+                                class="btn btn-outline-light"
                                 type="button"
                                 @click="logout"
                                 ><i class="fas fa-power-off"></i

@@ -12,7 +12,7 @@
             <div class="card-img-overlay">
                 <h4 class="card-title">¿Quieres una imagen de tu carta astral?</h4>
                 <p class="card-text">Contáctanos y podrás conseguir una totalmente personalizada</p>
-                <a href="#" class="btn text-light" style="background-color: slateblue">Pide la tuya aquí</a>
+                <a href="#" class="btn astra-btn-primario">Pide la tuya aquí</a>
             </div>
         </div>
     </div>
