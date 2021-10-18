@@ -39,11 +39,11 @@ export default {
             await dispatch('cerrarSesion');
         },
 
-        async modificarNombreUsuario({ commit }, payload) {
+        async modificarUsuario({ commit }, payload) {
             try {
                 const { data, error } = await supabase
                     .from("perfil_usuario")
-                    .update({ nombre: payload, updated_at: new Date() })
+                    .update({ nombre: payload.nombre, bio: payload.bio, updated_at: new Date() })
                     .match({ id: supabase.auth.user().id });
                 if (error) throw error;
                 commit('setUsuario', ...data);

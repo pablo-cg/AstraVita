@@ -2,7 +2,7 @@
     <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
-            <h4 class="modal-title">Confirma que tus datos estén correctos</h4>
+            <h4 class="modal-title">{{ titulo }}</h4>
             <button
                 type="button"
                 class="btn-close"
@@ -12,68 +12,14 @@
 
         <!-- Modal body -->
         <div class="modal-body">
-            <p class="text-muted">¿Son correctos estos datos?</p>
-            <div class="mb-3 row">
-                <label for="nombre" class="col-sm-2 col-form-label fw-bold"
-                    >Nombre:</label
-                >
-                <div class="col-sm-10">
-                    <input
-                        type="text"
-                        disabled
-                        class="form-control-plaintext"
-                        id="nombre"
-                        :value="nuevoNombre"
-                    />
-                </div>
-            </div>
-            <!-- <div class="mb-3 row">
-                <label for="correo" class="col-sm-2 col-form-label"
-                    >Correo:</label
-                >
-                <div class="col-sm-10">
-                    <input
-                        type="text"
-                        disabled
-                        class="form-control-plaintext"
-                        id="correo"
-                        :value="nuevoCorreo"
-                    />
-                </div>
-            </div> -->
-            <div class="mb-3 row">
-                <label for="bio" class="col-sm-2 col-form-label fw-bold"
-                    >Bio:</label
-                >
-                <div class="col-sm-10">
-                    <input
-                        type="text"
-                        disabled
-                        class="form-control-plaintext"
-                        id="bio"
-                        :value="nuevaBio"
-                    />
-                </div>
-            </div>
-            <div class="mb-3 row">
-                <label for="contrasena" class="col-sm-2 col-form-label fw-bold"
-                    >Contraseña:</label
-                >
-                <div class="col-sm-10">
-                    <input
-                        type="text"
-                        disabled
-                        class="form-control-plaintext"
-                        id="contrasena"
-                        :value="nuevaContrasena"
-                    />
-                </div>
+            <div class="card-text">
+                {{ texto }}
             </div>
         </div>
-
         <!-- Modal footer -->
         <div class="modal-footer">
             <button
+                v-if="hayCambios"
                 type="button"
                 class="btn astra-btn-primario"
                 @click="actualizarDatosUsuario"
@@ -81,12 +27,21 @@
                 Sí, actualiza mis datos
             </button>
             <button
+                v-if="hayCambios"
                 type="button"
                 class="btn btn-danger"
                 data-bs-dismiss="modal"
                 ref="cerrarModal"
             >
                 No, me equivoqué
+            </button>
+            <button
+                v-else
+                type="button"
+                class="btn astra-btn-primario"
+                data-bs-dismiss="modal"
+            >
+                Nada que cambiar
             </button>
         </div>
     </div>
@@ -97,47 +52,47 @@ import { supabase } from "../includes/supabase";
 import { mapActions, mapState } from "vuex";
 
 export default {
-    props: ["nombre", "correo", "contrasena", "bio", "eliminaBio"],
+    props: [
+        "nombre",
+        "correo",
+        "contrasena",
+        "bio",
+        "eliminaBio",
+        "elementoACambiar",
+    ],
     data() {
         return {
             datosActualizados: false,
+            hayCambios: true,
         };
     },
     computed: {
         ...mapState("usuarioStore", ["usuario"]),
-
-        nuevoNombre() {
-            if (this.nombre == "" || this.nombre == this.usuario.nombre) {
-                return "Sin cambios";
+        titulo() {
+            if (this.elementoACambiar == "nombre") {
+                return "Este será tu nuevo nombre";
+            } else if (this.elementoACambiar == "contrasena") {
+                return "Estas apunto de cambiar tu contraseña";
+            } else if (this.eliminaBio) {
+                return "Estas a punto de eliminar tu bio";
             } else {
-                return this.nombre;
+                return "Esta será tu nueva bio:";
             }
         },
-        // nuevoCorreo() {
-        //     if (this.correo == "" || this.correo==this.usuario.correo) {
-        //         return "Sin cambios";
-        //     } else {
-        //         return this.correo;
-        //     }
-        // },
-        nuevaBio() {
-            if (this.eliminaBio) {
-                return "Tu bio se va a eliminar";
-            } else if (this.bio == "" || this.bio == this.usuario.bio) {
-                return "Sin cambios";
-            }
-            return this.bio;
-        },
-        nuevaContrasena() {
-            if (this.contrasena == "") {
-                return "Sin cambios";
+        texto() {
+            if (this.elementoACambiar == "nombre") {
+                return `${this.nombre}, ¿Quieres cambiarlo?`;
+            } else if (this.elementoACambiar == "contrasena") {
+                return "¿Quieres cambiarla?";
+            } else if (this.eliminaBio) {
+                return "¿Quieres eliminarla?";
             } else {
-                return "por motivos de seguridad tu contraseña no es mostrada, pero debes recordarla";
+                return `${this.bio}, ¿quieres cambiarla?`;
             }
         },
     },
     methods: {
-        ...mapActions("usuarioStore", ["modificarNombreUsuario"]),
+        ...mapActions("usuarioStore", ["modificarUsuario"]),
 
         async modificarContrasenaUsuario(contrasena) {
             try {
@@ -151,38 +106,26 @@ export default {
         },
 
         async actualizarDatosUsuario() {
-            if (this.nombre && this.contrasena == "") {
-                try {
-                    await this.modificarNombreUsuario(this.nombre);
-                    this.datosActualizados = true;
-                } catch (error) {
-                    this.datosActualizados = false;
-                }
-                // } else if (this.correo) {
-                //     try {
-                //         const { user, error } = await supabase.auth.update({
-                //             email: this.correo,
-                //         });
-                //         if (error) throw error;
-                //         console.log(user);
-                //     } catch (error) {
-                //         console.log(error);
-                //     }
-            } else if (this.contrasena && this.nombre == "") {
-                try {
+            try {
+                if (this.elementoACambiar == "nombre") {
+                    await this.modificarUsuario({
+                        nombre: this.nombre,
+                    });
+                } else if (this.elementoACambiar == "contrasena") {
                     await this.modificarContrasenaUsuario(this.contrasena);
-                    this.datosActualizados = true;
-                } catch (error) {
-                    this.datosActualizados = false;
+                } else if (this.eliminaBio) {
+                    await this.modificarUsuario({
+                        bio: "",
+                    });
+                } else {
+                    await this.modificarUsuario({
+                        bio: this.bio,
+                    });
                 }
-            } else if (this.contrasena && this.nombre) {
-                try {
-                    await this.modificarNombreUsuario(this.nombre);
-                    await this.modificarContrasenaUsuario(this.contrasena);
-                    this.datosActualizados = true;
-                } catch (error) {
-                    this.datosActualizados = false;
-                }
+                this.datosActualizados = true;
+            } catch (error) {
+                console.log(error);
+                this.datosActualizados = false;
             }
 
             const btn = this.$refs.cerrarModal;

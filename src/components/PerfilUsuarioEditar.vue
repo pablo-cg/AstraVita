@@ -3,6 +3,7 @@
         <h5 class="card-header text-light" style="background-color: slateblue">
             Editando Perfil
         </h5>
+
         <div class="card-body d-flex">
             <div class="row">
                 <div class="col-md-4">
@@ -10,14 +11,31 @@
                 </div>
                 <div class="col-md-8">
                     <div class="card-text">
-                        <p class="text-muted fst-italic">
-                            Debido a que cambiar tus datos de nacimiento implica
-                            un recalculo de la carta astral, por el momento solo
-                            puedes editar estos datos.
-                        </p>
-                        <p class="text-muted fst-italic">
-                            Deja vacios los campos que no deseas modificar
-                        </p>
+                        <div class="row">
+                            <p class="text-muted fst-italic">
+                                Debido a que cambiar tus datos de nacimiento
+                                implica un recalculo de la carta astral, por el
+                                momento solo puedes editar estos datos.
+                            </p>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="text-muted fst-italic">
+                                    Deja vacios los campos que no deseas
+                                    modificar
+                                </p>
+                            </div>
+                            <div class="col text-end">
+                                <button
+                                    type="button"
+                                    class="btn btn-warning"
+                                    @click="cerrarEdicion"
+                                >
+                                    Cancelar Edición
+                                </button>
+                            </div>
+                        </div>
+
                         <div class="mb-3 mt-3">
                             <label for="nombre" class="form-label"
                                 >Nombre:</label
@@ -29,6 +47,16 @@
                                 v-model="nombre"
                             />
                         </div>
+                        <button
+                            type="button"
+                            class="btn astra-btn-primario m-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmacion"
+                            :disabled="txtGuardarNombre == 'Sin cambios'"
+                            @click="setElementoACambiar('nombre')"
+                        >
+                            {{ txtGuardarNombre }}
+                        </button>
                         <div class="mb-3">
                             <label for="bio" class="form-label">Bio:</label>
                             <textarea
@@ -36,6 +64,7 @@
                                 id="bio"
                                 rows="3"
                                 v-model="bio"
+                                :disabled="eliminaBio"
                             ></textarea>
                         </div>
                         <div class="form-check">
@@ -52,6 +81,16 @@
                                 Elimina mi Bio
                             </label>
                         </div>
+                        <button
+                            type="button"
+                            class="btn astra-btn-primario m-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmacion"
+                            :disabled="txtGuardarBio == 'Sin cambios'"
+                            @click="setElementoACambiar('bio')"
+                        >
+                            {{ txtGuardarBio }}
+                        </button>
                         <!-- <div class="mb-3 mt-3">
                             <label for="correo" class="form-label"
                                 >Correo Electrónico:</label
@@ -91,43 +130,29 @@
                         >
                             Las contraseñas no coinciden
                         </p>
-                        <p
-                            v-if="nombre == '' && contrasena == ''"
-                            class="text-danger"
-                        >
-                            No hay nada que cambiar
-                        </p>
                     </div>
                     <button
                         type="button"
                         class="btn astra-btn-primario m-1"
                         data-bs-toggle="modal"
                         data-bs-target="#confirmacion"
-                    >
-                        Guardar Cambios
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-danger"
-                        @click="cerrar"
-                    >
-                        Cancelar
-                    </button>
-                    <div
-                        class="modal"
-                        id="confirmacion"
-                        v-if="
-                            (nombre != '' && contrasena != '') ||
-                            nombre != '' ||
-                            (contrasena != '' && repiteContrasena == contrasena)
+                        :disabled="
+                            txtGuardarContraseña == 'Sin cambios' ||
+                            repiteContrasena != contrasena
                         "
+                        @click="setElementoACambiar('contrasena')"
                     >
+                        {{ txtGuardarContraseña }}
+                    </button>
+
+                    <div class="modal" id="confirmacion">
                         <div class="modal-dialog modal-lg">
                             <PerfilUsuarioModalConfirma
                                 :nombre="nombre"
                                 :bio="bio"
                                 :eliminaBio="eliminaBio"
                                 :contrasena="contrasena"
+                                :elementoACambiar="elemento"
                                 @datosActualizados="datosActualizados"
                             />
                         </div>
@@ -150,7 +175,8 @@ export default {
             contrasena: "",
             repiteContrasena: "",
             bio: null,
-            eliminaBio : false,
+            eliminaBio: false,
+            elementoACambiar: "",
         };
     },
     components: {
@@ -159,16 +185,48 @@ export default {
     computed: {
         ...mapState("usuarioStore", ["usuario"]),
 
-        hayCambios(){
-            return "HACER ESTA PARTE"
-        }
+        txtGuardarNombre() {
+            if (this.nombre == "" || this.nombre == this.usuario.nombre) {
+                return "Sin cambios";
+            } else {
+                return "Cambiar Nombre";
+            }
+        },
+
+        txtGuardarBio() {
+            if (
+                (this.bio == "" || this.bio == this.usuario.bio) &&
+                !this.eliminaBio
+            ) {
+                return "Sin cambios";
+            } else if (this.eliminaBio) {
+                return "Eliminar Bio";
+            } else {
+                return "Guardar Bio";
+            }
+        },
+
+        txtGuardarContraseña() {
+            if (this.contrasena == "") {
+                return "Sin cambios";
+            } else {
+                return "Cambiar Contraseña";
+            }
+        },
+
+        elemento() {
+            return this.elementoACambiar;
+        },
     },
     methods: {
-        cerrar() {
+        cerrarEdicion() {
             this.$emit("cerrarEdicionPerfil");
         },
         datosActualizados(value) {
             this.$emit("datosActualizados", value);
+        },
+        setElementoACambiar(elemento) {
+            this.elementoACambiar = elemento;
         },
     },
     mounted() {
