@@ -6,7 +6,22 @@
                 {{ post.id_usuario.substring(0, 7) }} dice:
             </div>
             <div class="col" v-else>
-                <i class="fas fa-user"></i> {{ post.nombre_usuario }} dice:
+                <i class="fas fa-user"></i>&nbsp;
+                <router-link
+                    :to="
+                        idUsuario == post.id_usuario
+                            ? {
+                                  name: 'PerfilUsuarioInicio',
+                                  params: { id: '#' },
+                              }
+                            : {
+                                  name: 'Perfil',
+                                  params: { idUsuario: post.id_usuario },
+                              }
+                    "
+                    >{{ post.nombre_usuario }}
+                </router-link>
+                dice:
             </div>
             <div class="col text-end">
                 <i class="fas fa-clock"></i>
@@ -38,6 +53,7 @@
                             v-for="comentario in comentarios"
                             :key="comentario.id"
                             :comentario="comentario"
+                            :idUsuario="idUsuario"
                             class="mt-3"
                         />
                     </p>
@@ -66,7 +82,7 @@
 import { supabase } from "../includes/supabase";
 import Comentario from "./PostComentario.vue";
 export default {
-    props: ["post"],
+    props: ["post", "idUsuario"],
     components: {
         Comentario,
     },

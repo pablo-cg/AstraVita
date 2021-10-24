@@ -1,11 +1,34 @@
-.navColor{
-    background-color: #07002C;
+.navColor {
+  background-color: #07002c;
 }
 
-.bordeIzq{
-    border-top: none;
-    border-right: none;
-    border-bottom: none;
-    border-left: solid 1px;
-    padding-left: 3px;
+.bordeIzq {
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: solid 1px;
+  padding-left: 3px;
+}
+
+.astra-btn-primario {
+  background-color: slateblue;
+  border-color: slateblue;
+  color: whitesmoke;
+}
+
+.astra-btn-primario:hover {
+  background-color: whitesmoke;
+  border-color: slateblue;
+  color: black;
+}
+
+.astra-btn-secundario {
+  background-color: whitesmoke;
+  border-color: slateblue;
+  color: black;
+}
+.astra-btn-secundario:hover {
+  background-color: slateblue;
+  border-color: slateblue;
+  color: whitesmoke;
 }

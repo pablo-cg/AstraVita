@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import Home from '../views/Home.vue'
 import VistaInicioSesion from '@/views/VistaInicioSesion.vue'
 import VistaRegistro from '@/views/VistaRegistro.vue'
@@ -11,6 +12,7 @@ import VistaNovedades from '@/views/VistaNovedades.vue'
 import VistaPerfilUsuario from '@/views/VistaPerfilUsuario.vue'
 import VistaSuscripcion from '@/views/VistaSuscripcion.vue'
 import VistaPost from '@/views/VistaPost.vue'
+import VistaUsuario from '@/views/VistaUsuario.vue'
 
 const routes = [
     {
@@ -96,6 +98,14 @@ const routes = [
         }
     },
     {
+        path: '/miPerfil/:id',
+        name: 'PerfilUsuarioInicio',
+        component: VistaPerfilUsuario,
+        meta: {
+            title: 'Mi Perfil - AstraVita'
+        }
+    },
+    {
         path: '/suscribite',
         name: 'Suscripcion',
         component: VistaSuscripcion,
@@ -103,12 +113,17 @@ const routes = [
             title: 'Suscribete - AstraVita'
         }
     },
+    {
+        path: '/perfil/:idUsuario',
+        name: 'Perfil',
+        component: VistaUsuario,
+    },
 
 ]
 
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
+    routes,
 })
 
 // ...

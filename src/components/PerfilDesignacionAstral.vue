@@ -7,11 +7,15 @@
                 class="card-img-top"
                 src="../assets/img/demoChart.svg"
                 alt="Card image"
-                style="filter:blur(4px)"
+                style="filter: blur(4px)"
             />
             <div class="card-img-overlay">
-                <h4 class="card-title">¿Quieres una imagen de tu carta astral?</h4>
-                <p class="card-text">Contáctanos y podrás conseguir una totalmente personalizada</p>
+                <h4 class="card-title">
+                    ¿Quieres una imagen de tu carta astral?
+                </h4>
+                <p class="card-text">
+                    Contáctanos y podrás conseguir una totalmente personalizada
+                </p>
                 <a href="#" class="btn astra-btn-primario">Pide la tuya aquí</a>
             </div>
         </div>
@@ -129,5 +133,6 @@ export default {
 
 <style scoped>
 @import "../assets/css/zodiac.css";
+@import "../assets/css/astravita-style.css";
 </style>
 

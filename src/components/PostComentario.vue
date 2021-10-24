@@ -7,9 +7,23 @@
                     {{ comentario.id_usuario.substring(0, 7) }} dice:
                 </div>
                 <div class="col" v-else>
-                    <i class="fas fa-user"></i>
-                    {{ comentario.nombre_usuario }} dice:
-                </div>
+                <i class="fas fa-user"></i>&nbsp;
+                <router-link
+                    :to="
+                        idUsuario == comentario.id_usuario
+                            ? {
+                                  name: 'PerfilUsuarioInicio',
+                                  params: { id: '#' },
+                              }
+                            : {
+                                  name: 'Perfil',
+                                  params: { idUsuario: comentario.id_usuario },
+                              }
+                    "
+                    >{{ comentario.nombre_usuario }}
+                </router-link>
+                dice:
+            </div>
                 <div class="col text-end">
                     <i class="fas fa-clock"></i>
                     {{ creadoEl(new Date(comentario.created_at)) }}
@@ -24,7 +38,7 @@
 
 <script>
 export default {
-    props: ["comentario"],
+    props: ["comentario", "idUsuario"],
     methods: {
         creadoEl(fecha) {
             const nuevaFecha = fecha.toLocaleString();

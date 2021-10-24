@@ -29,6 +29,7 @@
             v-for="post in posts"
             :key="post.id"
             :post="post"
+            :idUsuario="idUsuario"
         ></post>
         <VueEternalLoading :load="getPosts"></VueEternalLoading>
         <div class="no-more text-light text-center fw-bold">
@@ -57,6 +58,7 @@ export default {
             descripcionGrupo: null,
             idPlaneta: -1,
             textoPlaneta,
+            idUsuario: supabase.auth.user().id,
         };
     },
     components: {

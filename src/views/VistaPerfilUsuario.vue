@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="mb-2">
-            <PerfilUsuarioCabecera/>
+            <PerfilUsuarioCabecera />
         </div>
         <div>
-            <PerfilUsuarioCuerpo/>
+            <PerfilUsuarioCuerpo />
         </div>
     </div>
 </template>
@@ -17,6 +17,16 @@ export default {
     components: {
         PerfilUsuarioCabecera,
         PerfilUsuarioCuerpo,
+    },
+    methods: {
+        scrollToTop() {
+            window.scrollTo(0, 0);
+        },
+    },
+    beforeMount() {
+        if (this.$route.params.id == "#") {
+            this.scrollToTop();
+        }
     },
 };
 </script>

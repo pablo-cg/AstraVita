@@ -17,7 +17,7 @@
                         :to="{ name: 'Grupo', params: { id: post.id_grupo } }"
                     >
                         <button type="button" class="btn btn-light">
-                            Volver a Grupos
+                            Volver a {{nombreGrupo}}
                             <i class="fas fa-long-arrow-alt-left"></i>
                         </button>
                     </router-link>
@@ -68,6 +68,7 @@ export default {
             comentarios: [],
             idPlaneta: -1,
             post: null,
+            nombreGrupo: ''
         };
     },
     components: {
@@ -126,6 +127,10 @@ export default {
         } else {
             document.title = `Publicación de ${this.post.nombre_usuario}`;
         }
+        const data = this.grupos.find(
+            (data) => data.grupo.id == this.post.id_grupo
+        );
+        this.nombreGrupo = data.grupo.nombre;
     },
 };
 </script>
