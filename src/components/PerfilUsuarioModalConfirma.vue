@@ -29,7 +29,7 @@
             <button
                 v-if="hayCambios"
                 type="button"
-                class="btn btn-danger"
+                class="btn astra-btn-cancel"
                 data-bs-dismiss="modal"
                 ref="cerrarModal"
             >
@@ -147,5 +147,17 @@ export default {
     background-color: whitesmoke;
     border-color: slateblue;
     color: black;
+}
+
+.astra-btn-cancel{
+    background-color: #cd6a5a;
+    border-color: #cd6a5a;
+    color: whitesmoke;
+}
+
+.astra-btn-cancel:hover{
+    background-color: #bdcd5a;
+    border-color: #bdcd5a;
+    color: dark;
 }
 </style>

@@ -28,7 +28,7 @@
                             <div class="col text-end">
                                 <button
                                     type="button"
-                                    class="btn btn-warning"
+                                    class="btn astra-btn-terciario"
                                     @click="cerrarEdicion"
                                 >
                                     Cancelar Edición
@@ -250,14 +250,15 @@ export default {
     color: black;
 }
 
-.astra-btn-secundario {
-    background-color: whitesmoke;
-    border-color: slateblue;
-    color: black;
+.astra-btn-terciario{
+    background-color: #bdcd5a;
+    border-color: #bdcd5a;
+    color: dark;
 }
-.astra-btn-secundario:hover {
-    background-color: slateblue;
-    border-color: slateblue;
+
+.astra-btn-terciario:hover{
+    background-color: #cd6a5a;
+    border-color: #cd6a5a;
     color: whitesmoke;
 }
 </style>
