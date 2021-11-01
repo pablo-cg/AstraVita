@@ -87,6 +87,7 @@
                     src="@/assets/img/astraLogoSlate.png"
                     alt="astravitaLogo"
                     height="32"
+                    width="150"
             /></router-link>
             <router-link
                 :to="{ name: 'InicioSesion' }"
