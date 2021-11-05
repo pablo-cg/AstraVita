@@ -31,34 +31,9 @@ export default {
     },
     methods: {
         ...mapActions("usuarioStore", ["usuarioEstaConectado"]),
-
-        mostrarToast() {
-            this.$toast.open({
-                message: "Tienes solicitudes de amistad pendientes",
-                type: "info",
-            });
-        },
-
-        async subListaAmigos() {
-            try {
-                const suscripcion = await supabase
-                    .from(
-                        `lista_amigo:id_usuario2=eq.${supabase.auth.user().id}`
-                    )
-                    .on("INSERT", () => {
-                        this.mostrarToast();
-                    })
-                    .subscribe();
-                console.log("suscrito");
-            } catch (error) {
-                console.log(error);
-            }
-        },
     },
     async created() {
         await this.usuarioEstaConectado();
-
-        await this.subListaAmigos();
     },
 };
 </script>

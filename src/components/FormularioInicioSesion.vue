@@ -75,7 +75,7 @@
             <div class="row mb-3 text-light" v-else>
                 <div class="col">
                     ¿No posees una cuenta?,
-                    <router-link :to="{ name: 'Registro'}" class="text-light"
+                    <router-link :to="{ name: 'Registro' }" class="text-light"
                         >Registrate</router-link
                     >
                 </div>
@@ -87,7 +87,8 @@
 <script>
 import validationSchemas from "../includes/validationSchemas.js";
 import { mapActions } from "vuex";
-import { supabase } from '../includes/supabase'
+import { supabase } from "../includes/supabase";
+import suscripciones from "@/includes/suscripciones.js";
 
 export default {
     data() {
@@ -103,7 +104,11 @@ export default {
     },
     methods: {
         ...mapActions("usuarioStore", ["iniciarSesion"]),
-        ...mapActions("cartaAstralStore",["obtenerCartaAspectos", "obtenerGruposUsuario"]),
+        ...mapActions("cartaAstralStore", [
+            "obtenerCartaAspectos",
+            "obtenerGruposUsuario",
+        ]),
+
         async login(values) {
             this.loginEnCurso = true;
 
@@ -111,6 +116,7 @@ export default {
                 await this.iniciarSesion(values);
                 this.obtenerCartaAspectos(supabase.auth.user().id);
                 this.obtenerGruposUsuario(supabase.auth.user().id);
+                await this.subListaAmigos();
             } catch (error) {
                 this.loginEnCurso = false;
                 this.loginFallido = true;
@@ -122,6 +128,29 @@ export default {
             this.loginVarianteAlerta = "alert-success";
             this.loginMensajeAlerta = "Inicio de sesión correcto";
             this.$router.push("Inicio");
+        },
+
+        mostrarToast() {
+            this.$toast.open({
+                message: "Tienes solicitudes de amistad pendientes",
+                type: "info",
+            });
+        },
+
+        async subListaAmigos() {
+            try {
+                const sub = await supabase
+                    .from(
+                        `lista_amigo:id_usuario2=eq.${supabase.auth.user().id}`
+                    )
+                    .on("INSERT", () => {
+                        this.mostrarToast();
+                    })
+                    .subscribe();
+                    suscripciones.setSuscripcion(sub);
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
 };

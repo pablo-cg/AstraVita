@@ -73,14 +73,25 @@ export default {
                 console.log(error);
             }
         },
-        async enviarSolicitudAmistad(){
-            console.log("ENVIAR SOLICITUD");
-        }
+        async enviarSolicitudAmistad() {
+            try {
+                const { error } = await supabase.from("lista_amigo").insert([
+                    {
+                        id_usuario1: supabase.auth.user().id,
+                        id_usuario2: this.usuario.id,
+                    },
+                ]);
+                if (error) throw error;
+                console.log("solicitud enviada");
+            } catch (error) {
+                console.log(error);
+            }
+        },
     },
     async created() {
         await this.buscarUsuario();
         const nombreUsuario = this.usuario.nombre;
-        document.title = `${nombreUsuario} - AstraVita`
+        document.title = `${nombreUsuario} - AstraVita`;
     },
 };
 </script>
