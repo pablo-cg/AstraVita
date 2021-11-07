@@ -92,6 +92,7 @@
             <router-link
                 :to="{ name: 'InicioSesion' }"
                 class="btn btn-outline-light"
+                v-if="$route.name != 'Admin'"
                 >Iniciar Sesión</router-link
             >
         </div>

@@ -13,6 +13,7 @@ import VistaPerfilUsuario from '@/views/VistaPerfilUsuario.vue'
 import VistaSuscripcion from '@/views/VistaSuscripcion.vue'
 import VistaPost from '@/views/VistaPost.vue'
 import VistaUsuario from '@/views/VistaUsuario.vue'
+import VistaAdmin from '@/views/VistaAdmin.vue'
 
 const routes = [
     {
@@ -117,6 +118,14 @@ const routes = [
         path: '/perfil/:idUsuario',
         name: 'Perfil',
         component: VistaUsuario,
+    },
+    {
+        path: '/panel',
+        name: 'Admin',
+        component: VistaAdmin,
+        meta:{
+            title: 'Panel Administrador Astravita',
+        }
     },
 
 ]
