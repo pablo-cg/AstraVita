@@ -8,7 +8,7 @@ import VistaAmigos from '@/views/VistaAmigos.vue'
 import VistaContacto from '@/views/VistaContacto.vue'
 import VistaGrupos from '@/views/VistaGrupos.vue'
 import VistaGrupo from '@/views/VistaGrupo.vue'
-import VistaNovedades from '@/views/VistaNovedades.vue'
+import VistaMensajes from '@/views/VistaMensajes.vue'
 import VistaPerfilUsuario from '@/views/VistaPerfilUsuario.vue'
 import VistaSuscripcion from '@/views/VistaSuscripcion.vue'
 import VistaPost from '@/views/VistaPost.vue'
@@ -83,11 +83,11 @@ const routes = [
         }
     },
     {
-        path: '/novedades',
-        name: 'Novedades',
-        component: VistaNovedades,
+        path: '/mensajes',
+        name: 'Mensajes',
+        component: VistaMensajes,
         meta: {
-            title: 'Novedades - AstraVita'
+            title: 'Mensajes - AstraVita'
         }
     },
     {

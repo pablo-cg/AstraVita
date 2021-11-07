@@ -44,8 +44,8 @@
                     <li class="nav-item">
                         <router-link
                             class="nav-link"
-                            :to="{ name: 'Novedades' }"
-                            >Novedades</router-link
+                            :to="{ name: 'Mensajes' }"
+                            >Mensajes</router-link
                         >
                     </li>
                     <li class="nav-item">
