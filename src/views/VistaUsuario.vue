@@ -1,4 +1,5 @@
 <template>
+<h1 class="text-light" @click="obtenerAmigoEnLista">TOCAME</h1>
     <div class="card" v-if="usuario">
         <h5 class="card-header text-light" style="background-color: slateblue">
             {{ usuario.nombre }}
@@ -48,6 +49,7 @@ export default {
     data() {
         return {
             usuario: null,
+            amigo: null
         };
     },
     computed: {
@@ -87,6 +89,20 @@ export default {
                 console.log(error);
             }
         },
+        async obtenerAmigoEnLista(){
+            try {
+                const { data: user, error } = await supabase
+                    .from("lista_amigo")
+                    .select()
+                    .eq('id_usuario1', this.usuario.id).or(`id_usuario1.eq.${supabase.auth.user().id}`)
+                    .eq('id_usuario2', this.usuario.id).or(`id_usuario2.eq.${supabase.auth.user().id}`)
+                    .single();
+                if (error) throw error;
+                console.log(user);
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
     async created() {
         await this.buscarUsuario();
