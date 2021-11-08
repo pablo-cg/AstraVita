@@ -80,59 +80,114 @@
                 :tipo="'listaAmigos'"
                 @eliminarAmigo="modalEliminarAmigo(amigo)"
                 @verPerfil="verPerfil(amigo.id_usuario)"
-                @enviarMensaje="enviarMensaje(amigo.id_usuario)"
+                @enviarMensaje="modalEnviarMensaje(amigo)"
             />
             <VueEternalLoading :load="listarAmigos"></VueEternalLoading>
             <div class="no-more text-light text-center fw-bold">
                 <i class="fas fa-frown"></i> No hay más amigos que mostrar.
                 <i class="fas fa-frown"></i>
             </div>
-
-            <div
-                class="modal fade"
-                id="modalElimina"
-                tabindex="-1"
-                aria-labelledby="modalEliminaLabel"
-                aria-hidden="true"
-            >
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalEliminaLabel">
-                                Eliminar Amigo
-                            </h5>
-                            <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-                        <div class="modal-body" v-if="amigoAEliminar">
-                            ¿Estas seguro de eliminar a
-                            {{ amigoAEliminar.nombre }}?
-                        </div>
-                        <div class="modal-footer">
-                            <button
-                                type="button"
-                                class="btn astra-btn-primario"
-                                data-bs-dismiss="modal"
-                            >
-                                No, me arrepentí
-                            </button>
-                            <button
-                                type="button"
-                                class="btn btn-danger"
-                                data-bs-dismiss="modal"
-                                @click="eliminarAmigo(amigoAEliminar.id_lista)"
-                            >
-                                Sí, ya no quiero que esté en mi lista
-                            </button>
-                        </div>
+        </section>
+        <!-- MODAL ELIMINAR AMIGO -->
+        <div
+            class="modal fade"
+            id="modalElimina"
+            tabindex="-1"
+            aria-labelledby="modalEliminaLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" v-if="amigoSeleccionado">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEliminaLabel">
+                            Eliminar Amigo
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estas seguro de eliminar a
+                        {{ amigoSeleccionado.nombre }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn astra-btn-primario"
+                            data-bs-dismiss="modal"
+                        >
+                            No, me arrepentí
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal"
+                            @click="eliminarAmigo(amigoSeleccionado.id_lista)"
+                        >
+                            Sí, ya no quiero que esté en mi lista
+                        </button>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+        <!-- MODAL ENVIAR MENSAJE A AMIGO -->
+        <div
+            class="modal fade"
+            id="modalMensaje"
+            tabindex="-1"
+            aria-labelledby="modalMensajeLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" v-if="amigoSeleccionado">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalMensajeLabel">
+                            Enviando mensaje a {{ amigoSeleccionado.nombre }}
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label"
+                                >Mensaje:</label
+                            >
+                            <textarea
+                                class="form-control"
+                                id="mensaje"
+                                rows="3"
+                                v-model="mensaje"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn astra-btn-primario"
+                            data-bs-dismiss="modal"
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal"
+                            @click="enviarMensaje(amigoSeleccionado.id_usuario)"
+                            v-if="mensaje != ''"
+                        >
+                            Envía mi mensaje
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -149,7 +204,8 @@ export default {
             listaAmigos: [],
             indexAmigoInicio: 0,
             indexAmigoFin: 5,
-            amigoAEliminar: undefined,
+            amigoSeleccionado: undefined,
+            mensaje: "",
         };
     },
     components: {
@@ -198,7 +254,10 @@ export default {
             try {
                 const { data, error } = await supabase
                     .from("lista_amigo")
-                    .update({ confirmado: true, amigos_desde: new Date().toDateString() })
+                    .update({
+                        confirmado: true,
+                        amigos_desde: new Date().toDateString(),
+                    })
                     .match({ id: id });
                 if (error) throw error;
                 this.solicitudesPendientes = this.solicitudesPendientes.filter(
@@ -248,7 +307,7 @@ export default {
         },
 
         modalEliminarAmigo(amigo) {
-            this.amigoAEliminar = amigo;
+            this.amigoSeleccionado = amigo;
         },
 
         async eliminarAmigo(idAmigoEnLista) {
@@ -273,8 +332,25 @@ export default {
             });
         },
 
-        enviarMensaje(idUsuario) {
-            console.log(idUsuario);
+        modalEnviarMensaje(amigo) {
+            this.amigoSeleccionado = amigo;
+        },
+
+        async enviarMensaje(idUsuarioAmigo) {
+            if (this.mensaje != "") {
+                try {
+                    const { error } = await supabase.from("mensaje").insert({
+                        usuario_envia: supabase.auth.user().id,
+                        usuario_recibe: idUsuarioAmigo,
+                        contenido: this.mensaje,
+                    });
+                    if (error) throw error;
+                    // TODO: Agregar lógica para que muestre una alerta de mensaje enviado
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            this.mensaje = "";
         },
 
         haySolicitudes(acepta) {

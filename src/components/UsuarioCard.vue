@@ -50,6 +50,8 @@
                         <button
                             type="button"
                             class="btn astra-btn-primario m-1"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalMensaje"
                             @click="enviarMensaje"
                         >
                             Enviar Mensaje

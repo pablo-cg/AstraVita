@@ -34,25 +34,51 @@
                 >Mensajes recibidos</a
             >
         </nav>
-        <div v-if="activo == 'enviados'">enviados</div>
-        <div v-if="activo == 'recibidos'">recibidos</div>
+        <div v-if="activo == 'enviados'">
+            <!-- TODO: Card o algo para mostrar los mensajes enviados -->
+        </div>
+        <div v-if="activo == 'recibidos'">
+            <!-- TODO: Card o algo para mostrar los mensajes enviados -->
+        </div>
     </div>
 </template>
 <script>
+import { supabase } from "@/includes/supabase";
+
 export default {
     data() {
         return {
             activo: "enviados",
+            mensajesEnviados: null,
+            mensajesRecibidos: null,
         };
     },
     methods: {
-        mostrarEnviados() {
-            console.log("enviados");
+        async mostrarEnviados() {
+            try {
+                const {data: mensajes, error} = await supabase
+                .from('mensaje')
+                .select('*, perfil_usuario:usuario_recibe(nombre)')
+                .eq('usuario_envia', supabase.auth.user().id);
+                if (error) throw error;
+                this.mensajesEnviados = mensajes;
+            } catch (error) {
+                console.log(error);
+            }
             this.activo = "enviados";
         },
 
-        mostrarRecibidos() {
-            console.log("recibidos");
+        async mostrarRecibidos() {
+            try {
+                const {data: mensajes, error} = await supabase
+                .from('mensaje')
+                .select('*, perfil_usuario:usuario_envia(nombre)')
+                .eq('usuario_recibe', supabase.auth.user().id);
+                if (error) throw error;
+                this.mensajesRecibidos = mensajes;
+            } catch (error) {
+                console.log(error);
+            }
             this.activo = "recibidos";
         },
     },
