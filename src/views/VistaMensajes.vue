@@ -18,68 +18,188 @@
         </div>
     </div>
     <div class="card mt-2">
-        <nav class="nav nav-pills nav-fill">
+        <nav class="nav nav-pills nav-fill border-bottom">
             <a
                 class="nav-link link-dark"
-                :class="{ active: activo == 'enviados' }"
+                :class="{
+                    active: activo == 'enviados',
+                    disabled: activo == 'enviados',
+                }"
                 href="#"
                 @click="mostrarEnviados"
                 >Mensajes Enviados</a
             >
             <a
                 class="nav-link link-dark"
-                :class="{ active: activo == 'recibidos'}"
+                :class="{
+                    active: activo == 'recibidos',
+                    disabled: activo == 'recibidos',
+                }"
                 href="#"
                 @click="mostrarRecibidos"
                 >Mensajes recibidos</a
             >
         </nav>
         <div v-if="activo == 'enviados'">
-            <!-- TODO: Card o algo para mostrar los mensajes enviados -->
+            <mensaje-card
+                v-for="mensaje in mensajesEnviados"
+                :key="mensaje.id"
+                :mensaje="mensaje"
+                :textoTipo="'Enviado a'"
+            ></mensaje-card>
+            <VueEternalLoading :load="getMensajesEnviados">
+                <template #loading>
+                    <div class="d-flex justify-content-center my-4">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden"
+                                >Cargando contenido...</span
+                            >
+                        </div>
+                    </div>
+                </template>
+
+                <template #no-more>
+                    <div class="text-dark text-center fw-bold mb-4">
+                        <i class="fas fa-info-circle"></i> No hay más mensajes
+                        que mostrar
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                </template>
+
+                <template #no-results>
+                    <div class="text-dark text-center fw-bold mb-4">
+                        <i class="fas fa-frown"></i> Aun no has enviado ningún
+                        mensaje
+                        <i class="fas fa-frown"></i>
+                    </div>
+                </template>
+
+                <template #error>
+                    <div class="text-dark text-center fw-bold mb-4">
+                        <i class="fas fa-exclamation-triangle"></i> Ocurrió un
+                        error inesperado
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                </template>
+            </VueEternalLoading>
         </div>
         <div v-if="activo == 'recibidos'">
-            <!-- TODO: Card o algo para mostrar los mensajes enviados -->
+            <mensaje-card
+                v-for="mensaje in mensajesRecibidos"
+                :key="mensaje.id"
+                :mensaje="mensaje"
+                :textoTipo="'Recibido de'"
+            ></mensaje-card>
+            <VueEternalLoading :load="getMensajesRecibidos">
+                <template #loading>
+                    <div class="d-flex justify-content-center my-4">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden"
+                                >Cargando contenido...</span
+                            >
+                        </div>
+                    </div>
+                </template>
+
+                <template #no-more>
+                    <div class="text-dark text-center fw-bold mb-4">
+                        <i class="fas fa-info-circle"></i> No hay más mensajes
+                        que mostrar
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                </template>
+
+                <template #no-results>
+                    <div class="text-dark text-center fw-bold mb-4">
+                        <i class="fas fa-frown"></i> Aun no has recibido ningún
+                        mensaje
+                        <i class="fas fa-frown"></i>
+                    </div>
+                </template>
+
+                <template #error>
+                    <div class="text-dark text-center fw-bold mb-4">
+                        <i class="fas fa-exclamation-triangle"></i> Ocurrió un
+                        error inesperado
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                </template>
+            </VueEternalLoading>
         </div>
     </div>
 </template>
 <script>
 import { supabase } from "@/includes/supabase";
+import MensajeCard from "@/components/MensajeCard.vue";
+import { VueEternalLoading } from "@ts-pro/vue-eternal-loading";
 
 export default {
+    components: {
+        MensajeCard,
+        VueEternalLoading,
+    },
     data() {
         return {
             activo: "enviados",
-            mensajesEnviados: null,
-            mensajesRecibidos: null,
+            mensajesEnviados: [],
+            mensajesRecibidos: [],
+            mensajeInicio: 0,
+            mensajeFin: 5,
         };
     },
     methods: {
-        async mostrarEnviados() {
-            try {
-                const {data: mensajes, error} = await supabase
-                .from('mensaje')
-                .select('*, perfil_usuario:usuario_recibe(nombre)')
-                .eq('usuario_envia', supabase.auth.user().id);
-                if (error) throw error;
-                this.mensajesEnviados = mensajes;
-            } catch (error) {
-                console.log(error);
-            }
+        mostrarEnviados() {
+            this.mensajeInicio = 0;
+            this.mensajeFin = 5;
+            this.mensajesEnviados = [];
             this.activo = "enviados";
         },
 
-        async mostrarRecibidos() {
+        mostrarRecibidos() {
+            this.mensajeInicio = 0;
+            this.mensajeFin = 5;
+            this.mensajesRecibidos = [];
+            this.activo = "recibidos";
+        },
+
+        async getMensajesEnviados({ loaded }) {
             try {
-                const {data: mensajes, error} = await supabase
-                .from('mensaje')
-                .select('*, perfil_usuario:usuario_envia(nombre)')
-                .eq('usuario_recibe', supabase.auth.user().id);
+                const { data: mensajes, error } = await supabase
+                    .from("mensaje")
+                    .select("*, perfil_usuario:usuario_recibe(nombre)")
+                    .eq("usuario_envia", supabase.auth.user().id)
+                    .range(this.mensajeInicio, this.mensajeFin)
+                    .order("created_at", { ascending: false });
                 if (error) throw error;
-                this.mensajesRecibidos = mensajes;
+                if (mensajes.length) {
+                    this.mensajesEnviados.push(...mensajes);
+                    this.mensajeInicio += 5;
+                    this.mensajeFin += 5;
+                    loaded(mensajes.length, 5);
+                }
             } catch (error) {
                 console.log(error);
             }
-            this.activo = "recibidos";
+        },
+
+        async getMensajesRecibidos({ loaded }) {
+            try {
+                const { data: mensajes, error } = await supabase
+                    .from("mensaje")
+                    .select("*, perfil_usuario:usuario_envia(nombre)")
+                    .eq("usuario_recibe", supabase.auth.user().id)
+                    .range(this.mensajeInicio, this.mensajeFin)
+                    .order("created_at", { ascending: false });
+                if (error) throw error;
+                if (mensajes.length) {
+                    this.mensajesRecibidos.push(...mensajes);
+                    this.mensajeInicio += 5;
+                    this.mensajeFin += 5;
+                    loaded(mensajes.length, 5);
+                }
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
 };
