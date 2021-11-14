@@ -35,24 +35,6 @@
                         >
                     </li>
                 </ul>
-                <div class="d-flex mb-2 mb-lg-0">
-                    <div class="input-group me-2">
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Buscar"
-                            aria-label="Buscar Usuario"
-                            aria-describedby="button-addon"
-                        />
-                        <button
-                            class="btn btn-outline-light"
-                            type="button"
-                            id="button-addon"
-                        >
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
                 <button
                     class="btn btn-outline-light"
                     type="button"
