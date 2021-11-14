@@ -13,7 +13,9 @@ import VistaPerfilUsuario from '@/views/VistaPerfilUsuario.vue'
 import VistaSuscripcion from '@/views/VistaSuscripcion.vue'
 import VistaPost from '@/views/VistaPost.vue'
 import VistaUsuario from '@/views/VistaUsuario.vue'
-import VistaAdmin from '@/views/VistaAdmin.vue'
+import VistaAdminLogin from '@/views/VistaAdminLogin.vue'
+import VistaSoporte from '@/views/VistaSoporte.vue'
+import VistaListaUsuario from '@/views/VistaListaUsuario.vue'
 
 const routes = [
     {
@@ -120,13 +122,29 @@ const routes = [
         component: VistaUsuario,
     },
     {
-        path: '/panel',
-        name: 'Admin',
-        component: VistaAdmin,
+        path: '/adminlogin',
+        name: 'AdminIniciarSesion',
+        component: VistaAdminLogin,
         meta:{
             title: 'Panel Administrador Astravita',
         }
     },
+    {
+        path: '/adminSoporte',
+        name: 'Soporte',
+        component: VistaSoporte,
+        meta:{
+            title: 'Panel Administrador Astravita',
+        }
+    },
+    {
+        path: '/adminUsuarios',
+        name: 'ListaUsuarios',
+        component: VistaListaUsuario,
+        meta:{
+            title: 'Panel Administrador Astravita',
+        }
+    }
 
 ]
 

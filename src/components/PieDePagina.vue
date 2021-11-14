@@ -74,9 +74,16 @@
                     </span>
                 </div>
                 <div class="col text-center">
-                    <span class="text-muted text-center"
-                        >Proyecto AstraVita&copy;</span
-                    >
+                    <span class="text-muted text-center" v-if="usuario">
+                        Proyecto AstraVita &copy;
+                    </span>
+                    <span class="text-center" v-else>
+                        <router-link
+                            :to="{ name: 'AdminIniciarSesion' }"
+                            class="text-decoration-none text-light text-muted "
+                            >Proyecto AstraVita &copy;
+                        </router-link>
+                    </span>
                 </div>
             </div>
         </div>

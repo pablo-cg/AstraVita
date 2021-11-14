@@ -1,4 +1,5 @@
 import { supabase } from "../../includes/supabase";
+import { supabaseAdmin } from "../../includes/supabaseAdmin";
 import suscripciones from "@/includes/suscripciones.js";
 
 export default {
@@ -6,14 +7,18 @@ export default {
     state: {
         usuarioConectado: false,
         usuario: null,
+        esAdmin: false,
     },
     mutations: {
         cambiarEstadoUsuario(state) {
             state.usuarioConectado = !state.usuarioConectado;
         },
         setUsuario(state, payload) {
-            state.usuario = payload
-        }
+            state.usuario = payload;
+        },
+        cambiarEstadoAdmin(state){
+            state.esAdmin = !state.esAdmin;
+        },
     },
     actions: {
         async registrarUsuario({ dispatch }, payload) {
@@ -58,11 +63,20 @@ export default {
                 email: payload.correo,
                 password: payload.contrasena,
             });
-            if (error) {
-                throw error;
-            }
+            if (error) throw error;
             commit('cambiarEstadoUsuario');
             await dispatch('datosUsuario');
+        },
+
+        async iniciarSesionAdmin({commit, dispatch}, payload){
+            const { error } = await supabaseAdmin.auth.signIn({
+                email: payload.correo,
+                password: payload.contrasena,
+            });
+            if (error) throw error;
+            commit("cambiarEstadoUsuario");
+            commit("cambiarEstadoAdmin");
+            await dispatch('datosUsuario')
         },
 
         async cerrarSesion({ commit }) {
@@ -75,6 +89,14 @@ export default {
             commit('cartaAstralStore/setAspectos', null, { root: true });
             commit('cartaAstralStore/setGrupos', null, { root: true });
         },
+
+        async cerrarSesionAdmin({ commit }) {
+            await supabaseAdmin.auth.signOut();
+            commit('cambiarEstadoUsuario');
+            commit("cambiarEstadoAdmin");
+            commit('setUsuario', null);
+        },
+
         async datosUsuario({ commit }) {
             const { data } = await supabase
                 .from("perfil_usuario")
