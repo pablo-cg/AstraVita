@@ -5,14 +5,14 @@
         </h5>
         <div class="card-body" v-if="cartaAstral">
             <div class="row">
-                <PerfilAspectos :aspectos="aspectos" />
-            </div>
-            <div class="row mt-3">
                 <PerfilDesignacionAstral
                     :planetas="cartaAstral.planets"
                     :casas="cartaAstral.housecusps"
                     :imagenRuedaCarta="cartaAstral.wheel"
                 />
+            </div>
+            <div class="row mt-3">
+                <PerfilAspectos :aspectos="aspectos" />
             </div>
         </div>
         <div class="card-body" v-else>
