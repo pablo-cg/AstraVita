@@ -48,11 +48,6 @@
                             >Mensajes</router-link
                         >
                     </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'Contacto' }"
-                            >Contacto</router-link
-                        >
-                    </li>
                 </ul>
                 <div class="d-flex mb-2 mb-lg-0">
                     <div class="input-group me-2">

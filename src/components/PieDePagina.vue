@@ -23,20 +23,20 @@
                                     >+569 7894 0490</a
                                 >
                             </li>
-                            <li>
-                                <i class="fas fa-at"></i>&nbsp;
-                                <a
-                                    href="mailto:soporte@astravita.cl"
-                                    class="text-light"
-                                    >soporte@astravita.cl</a
-                                >
-                            </li>
-                            <li v-if="usuario">
+                            <li v-if="usuario && !esAdmin">
                                 <i class="fas fa-heart"></i>&nbsp;
                                 <router-link
                                     :to="{ name: 'Suscripcion' }"
                                     class="text-light"
                                     >Suscribete</router-link
+                                >
+                            </li>
+                            <li v-if="usuario && !esAdmin">
+                                <router-link
+                                    class="text-light"
+                                    :to="{ name: 'Contacto' }"
+                                    ><i class="fas fa-headset">&nbsp;</i
+                                    >Contacto</router-link
                                 >
                             </li>
                         </ul>
@@ -80,7 +80,7 @@
                     <span class="text-center" v-else>
                         <router-link
                             :to="{ name: 'AdminIniciarSesion' }"
-                            class="text-decoration-none text-light text-muted "
+                            class="text-decoration-none text-light text-muted"
                             >Proyecto AstraVita &copy;
                         </router-link>
                     </span>
@@ -94,7 +94,7 @@
 import { mapState } from "vuex";
 export default {
     computed: {
-        ...mapState("usuarioStore", ["usuario"]),
+        ...mapState("usuarioStore", ["usuario", "esAdmin"]),
     },
 };
 </script>
