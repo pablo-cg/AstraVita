@@ -52,7 +52,7 @@ export default {
     methods: {
         ...mapActions("usuarioStore", ["iniciarSesionAdmin"]),
         async iniciarSesion() {
-            if (this.correo.includes("astravita")) {
+            if (this.correo.includes("@astravita")) {
                 try {
                     this.iniciarSesionAdmin({
                         correo: this.correo,

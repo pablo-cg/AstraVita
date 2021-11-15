@@ -76,7 +76,7 @@ export default {
             if (error) throw error;
             commit("cambiarEstadoUsuario");
             commit("cambiarEstadoAdmin");
-            await dispatch('datosUsuario')
+            await dispatch('datosAdmin')
         },
 
         async cerrarSesion({ commit }) {
@@ -107,6 +107,18 @@ export default {
                 commit('setUsuario', data);
             }
         },
+
+        async datosAdmin({ commit }) {
+            const { data } = await supabase
+                .from("perfil_usuario")
+                .select()
+                .eq("id", supabaseAdmin.auth.user().id)
+                .single();
+            if (data) {
+                commit('setUsuario', data);
+            }
+        },
+
         async usuarioEstaConectado({ commit, dispatch }) {
             const usuario = supabase.auth.user();
             if (usuario) {
