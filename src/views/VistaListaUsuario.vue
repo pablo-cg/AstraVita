@@ -32,7 +32,8 @@
                             <th>UUID</th>
                             <th>Nombre</th>
                             <th>Correo</th>
-                            <th>Estado Suscripción</th>
+                            <th>Está Suscrito</th>
+                            <th>Es Admin</th>
                             <th colspan="2">Acciones</th>
                         </tr>
                     </thead>
@@ -41,11 +42,14 @@
                             v-for="usuario in usuariosFiltrados"
                             :key="usuario.id"
                         >
-                            <td>{{ usuario.id }}</td>
+                            <td class="text-center">{{ usuario.id }}</td>
                             <td>{{ usuario.nombre }}</td>
                             <td>{{ usuario.correo }}</td>
                             <td class="text-center">
-                                {{ usuario.esta_suscrito }}
+                                {{ usuario.esta_suscrito ? "Si" : "No" }}
+                            </td>
+                            <td class="text-center">
+                                {{ usuario.es_admin ? "Si" : "No" }}
                             </td>
                             <td class="text-center">
                                 <button class="btn btn-primary">Editar</button>
@@ -120,6 +124,7 @@ export default {
             usuarios: null,
             filtro: "",
             usuarioSeleccionado: null,
+            asd: null,
         };
     },
     methods: {

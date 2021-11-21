@@ -46,14 +46,18 @@
                         >
                             <li>
                                 <router-link
-                            class="dropdown-item"
-                            :to="{ name: 'ListaUsuarios' }"
-                            ><i class="fas fa-list-ol"></i> Lista de usuarios</router-link
-                        >
+                                    class="dropdown-item"
+                                    :to="{ name: 'ListaUsuarios' }"
+                                    ><i class="fas fa-list-ol"></i> Lista de
+                                    usuarios</router-link
+                                >
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#"
-                                    ><i class="fas fa-user-plus"></i> Crear Nuevo usuario</a
+                                <router-link
+                                    class="dropdown-item"
+                                    :to="{ name: 'NuevoUsuario' }"
+                                    ><i class="fas fa-user-plus"></i> Crear
+                                    Nuevo usuario</router-link
                                 >
                             </li>
                         </ul>

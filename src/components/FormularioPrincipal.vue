@@ -7,7 +7,12 @@
                         th:src="@{/img/profelogo.png}"
                         class="img-fluid rounded-3 mt-3"
                     />
-                    <p class="text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis quos eos laboriosam sequi reiciendis repudiandae iste provident, nisi itaque atque accusamus ex. Voluptas libero incidunt praesentium porro, sapiente in pariatur!</p>
+                    <p class="text-light">
+                        La Astrología es una disciplina interpretativa que nos ayuda a comprender nuestros procesos.
+                    </p>
+                    <p class="text-light">
+                        Es dentro de este marco que, una <span class="fw-bold">Carta Natal</span> o <span class="fw-bold">Carta Astral</span> despliega una capacidad simbólica y arquetípica, que orienta ciertos patrones y ciertas situaciones. Inclina, <span class="fw-bold">mas no determina.</span>
+                    </p>
             </div>
             <div class="col-md-6">
                 <div class="card-body">

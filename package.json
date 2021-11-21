@@ -11,7 +11,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@popperjs/core": "^2.10.1",
-    "@supabase/supabase-js": "^1.22.6",
+    "@supabase/supabase-js": "^1.28.0",
     "@ts-pro/vue-eternal-loading": "^1.1.1",
     "@vee-validate/rules": "^4.4.7",
     "bootstrap": "^5.1.0",
