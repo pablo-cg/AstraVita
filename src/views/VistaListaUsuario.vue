@@ -144,7 +144,6 @@ export default {
             usuarios: null,
             filtro: "",
             usuarioSeleccionado: null,
-            asd: null,
         };
     },
     methods: {
