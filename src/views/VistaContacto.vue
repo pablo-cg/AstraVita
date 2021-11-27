@@ -81,14 +81,16 @@ export default {
         };
     },
     methods: {
-        enviarSolicitud() {
+        async enviarSolicitud() {
             if (this.asunto && this.detalles) {
                 try {
-                    const { error } = supabase.from("caso_soporte").insert({
-                        id_usuario: supabase.auth.user().id,
-                        asunto: this.asunto,
-                        detalles: this.detalles,
-                    });
+                    const { error } = await supabase.from("caso_soporte").insert([
+                        {
+                            id_usuario: supabase.auth.user().id,
+                            asunto: this.asunto,
+                            detalles: this.detalles,
+                        },
+                    ]);
                     if (error) throw error;
                     this.alerta = {
                         tipo: "alert-success",
@@ -96,7 +98,7 @@ export default {
                         mensaje:
                             "Un miembro de AstraStaff revisará tu caso y entregará una respuesta en las proximas horas, gracias por contactarte con nosotros",
                     };
-                    this.limpiarFormulario()
+                    this.limpiarFormulario();
                 } catch (error) {
                     console.log(error);
                     this.alerta = {
@@ -115,10 +117,10 @@ export default {
             }
         },
 
-        limpiarFormulario(){
+        limpiarFormulario() {
             this.asunto = null;
             this.detalles = null;
-        }
+        },
     },
 };
 </script>
