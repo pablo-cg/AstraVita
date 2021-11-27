@@ -96,6 +96,9 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import suscripciones from "@/includes/suscripciones.js";
+import { supabase } from "../includes/supabase";
+
 export default {
     computed: {
         ...mapState("usuarioStore", ["usuario"]),
@@ -104,6 +107,8 @@ export default {
         ...mapActions("usuarioStore", ["cerrarSesion"]),
         async logout() {
             try {
+                const suscripcion = suscripciones.getSuscripcion();
+                supabase.removeSubscription(suscripcion);
                 await this.cerrarSesion();
                 this.$router.push({ name: "InicioSesion" });
             } catch (error) {

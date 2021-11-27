@@ -116,7 +116,7 @@ export default {
                 await this.iniciarSesion(values);
                 this.obtenerCartaAspectos(supabase.auth.user().id);
                 this.obtenerGruposUsuario(supabase.auth.user().id);
-                await this.subListaAmigos();
+                this.subListaAmigos();
             } catch (error) {
                 this.loginEnCurso = false;
                 this.loginFallido = true;
@@ -137,13 +137,14 @@ export default {
             });
         },
 
-        async subListaAmigos() {
+        subListaAmigos() {
             try {
-                const sub = await supabase
+                const sub = supabase
                     .from(
                         `lista_amigo:id_usuario2=eq.${supabase.auth.user().id}`
                     )
                     .on("INSERT", () => {
+                        console.log("recibida solicitud de amistad");
                         this.mostrarToast();
                     })
                     .subscribe();

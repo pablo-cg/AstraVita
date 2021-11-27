@@ -1,6 +1,5 @@
 import { supabase } from "../../includes/supabase";
 import { supabaseAdmin } from "../../includes/supabaseAdmin";
-import suscripciones from "@/includes/suscripciones.js";
 
 export default {
     namespaced: true,
@@ -80,8 +79,6 @@ export default {
         },
 
         async cerrarSesion({ commit }) {
-            const suscripcion = suscripciones.getSuscripcion();
-            await supabase.removeSubscription(suscripcion);
             await supabase.auth.signOut();
             commit('cambiarEstadoUsuario');
             commit('setUsuario', null);
