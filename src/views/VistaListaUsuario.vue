@@ -52,7 +52,27 @@
                                 {{ usuario.es_admin ? "Si" : "No" }}
                             </td>
                             <td class="text-center">
-                                <button class="btn btn-primary">Editar</button>
+                                <div class="btn-group">
+                                    <button
+                                        class="btn btn-primary dropdown-toggle"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Opciones
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                                >Ver Publicaciones</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                                >Ver Comentarios</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
                             </td>
                             <td class="text-center">
                                 <button
