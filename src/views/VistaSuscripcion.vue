@@ -10,7 +10,10 @@
         <main>
             <div class="row row-cols-1 row-cols-md-2 mb-3 text-center">
                 <div class="col">
-                    <div class="card mb-4 rounded-3 shadow-sm" style="border-color: slateblue">
+                    <div
+                        class="card mb-4 rounded-3 shadow-sm"
+                        style="border-color: slateblue"
+                    >
                         <div class="card-header py-3">
                             <h4 class="my-0 fw-normal">Gratis</h4>
                         </div>
@@ -36,10 +39,16 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card mb-4 rounded-3 shadow-sm" style="border-color: slateblue">
+                    <div
+                        class="card mb-4 rounded-3 shadow-sm"
+                        style="border-color: slateblue"
+                    >
                         <div
                             class="card-header py-3 text-white"
-                            style="background-color: slateblue; border-color: slateblue"
+                            style="
+                                background-color: slateblue;
+                                border-color: slateblue;
+                            "
                         >
                             <h4 class="my-0 fw-normal">Mejorado</h4>
                         </div>
@@ -115,7 +124,11 @@
                 </table>
             </div>
             <div class="d-grid">
-                <button type="button" class="btn btn-block text-light" style="background-color: slateblue; border-color: slateblue">
+                <button
+                    type="button"
+                    class="btn btn-block astra-btn-primario"
+                    @click="suscribirse"
+                >
                     <h2>Suscríbete Ahora</h2>
                 </button>
             </div>
@@ -124,8 +137,57 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+import { mapState } from "vuex";
+
+const APIURL = `${process.env.VUE_APP_REVENIU_URL}subscriptions/`;
+const APIKEY = process.env.VUE_APP_REVENIU_KEY;
+
+export default {
+    computed: {
+        ...mapState("usuarioStore", ["usuario"]),
+    },
+    methods: {
+        async suscribirse() {
+
+            await axios
+                .post("http://localhost:3000/api/suscribir/", {
+                    nombre: this.usuario.nombre,
+                    correo: this.usuario.correo,
+                    url: APIURL,
+                    key: APIKEY,
+                })
+                .then((response) => {
+                    console.log(response.data);
+                });
+        },
+    },
+
+    //TODO: FORMULARIO PARA REDIRIGIR AL PAGO
+};
 </script>
 
-<style>
+<style scoped>
+.astra-btn-primario {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
+
+.astra-btn-primario:hover {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+
+.astra-btn-secundario {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+.astra-btn-secundario:hover {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
 </style>
