@@ -32,7 +32,7 @@ app.post('/api/suscribir/', async (request, response) => {
 
     await axios.request(reqOptions).then(function (response) {
         respuesta = response.data;
-    })
+    })  
 
     if (respuesta) {
         response.status(200).send(respuesta);
@@ -44,7 +44,12 @@ app.post('/api/suscribir/', async (request, response) => {
 
 });
 
-//TODO: ENDPOINT PARA RECIBIR EL WEBHOOK
+app.post('/api/suscribir/respuesta/', (request, response) =>{
+    const data = request.body;
+    console.log(data);
+
+    response.status(200).send();
+});
 
 app.listen(
     PORT,

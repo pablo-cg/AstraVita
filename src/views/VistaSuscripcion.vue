@@ -142,6 +142,7 @@ import { mapState } from "vuex";
 
 const APIURL = `${process.env.VUE_APP_REVENIU_URL}subscriptions/`;
 const APIKEY = process.env.VUE_APP_REVENIU_KEY;
+const BEURL = process.env.VUE_APP_BACKENDAPI_URL;
 
 export default {
     computed: {
@@ -149,17 +150,35 @@ export default {
     },
     methods: {
         async suscribirse() {
+            let respuestaReveniu = null;
 
             await axios
-                .post("http://localhost:3000/api/suscribir/", {
-                    nombre: this.usuario.nombre,
+                .post(BEURL, {
+                    nombre: this.normalizar(this.usuario.nombre),
                     correo: this.usuario.correo,
                     url: APIURL,
                     key: APIKEY,
                 })
                 .then((response) => {
-                    console.log(response.data);
+                    respuestaReveniu = response.data;
                 });
+
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = respuestaReveniu.completion_url;
+            form.target = "_self";
+            var input = document.createElement("input");
+            input.id = "TBK_TOKEN";
+            input.name = "TBK_TOKEN";
+            input.type = "hidden";
+            input.value = respuestaReveniu.security_token;
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        },
+
+        normalizar(texto) {
+            return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         },
     },
 
