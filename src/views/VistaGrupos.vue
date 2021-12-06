@@ -7,9 +7,13 @@
                         <div class="col-8">
                             <h3 class="card-title">
                                 {{ data.grupo.nombre }}
-                                <span
-                                    class="badge bg-secondary"
+                                <router-link
+                                    :to="{ name: 'Suscripcion' }"
+                                    class="btn badge btn-secondary"
                                     v-if="data.grupo.de_pago"
+                                    >Premium</router-link
+                                >
+                                <span class="badge bg-secondary" v-else
                                     >Premium</span
                                 >
                             </h3>
