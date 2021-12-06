@@ -2,7 +2,7 @@
     <div
         class="alert alert-warning alert-dismissible fade show"
         role="alert"
-        v-if="status == 202"
+        v-if="status == 402"
     >
         <strong
             ><i class="fas fa-exclamation-circle"></i> Ups Algo salió
@@ -19,7 +19,7 @@
     <div
         class="alert alert-success alert-dismissible fade show"
         role="alert"
-        v-if="status == 402"
+        v-if="status == 202"
     >
         <strong
             ><i class="fas fa-smile-beam"></i> Felicidades!</strong

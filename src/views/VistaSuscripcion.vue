@@ -126,8 +126,23 @@
             <div class="d-grid">
                 <button
                     type="button"
+                    class="btn btn-block astra-btn-primario disabled"
+                    v-if="redirigiendo"
+                >
+                    <h2>
+                        <span
+                            class="spinner-border"
+                            role="status"
+                            aria-hidden="true"
+                        ></span>
+                        ...Redirigiendo
+                    </h2>
+                </button>
+                <button
+                    type="button"
                     class="btn btn-block astra-btn-primario"
                     @click="suscribirse"
+                    v-else
                 >
                     <h2>Suscríbete Ahora</h2>
                 </button>
@@ -145,11 +160,17 @@ const APIKEY = process.env.VUE_APP_REVENIU_KEY;
 const BEURL = process.env.VUE_APP_BACKENDAPI_URL;
 
 export default {
+    data() {
+        return {
+            redirigiendo: false,
+        };
+    },
     computed: {
         ...mapState("usuarioStore", ["usuario"]),
     },
     methods: {
         async suscribirse() {
+            this.redirigiendo = true;
             let respuestaReveniu = null;
 
             await axios
