@@ -52,6 +52,14 @@ const routes = [
         }
     },
     {
+        path: '/inicio/:status',
+        name: 'InicioSuscrito',
+        component: VistaPaginaPrincipal,
+        meta: {
+            title: 'Inicio - AstraVita'
+        }
+    },
+    {
         path: '/amigos',
         name: 'MisAmigos',
         component: VistaAmigos,

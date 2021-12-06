@@ -1,7 +1,8 @@
 <template>
     <div class="container">
+        <AlertaSuscripcion v-if="status" :status="status"/>
         <CarouselInicio :nombreUsuario="usuario.nombre" />
-        <UltimosPosts v-if="ultimosPosts" :posts="ultimosPosts" />
+        <UltimosPosts v-if="ultimosPosts" :posts="ultimosPosts" @click="test" />
         <CardInfoAstravita />
         <CardNovedades />
     </div>
@@ -12,12 +13,14 @@ import { supabase } from "@/includes/supabase";
 import CarouselInicio from "@/components/CarouselInicio.vue";
 import UltimosPosts from "@/components/UltimosPosts.vue";
 import CardInfoAstravita from "@/components/CardInfoAstravita.vue";
-import CardNovedades from '@/components/CardNovedades.vue'
+import CardNovedades from "@/components/CardNovedades.vue";
+import AlertaSuscripcion from '@/components/AlertaSuscripcion.vue'
 
 export default {
     data() {
         return {
             ultimosPosts: null,
+            status: null,
         };
     },
     components: {
@@ -25,6 +28,7 @@ export default {
         UltimosPosts,
         CardInfoAstravita,
         CardNovedades,
+        AlertaSuscripcion,
     },
     computed: {
         ...mapState("usuarioStore", ["usuario"]),
@@ -48,6 +52,7 @@ export default {
     },
     async created() {
         await this.obtenerUltimosPosts();
+        this.status = this.$route.params.status;
     },
 };
 </script>
