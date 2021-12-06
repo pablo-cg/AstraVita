@@ -1,8 +1,8 @@
 <template>
     <div class="container">
-        <AlertaSuscripcion v-if="status" :status="status"/>
+        <AlertaSuscripcion v-if="status" :status="status" />
         <CarouselInicio :nombreUsuario="usuario.nombre" />
-        <UltimosPosts v-if="ultimosPosts" :posts="ultimosPosts" :usuario_premium="usuario.esta_suscrito"/>
+        <UltimosPosts v-if="ultimosPosts" :posts="ultimosPosts" />
         <CardInfoAstravita />
         <CardNovedades />
     </div>
@@ -14,7 +14,7 @@ import CarouselInicio from "@/components/CarouselInicio.vue";
 import UltimosPosts from "@/components/UltimosPosts.vue";
 import CardInfoAstravita from "@/components/CardInfoAstravita.vue";
 import CardNovedades from "@/components/CardNovedades.vue";
-import AlertaSuscripcion from '@/components/AlertaSuscripcion.vue'
+import AlertaSuscripcion from "@/components/AlertaSuscripcion.vue";
 
 export default {
     data() {
@@ -35,18 +35,40 @@ export default {
     },
     methods: {
         async obtenerUltimosPosts() {
-            try {
-                const { data, error } = await supabase.rpc("ultimos_posts", {
-                    limite: 5,
-                    usuario: this.usuario.id,
-                });
+            if (this.usuario.esta_suscrito) {
+                try {
+                    const { data, error } = await supabase.rpc(
+                        "ultimos_posts",
+                        {
+                            limite: 5,
+                            usuario: this.usuario.id,
+                        }
+                    );
 
-                if (error) console.error(error);
-                if (data.length > 0) {
-                    this.ultimosPosts = data;
+                    if (error) console.error(error);
+                    if (data.length > 0) {
+                        this.ultimosPosts = data;
+                    }
+                } catch (error) {
+                    console.log(error);
                 }
-            } catch (error) {
-                console.log(error);
+            } else {
+                try {
+                    const { data, error } = await supabase.rpc(
+                        "ultimos_posts_free",
+                        {
+                            limite: 5,
+                            usuario: this.usuario.id,
+                        }
+                    );
+
+                    if (error) console.error(error);
+                    if (data.length > 0) {
+                        this.ultimosPosts = data;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
             }
         },
     },
