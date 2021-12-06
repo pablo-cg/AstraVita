@@ -27,6 +27,8 @@
                 <div class="col text-end">
                     <i class="fas fa-clock"></i>
                     {{ creadoEl(new Date(comentario.created_at)) }}
+                    <button type="button" class="btn astra-btn-secundario btn-sm" v-if="idUsuario != comentario.id_usuario">Reportar</button>
+                    <button type="button" class="btn btn-danger btn-sm" v-if="idUsuario == comentario.id_usuario">Eliminar</button>
                 </div>
             </section>
         </h5>
@@ -48,5 +50,27 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.astra-btn-primario {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
+
+.astra-btn-primario:hover {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+
+.astra-btn-secundario {
+    background-color: whitesmoke;
+    border-color: slateblue;
+    color: black;
+}
+.astra-btn-secundario:hover {
+    background-color: slateblue;
+    border-color: slateblue;
+    color: whitesmoke;
+}
 </style>

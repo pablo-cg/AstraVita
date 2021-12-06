@@ -43,6 +43,7 @@
             v-for="comentario in comentarios"
             :key="comentario.id"
             :comentario="comentario"
+            :idUsuario="post.id_usuario"
         ></comentario>
         <VueEternalLoading :load="getComentarios"></VueEternalLoading>
         <div class="no-more text-light text-center fw-bold">

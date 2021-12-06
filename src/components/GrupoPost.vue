@@ -26,6 +26,7 @@
             <div class="col text-end">
                 <i class="fas fa-clock"></i>
                 {{ creadoEl(new Date(post.created_at)) }}
+                <button type="button" class="btn astra-btn-secundario btn-sm" v-if="idUsuario != post.id_usuario">Reportar</button>
             </div>
         </h5>
         <div class="card-body">
