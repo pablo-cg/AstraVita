@@ -21,9 +21,63 @@
                         :key="index"
                         :class="index == 0 ? 'active' : ''"
                     >
-                        <div
+                        <section v-if="usuario_premium">
+                            <div
+                                class="card mb-3"
+                                style="max-width: 85%; margin: auto"
+                            >
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img
+                                            :src="post.avatar"
+                                            class="img-fluid rounded-start"
+                                            :alt="alt(post.nombre_usuario)"
+                                        />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                {{ post.nombre_usuario }}
+                                            </h5>
+
+                                            <p class="card-text">
+                                                <small
+                                                    class="
+                                                        text-muted
+                                                        fst-italic
+                                                    "
+                                                    >{{
+                                                        post.nombre_grupo
+                                                    }}</small
+                                                >
+                                            </p>
+
+                                            <p class="card-text">
+                                                {{ post.contenido }}
+                                            </p>
+                                            <p class="card-text">
+                                                <small
+                                                    class="
+                                                        text-muted
+                                                        fst-italic
+                                                    "
+                                                    >{{
+                                                        creadoEl(
+                                                            post.publicado_en
+                                                        )
+                                                    }}</small
+                                                >
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section v-else>
+                            <div
                             class="card mb-3"
                             style="max-width: 85%; margin: auto"
+                            v-if="!post.es_premium"
                         >
                             <div class="row g-0">
                                 <div class="col-md-4">
@@ -61,6 +115,7 @@
                                 </div>
                             </div>
                         </div>
+                        </section>
                     </div>
                 </div>
                 <button
@@ -93,7 +148,7 @@
 </template>
 <script>
 export default {
-    props: ["posts"],
+    props: ["posts", "usuario_premium"],
     methods: {
         creadoEl(fecha) {
             const nuevaFecha = new Date(fecha);

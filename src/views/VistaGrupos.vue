@@ -23,7 +23,7 @@
                         <div class="col-4 text-end">
                             <router-link
                                 class="btn astra-btn-primario"
-                                :class="{ disabled: data.grupo.de_pago }"
+                                :class="{ disabled: data.grupo.de_pago && !usuario.esta_suscrito }"
                                 :to="{
                                     name: 'Grupo',
                                     params: { id: data.grupo.id },

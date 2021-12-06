@@ -2,7 +2,7 @@
     <div class="container">
         <AlertaSuscripcion v-if="status" :status="status"/>
         <CarouselInicio :nombreUsuario="usuario.nombre" />
-        <UltimosPosts v-if="ultimosPosts" :posts="ultimosPosts"/>
+        <UltimosPosts v-if="ultimosPosts" :posts="ultimosPosts" :usuario_premium="usuario.esta_suscrito"/>
         <CardInfoAstravita />
         <CardNovedades />
     </div>
