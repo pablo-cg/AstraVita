@@ -55,7 +55,8 @@
                             <button
                                 type="button"
                                 class="btn astra-btn-primario m-1"
-                                @click="enviarMensaje"
+                                data-bs-toggle="modal"
+                                data-bs-target="#modalMensaje"
                             >
                                 Enviar Mensaje
                             </button>
@@ -72,12 +73,70 @@
                 </div>
             </div>
         </div>
+    </div>
+    <!-- MODAL ENVIAR MENSAJE A AMIGO -->
         <div
+            class="modal fade"
+            id="modalMensaje"
+            tabindex="-1"
+            aria-labelledby="modalMensajeLabel"
+            aria-hidden="true"
+            v-if="usuario"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalMensajeLabel">
+                            Enviando mensaje a {{ usuario.nombre }}
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="mensaje" class="form-label"
+                                >Mensaje:</label
+                            >
+                            <textarea
+                                class="form-control"
+                                id="mensaje"
+                                rows="3"
+                                v-model="mensaje"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn astra-btn-primario"
+                            data-bs-dismiss="modal"
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal"
+                            @click="enviarMensaje"
+                            v-if="mensaje != ''"
+                        >
+                            Envía mi mensaje
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div
             class="modal fade"
             id="modalElimina"
             tabindex="-1"
             aria-labelledby="modalEliminaLabel"
             aria-hidden="true"
+            v-if="usuario"
         >
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -116,7 +175,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 <script>
 import { supabase } from "@/includes/supabase";
@@ -127,6 +185,7 @@ export default {
             amigo: null,
             existeAmigo: false,
             solicitudEnviada: false,
+            mensaje : "",
         };
     },
     computed: {
@@ -190,8 +249,21 @@ export default {
             }
         },
 
-        enviarMensaje() {
-            console.log("enviar Mensaje");
+        async enviarMensaje() {
+            if (this.mensaje != "") {
+                try {
+                    const { error } = await supabase.from("mensaje").insert({
+                        usuario_envia: supabase.auth.user().id,
+                        usuario_recibe: this.usuario.id,
+                        contenido: this.mensaje,
+                    });
+                    if (error) throw error;
+                    // TODO: Agregar lógica para que muestre una alerta de mensaje enviado
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            this.mensaje = "";
         },
 
         async eliminarAmigo(idAmigoEnLista) {
