@@ -15,7 +15,7 @@
                 <div class="col-md-8">
                     <div class="mb-3">
                         <p class="card-text mb-3 text-muted">
-                            {{usuario.bio}}
+                            {{ usuario.bio }}
                         </p>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
@@ -81,7 +81,7 @@ export default {
         ...mapState("usuarioStore", ["usuario"]),
 
         fechaNac() {
-            return new Date(this.usuario.fecha_nac).toLocaleDateString();
+            return this.formatoFecha(this.usuario.fecha_nac);
         },
 
         horaNac() {
@@ -105,6 +105,18 @@ export default {
                 this.alertaTexto =
                     "Ocurrió un error inesperado al cambiar tus datos, intenta más tarde";
             }
+        },
+
+        formatoFecha(fecha) {
+            var d = new Date(fecha),
+                month = "" + (d.getMonth() + 1),
+                day = "" + (d.getDate() + 1),
+                year = d.getFullYear();
+
+            if (month.length < 2) month = "0" + month;
+            if (day.length < 2) day = "0" + day;
+
+            return [day, month, year].join("-");
         },
     },
 };
