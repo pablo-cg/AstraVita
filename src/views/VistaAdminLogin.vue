@@ -5,7 +5,20 @@
                 Iniciar Sesión Administrador
             </h1>
             <div class="card-body">
-                <form @submit.prevent="iniciarSesion">
+                <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                    v-if="errorLogin"
+                >
+                    Usuario o contraseña incorrectos
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
+                    ></button>
+                </div>
+                <form @submit.prevent="iniciarSesion" class="mb-3">
                     <div class="mb-3">
                         <label for="correo" class="form-label"
                             >Correo Electrónico</label
@@ -47,6 +60,7 @@ export default {
         return {
             correo: "",
             contrasena: "",
+            errorLogin: false,
         };
     },
     methods: {
@@ -54,13 +68,13 @@ export default {
         async iniciarSesion() {
             if (this.correo.includes("@astravita")) {
                 try {
-                    this.iniciarSesionAdmin({
+                    await this.iniciarSesionAdmin({
                         correo: this.correo,
                         contrasena: this.contrasena,
                     });
                     this.$router.push({ name: "Soporte" });
                 } catch (error) {
-                    console.log(error);
+                    this.errorLogin = true;
                 }
             }
         },
