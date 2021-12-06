@@ -13,12 +13,27 @@
                             {{ mensaje.contenido }}
                         </p>
                         <footer class="blockquote-footer pt-4 mt-4 border-top">
-                            {{textoTipo}} {{ mensaje.perfil_usuario.nombre }} el
+                            {{ textoTipo }}
+                            {{ mensaje.perfil_usuario.nombre }} el
                             <cite title="Source Title">{{
                                 creadoEl(new Date(mensaje.created_at))
                             }}</cite>
                             <div class="text-end">
-                                <button type="button" class="btn astra-btn-primario">
+                                <button
+                                    type="button"
+                                    class="btn btn-danger mx-1"
+                                    @click="eliminarMensaje"
+                                >
+                                    Eliminar
+                                </button>
+                                <button
+                                    v-if="!esEnviados"
+                                    type="button"
+                                    class="btn astra-btn-primario"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalMensaje"
+                                    @click="responderMensaje"
+                                >
                                     Responder
                                 </button>
                             </div>
@@ -31,12 +46,24 @@
 </template>
  <script>
 export default {
-    props: ["mensaje", "textoTipo"],
+    props: ["mensaje", "textoTipo", "esEnviados"],
+    data() {
+        return {
+            respuesta: "",
+        };
+    },
     methods: {
         creadoEl(fecha) {
             const nuevaFecha = fecha.toLocaleString();
             return nuevaFecha;
         },
+        responderMensaje() {
+            this.$emit("responderMensaje");
+        },
+
+        eliminarMensaje(){
+            //TODO
+        }
     },
 };
 </script>

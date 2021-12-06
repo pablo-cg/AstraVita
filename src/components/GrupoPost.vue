@@ -31,6 +31,9 @@
         <div class="card-body">
             <p>{{ post.contenido }}</p>
             <p class="text-end">
+                <button class="btn btn-danger mx-1" v-if="idUsuario == post.id_usuario" @click="eliminarPost">
+                    Eliminar
+                </button>
                 <button
                     class="btn astra-btn-primario col"
                     type="button"
@@ -116,6 +119,10 @@ export default {
                 console.log(error);
             }
         },
+
+        eliminarPost(){
+            //TODO
+        }
     },
 };
 </script>

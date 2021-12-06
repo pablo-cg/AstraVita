@@ -46,6 +46,7 @@
                 :key="mensaje.id"
                 :mensaje="mensaje"
                 :textoTipo="'Enviado a'"
+                :esEnviados="true"
             ></mensaje-card>
             <VueEternalLoading :load="getMensajesEnviados">
                 <template #loading>
@@ -89,6 +90,7 @@
                 :key="mensaje.id"
                 :mensaje="mensaje"
                 :textoTipo="'Recibido de'"
+                @responderMensaje="modalResponderMensaje(mensaje)"
             ></mensaje-card>
             <VueEternalLoading :load="getMensajesRecibidos">
                 <template #loading>
@@ -127,6 +129,61 @@
             </VueEternalLoading>
         </div>
     </div>
+    <!-- MODAL ENVIAR MENSAJE A AMIGO -->
+        <div
+            class="modal fade"
+            id="modalMensaje"
+            tabindex="-1"
+            aria-labelledby="modalMensajeLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" v-if="usuarioSeleccionado">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalMensajeLabel">
+                            Enviando mensaje a {{ usuarioSeleccionado.perfil_usuario.nombre }}
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="respuesta" class="form-label"
+                                >Mensaje:</label
+                            >
+                            <textarea
+                                class="form-control"
+                                id="respuesta"
+                                rows="3"
+                                v-model="respuesta"
+                            ></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn astra-btn-primario"
+                            data-bs-dismiss="modal"
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            data-bs-dismiss="modal"
+                            @click="responderMensaje(usuarioSeleccionado.usuario_envia)"
+                            v-if="respuesta != ''"
+                        >
+                            Envía mi mensaje
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 </template>
 <script>
 import { supabase } from "@/includes/supabase";
@@ -145,6 +202,8 @@ export default {
             mensajesRecibidos: [],
             mensajeInicio: 0,
             mensajeFin: 5,
+            usuarioSeleccionado : null,
+            respuesta: ""
         };
     },
     methods: {
@@ -201,6 +260,27 @@ export default {
                 console.log(error);
             }
         },
+
+        modalResponderMensaje(usuario){
+            this.usuarioSeleccionado = usuario
+        },
+
+        async responderMensaje(idUsuario){
+            if (this.respuesta != "") {
+                try {
+                    const { error } = await supabase.from("mensaje").insert({
+                        usuario_envia: supabase.auth.user().id,
+                        usuario_recibe: idUsuario,
+                        contenido: this.respuesta,
+                    });
+                    if (error) throw error;
+                    // TODO: Agregar lógica para que muestre una alerta de mensaje enviado
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            this.respuesta = "";
+        }
     },
 };
 </script>
