@@ -49,7 +49,7 @@ import PerfilAspectos from "./PerfilAspectos.vue";
 export default {
     data() {
         return {
-            calculando: true,
+            calculando: false,
         };
     },
     computed: {
