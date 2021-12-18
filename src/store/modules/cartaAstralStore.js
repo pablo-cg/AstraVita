@@ -56,7 +56,7 @@ export default {
             const opcionesRequest = {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Accept-Encoding": "application/json",
                     Authorization: process.env.VUE_APP_ASTROAPI_KEY,
                     "Access-Control-Allow-Origin": "*",
                 },
