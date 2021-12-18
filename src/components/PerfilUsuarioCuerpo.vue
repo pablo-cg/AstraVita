@@ -17,7 +17,15 @@
         </div>
         <div class="card-body" v-else>
             <div class="row">
-                <h5 class="text-center">
+                <h5 class="text-center" v-if="calculando">
+                    ...Calculando, espera unos segundos&nbsp;
+                    <span
+                        class="spinner-border"
+                        role="status"
+                        aria-hidden="true"
+                    ></span>
+                </h5>
+                <h5 class="text-center" v-else>
                     Tu carta astral aun no ha sido calculada, si quieres
                     calcularla presiona
                     <button
@@ -39,6 +47,11 @@ import PerfilDesignacionAstral from "./PerfilDesignacionAstral.vue";
 import PerfilAspectos from "./PerfilAspectos.vue";
 
 export default {
+    data() {
+        return {
+            calculando: true,
+        };
+    },
     computed: {
         ...mapState("usuarioStore", ["usuario"]),
         ...mapState("cartaAstralStore", ["cartaAstral", "aspectos"]),
@@ -47,16 +60,16 @@ export default {
         PerfilDesignacionAstral,
         PerfilAspectos,
     },
-    async mounted() {
-    },
     methods: {
         ...mapActions("cartaAstralStore", [
             "obtenerCartaAspectos",
             "calcularCartaAstral",
-            "obtenerGruposUsuario"
+            "obtenerGruposUsuario",
         ]),
         async calcularCarta() {
-            this.calcularCartaAstral(this.usuario);
+            this.calculando = true;
+            await this.calcularCartaAstral(this.usuario);
+            this.calculando = false;
         },
     },
 };

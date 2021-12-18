@@ -53,27 +53,25 @@ export default {
         },
 
         async calcularCartaAstral({ commit, dispatch }, payload) {
-            const opcionesRequest = {
-                method: "POST",
-                headers: {
-                    "Accept-Encoding": "application/json",
-                    Authorization: process.env.VUE_APP_ASTROAPI_KEY,
-                    "Access-Control-Allow-Origin": "*",
-                },
-                body: JSON.stringify({
-                    name: payload.nombre,
-                    date: payload.fecha_nac,
-                    time: payload.hora_nac.slice(0, -3),
-                    place_id: payload.id_lugar_nac,
-                    lang: "en",
-                    system: "p",
-                }),
-            };
-
             try {
                 const carta = await fetch(
                     process.env.VUE_APP_ASTROAPI_URL,
-                    opcionesRequest
+                    {
+                        method: "POST",
+                        body: JSON.stringify({
+                            name: payload.nombre,
+                            date: payload.fecha_nac,
+                            time: payload.hora_nac.slice(0, -3),
+                            place_id: payload.id_lugar_nac,
+                            lang: "en",
+                            system: "p",
+                        }),
+                        headers: {
+                            "Accept-Encoding": "application/json",
+                            "Authorization": process.env.VUE_APP_ASTROAPI_KEY,
+                            "Content-Type": "application/json"
+                        }
+                    }
                 ).then((response) => response.json());
 
                 let aspectos = [];
