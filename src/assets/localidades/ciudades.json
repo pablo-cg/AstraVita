@@ -139,7 +139,11 @@
             {
                 "id": 1152337970,
                 "nombre": "Valparaíso"
-            }
+            },
+            {
+                "id": 1152898644,
+                "nombre": "Viña del Mar"
+            }            
         ]
     },
     {
